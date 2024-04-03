@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <android.widget.Button
+            android:id="@+id/home"
+            android:layout_width="51dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:paddingBottom="5dp"
+            android:text="🏠"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:text="With P"
+            android:gravity="center"
+            android:textSize="20dp" />
+
+        <android.widget.Button
+            android:id="@+id/archiveBtn"
+            android:layout_width="51dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="180dp"
+            android:background="@android:color/transparent"
+            android:paddingBottom="5dp"
+            android:text="🔔"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp" />
+        <ImageButton
+            android:id="@+id/profileBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/profileimg"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:text="식물을 등록해요"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <android.widget.Button
+            android:id="@+id/button"
+            android:layout_width="123dp"
+            android:layout_height="126dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_enroll"
+            android:text="+"
+            android:textSize="90dp"
+            android:textColor="#FFFFFF"/>
+
+        <android.widget.Button
+            android:id="@+id/diaryBtn"
+            android:layout_width="222dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_diary"
+            android:text="나의 식물 다이어리 GO~"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="플랜터들과 소통해요"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <android.widget.Button
+                android:id="@+id/freeBoard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_board"
+                android:text="자유" />
+
+            <android.widget.Button
+                android:id="@+id/selfBoard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_board"
+                android:text="자랑" />
+
+            <android.widget.Button
+                android:id="@+id/sellBoard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_board"
+                android:text="분양" />
+
+            <android.widget.Button
+                android:id="@+id/giveBoard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_board"
+                android:text="나눔" />
+
+            <android.widget.Button
+                android:id="@+id/QABoard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_board"
+                android:text="QA" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <android.widget.Button
+                android:id="@+id/itemInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/button_board"
+                android:text="용품정보" />
+
+            <android.widget.Button
+                android:id="@+id/plantInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+
+                android:background="@drawable/button_board"
+                android:text="식물정보" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="궁금한 식물을 찾아봐요"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/home_search"
+            android:queryHint="아이비가 무엇인가요?" />
+    </LinearLayout>
+
+</LinearLayout>

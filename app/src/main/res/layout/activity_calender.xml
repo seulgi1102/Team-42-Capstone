@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.widget.Button
+            android:id="@+id/home2"
+            android:layout_width="51dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:paddingBottom="5dp"
+            android:text="🏠"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="With P"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp">
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="성장일지를 등록할 날짜를 선택해주세요."
+        android:textSize="24sp" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="381dp"
+        android:layout_height="312dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="95dp" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:visibility="invisible"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:text="아무것도 입력되지 않았습니다." />
+</LinearLayout>
+
+    <Button
+        android:id="@+id/nextBtn"
+        android:layout_width="114dp"
+        android:layout_height="62dp"
+        android:layout_marginLeft="280dp"
+        android:layout_marginTop="60dp"
+        android:text="작성하기" />
+
+</LinearLayout>
