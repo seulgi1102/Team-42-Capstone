@@ -25,9 +25,9 @@ class CalenderActivity : AppCompatActivity() {
         homeBtn = findViewById(R.id.home2)
         nextBtn = findViewById(R.id.nextBtn)
         choiceDate = ""
-        //선택한 날짜에 기록이 있으면 [수정]버튼이 활성화
         //작성기록이 없으면 [작성하기]버튼이 활성화
-        //기록이 있으면 달력 밑에 작성일지들의 요약버전이 리스트로 표시
+        //기록이 있으면 달력 밑에 작성일지들의 요약버전이 리스트로 표시 그중 하나를 선택하여 상세보기 화면으로 이동
+        // 상세보기 페이지에서 수정도 가능
         val intent = Intent(this, HomeActivity::class.java)
 
         homeBtn.setOnClickListener {

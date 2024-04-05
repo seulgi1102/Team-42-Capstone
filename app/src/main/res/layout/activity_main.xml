@@ -26,7 +26,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="374dp"
+        android:layout_height="440dp"
         android:layout_margin="10dp"
         android:gravity="center"
         android:orientation="vertical">
@@ -42,8 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text"
-            android:hint="abc@naver.com"/>
+            android:hint="abc@naver.com"
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/alarmId"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:text="이메일 형식이 올바르지 않습니다."
             android:textColor="#A8A8A8"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/textView3"
@@ -72,9 +72,9 @@
             android:id="@+id/alarmPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:text="영문, 숫자, 특수문자 조합으로 10자리 이상 입력해주세요. "
             android:textColor="#A8A8A8"
-            android:text="영문, 숫자, 특수문자 조합으로 10자리 이상 입력해주세요. "/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/signUp"
