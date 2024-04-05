@@ -34,7 +34,8 @@ class Fragment_Garden : Fragment() {
         return view
     }
     private fun getTipList(): ArrayList<String> {
-        return arrayListOf("채광이 잘드는 장소를 찾은 다음에 무엇을 키울지 결정하는것이 좋습니다.", "지나치게 물을 많이 주지말고 흙이 건조할때 물을 주는것이 좋습니다.")
+        return arrayListOf("채광이 잘드는 장소를 찾은 다음에 무엇을 키울지 결정하는것이 좋습니다.", "지나치게 물을 많이 주지말고 흙이 건조할때 물을 주는것이 좋습니다.",
+            "너무 강한 직사광선은 식물에게 해롭습니다.", "식물의 잘 자라는 온도는 18~23도로 사람과 같습니다. 열대식물과 같이 습한 환경에서 잘자라는 식물은 분무기로 2~3일에 한번씩 물을 뿌려줍시다.")
     }
     private fun getPlantList(): ArrayList<PlantListItem> {
         val plantList = ArrayList<PlantListItem>()
