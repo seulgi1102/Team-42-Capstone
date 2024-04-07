@@ -18,7 +18,6 @@ class Fragment_Search : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment__search, container, false)
-        // Inflate the layout for this fragment
         listView = view.findViewById(R.id.searchList)
         searchView = view.findViewById(R.id.searchView)
         listView.adapter = SearchAdapter(getSearchList())
@@ -51,7 +50,6 @@ class Fragment_Search : Fragment() {
         return searchList
     }
     private fun initSearchView() {
-        // init SearchView
         searchView.isSubmitButtonEnabled = true
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
