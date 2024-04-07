@@ -29,7 +29,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Tip"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tipContent"

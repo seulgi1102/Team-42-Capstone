@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".Fragment_Garden">
 
@@ -47,7 +48,7 @@
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="____"
+                android:hint="Name of planter"
                 android:textSize="30dp" />
 
             <TextView
@@ -62,7 +63,7 @@
         <GridView
             android:id="@+id/gridView"
             android:layout_width="408dp"
-            android:layout_height="464dp"
+            android:layout_height="417dp"
             android:columnWidth="120dp"
             android:horizontalSpacing="8dp"
             android:numColumns="3"
@@ -79,19 +80,30 @@
             <TextView
                 android:id="@+id/textView14"
                 android:layout_width="match_parent"
-                android:layout_height="114dp"
+                android:layout_height="181dp"
                 android:layout_weight="1"
                 android:text="식물 키우기 tip"
                 android:textSize="30dp" />
 
             <androidx.viewpager2.widget.ViewPager2
-                android:layout_weight="1"
                 android:id="@+id/viewPagerTip"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="270dp"
                 android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:clipChildren="false"
+                android:clipToPadding="false"
                 android:orientation="horizontal" />
+            <me.relex.circleindicator.CircleIndicator3
+                android:id="@+id/tip_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                app:ci_drawable_unselected="@drawable/gray_radius"
+                app:ci_drawable="@drawable/blue_radius"
+                app:ci_animator="@animator/scale_with_alpha"
+                />
             </LinearLayout>
+
     </LinearLayout>
 
 

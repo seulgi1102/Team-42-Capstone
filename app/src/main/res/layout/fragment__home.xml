@@ -74,11 +74,11 @@
                     android:id="@+id/textView7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:text="식물을 등록해요"
-                    android:layout_marginTop="40dp"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <android.widget.Button
@@ -96,6 +96,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:scrollbarSize="0dp"
+                    android:scrollbarThumbVertical="@null"
+                    android:scrollbarTrackVertical="@null"
+                    android:scrollbars="horizontal"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:orientation="vertical"
                 android:padding="10dp">
@@ -106,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="플랜터들과 소통해요"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -188,28 +204,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:text="궁금한 식물을 찾아봐요"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <SearchView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/home_search"
-                    android:queryHint="아이비가 무엇인가요?" />
-            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

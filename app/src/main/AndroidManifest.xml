@@ -37,6 +37,11 @@
             android:name=".DiaryActivity"
             android:exported="true"
             android:label="다이어리" />
+        <activity
+            android:name=".PlantEnrollActivity"
+            android:exported="true"
+            android:label="식물등록" />
+
     </application>
 
 </manifest>

@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="궁금한 식물을 찾아봐요"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <SearchView
