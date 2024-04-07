@@ -13,6 +13,7 @@ class HomeActivity : AppCompatActivity(){
     private lateinit var Fragment_Garden: Fragment_Garden
     private lateinit var Fragment_Search: Fragment_Search
     private lateinit var bottomNavigationView:BottomNavigationView
+    private lateinit var homeBtn: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -22,6 +23,11 @@ class HomeActivity : AppCompatActivity(){
         Fragment_Search = Fragment_Search()
         supportFragmentManager.beginTransaction().replace(R.id.container, Fragment_Home).commit();
 
+        homeBtn = findViewById(R.id.home)
+        val intent = Intent(this, HomeActivity::class.java)
+        homeBtn.setOnClickListener {
+            startActivity(intent)
+        }
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {

@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class Fragment_Enroll1 : Fragment() {
-    @SuppressLint("MissingInflatedId")
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var enrollBtn: Button
+
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

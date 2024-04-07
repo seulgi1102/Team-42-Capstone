@@ -15,53 +15,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <android.widget.Button
-                    android:id="@+id/home"
-                    android:layout_width="51dp"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:paddingBottom="5dp"
-                    android:text="🏠"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
-                    android:textSize="34sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="With P"
-                    android:textSize="20dp" />
-
-                <android.widget.Button
-                    android:id="@+id/archiveBtn"
-                    android:layout_width="51dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="180dp"
-                    android:background="@android:color/transparent"
-                    android:paddingBottom="5dp"
-                    android:text="🔔"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
-                    android:textSize="34sp" />
-
-                <ImageButton
-                    android:id="@+id/profileBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="10dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/profileimg"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
