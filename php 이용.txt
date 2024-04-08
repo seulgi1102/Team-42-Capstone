@@ -1,0 +1,80 @@
+<?php
+// MariaDB 연결 정보
+$servername = "localhost"; // 호스트 이름
+$username = "사용자명"; // 사용자 이름
+$password = "비밀번호"; // 비밀번호
+$dbname = "데이터베이스명"; // 데이터베이스 이름
+
+// 데이터베이스 연결
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// 연결 확인
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// 등록하기
+function insertPost($title, $content, $imageId, $userId) {
+    global $conn;
+    $postDate = date("Y-m-d H:i:s");
+    $sql = "INSERT INTO tb_bbso_mng (BBSO_TTL_NM, PSTG_DE, BBSO_CN, BBSO_IMG_ID, RGTR_ID, REG_DT) VALUES ('$title', '$postDate', '$content', '$imageId', '$userId', '$postDate')";
+    if ($conn->query($sql) === TRUE) {
+        echo "게시물이 성공적으로 등록되었습니다.";
+    } else {
+        echo "등록 오류: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// 수정하기
+function updatePost($postId, $title, $content, $imageId, $userId) {
+    global $conn;
+    $updateDate = date("Y-m-d H:i:s");
+    $sql = "UPDATE tb_bbso_mng SET BBSO_TTL_NM='$title', BBSO_CN='$content', BBSO_IMG_ID='$imageId', UPDUSR_ID='$userId', MDFCN_DT='$updateDate' WHERE BBSO_MNG_ID='$postId'";
+    if ($conn->query($sql) === TRUE) {
+        echo "게시물이 성공적으로 수정되었습니다.";
+    } else {
+        echo "수정 오류: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// 삭제하기
+function deletePost($postId) {
+    global $conn;
+    $sql = "DELETE FROM tb_bbso_mng WHERE BBSO_MNG_ID='$postId'";
+    if ($conn->query($sql) === TRUE) {
+        echo "게시물이 성공적으로 삭제되었습니다.";
+    } else {
+        echo "삭제 오류: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// 게시물 목록 조회
+function getPostList() {
+    global $conn;
+    $sql = "SELECT * FROM tb_bbso_mng";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            echo "게시물 ID: " . $row["BBSO_MNG_ID"]. " - 제목: " . $row["BBSO_TTL_NM"]. "<br>";
+        }
+    } else {
+        echo "게시물이 없습니다.";
+    }
+}
+
+// 상세보기
+function getPostDetail($postId) {
+    global $conn;
+    $sql = "SELECT * FROM tb_bbso_mng WHERE BBSO_MNG_ID='$postId'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        echo "게시물 ID: " . $row["BBSO_MNG_ID"]. "<br>제목: " . $row["BBSO_TTL_NM"]. "<br>게시 일시: " . $row["PSTG_DE"]. "<br>내용: " . $row["BBSO_CN"];
+    } else {
+        echo "해당하는 게시물이 없습니다.";
+    }
+}
+
+// 연결 종료
+$conn->close();
+?>
