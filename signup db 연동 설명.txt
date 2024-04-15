@@ -1,0 +1,27 @@
+- signup.php 파일 (C:\xampp\htdocs 폴더에 넣어두면 됨!)
+
+<?php
+	header("Content-Type: text/html;charset=UTF-8");
+	$conn = mysqli_connect("127.0.0.1","root","1234","test");
+	$uid = $_POST['uid'];
+    	$upw = $_POST['upw'];
+	$uemail = $_POST['uemail'];
+	$query = "insert into user(uid,upw,uemail) values ('$uid','$upw','$uemail')";
+	$result = mysqli_query($conn, $query);
+
+	if($result)
+		echo "success";
+	else
+		echo "failed";
+
+	mysqli_close($conn);
+?>
+
+
+create table user (
+	uid varchar(30) NOT NULL,
+	upw varchar(30) NOT NULL,
+	uemail varchar(30) NOT NULL
+);
+-> 테이블은 일단 임의로 이렇게 저장함!
+
