@@ -16,6 +16,8 @@ import androidx.core.widget.addTextChangedListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
@@ -59,8 +61,9 @@ class SignUpActivity : AppCompatActivity() {
             val upw = password.text.toString()
             val uemail = email.text.toString()
 
+            //중복이메일 체크
             GlobalScope.launch(Dispatchers.IO) {
-                signup(uid, upw, uemail)
+                checkExistingId(uid, upw, uemail)
             }
         }
 
@@ -120,6 +123,67 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
+    //중복이메일 체크 기능
+    private fun checkExistingId(uid:String, upw:String, uemail:String) {
+        try {
+            // PHP 스크립트의 URL
+            val url = URL("http://10.0.2.2/checkid.php")
+
+            // HttpURLConnection 열기
+            val connection = url.openConnection() as HttpURLConnection
+
+            // POST 요청 설정
+            connection.requestMethod = "POST"
+            connection.doOutput = true
+
+            // 데이터 작성
+            val postData = URLEncoder.encode("uemail", "UTF-8") + "=" + URLEncoder.encode(uemail, "UTF-8")
+            val outputStream = OutputStreamWriter(connection.outputStream)
+            outputStream.write(postData)
+            outputStream.flush()
+
+            // 응답 코드 확인
+            val responseCode = connection.responseCode
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // 응답 데이터를 읽어옴
+                val inputStream = connection.inputStream
+                val reader = BufferedReader(InputStreamReader(inputStream))
+                val response = reader.readLine()
+
+                // 이미 존재하는 이메일인지 확인
+                if (response == "Already Exist") {
+                    runOnUiThread {
+                        AlertDialog.Builder(this)
+                            .setTitle("With P")
+                            .setMessage("이미 존재하는 이메일입니다.")
+                            .setPositiveButton("확인"
+                            ) { dialog, which -> Log.d("MyTag", "positive") }
+                            .create()
+                            .show()
+                    }
+                } else {
+                    // 회원가입 처리를 진행
+                    signup(uid, upw, uemail)
+                }
+            } else {
+                // 요청이 실패한 경우
+                runOnUiThread {
+                    Toast.makeText(this, "서버 연결 실패", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            // 연결 종료
+            connection.disconnect()
+        } catch (e: Exception) {
+            // 예외 처리
+            e.printStackTrace()
+            runOnUiThread {
+                Toast.makeText(this, "catch", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    //회원가입 기능
     private fun signup(uid:String, upw:String, uemail:String) {
         try {
             val url = URL("http://10.0.2.2/signup.php")
