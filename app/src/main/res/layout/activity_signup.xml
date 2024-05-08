@@ -111,7 +111,25 @@
             android:layout_height="wrap_content"
             android:textColor="#A8A8A8"
             android:visibility="gone" />
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="생년월일" />
 
+        <EditText
+            android:id="@+id/birth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="YYYYMMDD"
+            android:inputType="text" />
+        <TextView
+            android:id="@+id/alarmBirth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#A8A8A8"
+            android:visibility="gone" />
         <TextView
             android:id="@+id/goToLogin"
             android:layout_width="wrap_content"

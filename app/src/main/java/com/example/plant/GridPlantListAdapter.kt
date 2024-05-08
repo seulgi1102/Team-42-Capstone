@@ -29,8 +29,10 @@ class GridPlantListAdapter(var items: ArrayList<PlantListItem>): BaseAdapter(){
         val item = items[position]
         var itemName = view.findViewById<TextView>(R.id.itemName)
         var itemImage = view.findViewById<ImageView>(R.id.imageView2)
-        itemName.text = item.getName()
-        itemImage.setImageResource(item.getImgSrc())
+        itemName.text = item.getPlantName()
+        //itemImage.setImageResource(item.getImgSrc())
+        //이미지는 디폴트로 설정해둠
+        itemImage.setImageResource(R.drawable.img_6)
 
         return view
     }

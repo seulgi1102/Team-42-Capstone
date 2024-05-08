@@ -19,15 +19,15 @@
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/userNameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Name of planter"
+                android:hint=""
                 android:textSize="30dp" />
 
             <TextView
                 android:id="@+id/textView10"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="의 정원"
                 android:textSize="30dp" />
@@ -36,7 +36,8 @@
 
         <GridView
             android:id="@+id/gridView"
-            android:layout_width="408dp"
+            android:layout_width="match_parent"
+            android:gravity="center"
             android:layout_height="417dp"
             android:columnWidth="120dp"
             android:horizontalSpacing="8dp"
@@ -62,8 +63,8 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPagerTip"
                 android:layout_width="match_parent"
-                android:layout_height="270dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="296dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:clipChildren="false"
                 android:clipToPadding="false"

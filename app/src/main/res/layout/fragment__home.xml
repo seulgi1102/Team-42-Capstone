@@ -16,11 +16,10 @@
             android:orientation="vertical">
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 android:padding="10dp">
 
@@ -37,36 +36,45 @@
 
                 <android.widget.Button
                     android:id="@+id/button"
-                    android:layout_width="123dp"
-                    android:layout_height="126dp"
+                    android:layout_width="106dp"
+                    android:layout_height="102dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_enroll"
                     android:text="+"
                     android:textColor="#FFFFFF"
-                    android:textSize="90dp" />
+                    android:textSize="50dp" />
 
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:text="      최근 등록된 식물"
+                android:textColor="#B1B1B1"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="139dp"
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+
                     android:scrollbarSize="0dp"
                     android:scrollbarThumbVertical="@null"
                     android:scrollbarTrackVertical="@null"
-                    android:scrollbars="horizontal"
-                    />
+                    android:scrollbars="horizontal" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 android:padding="10dp">
 
@@ -154,6 +162,30 @@
                         android:text="식물정보" />
 
                 </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="153dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="내 식물 관리일정"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:orientation="horizontal"
+                    android:padding="5dp" />
 
 
             </LinearLayout>

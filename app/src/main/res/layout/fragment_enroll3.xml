@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_enroll_3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="702dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="713dp"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:text="물주기 주기 설정"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="372dp"
+                android:layout_height="41dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/sun"
+                    android:layout_width="146dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="일" />
+
+                <TextView
+                    android:id="@+id/mon"
+                    android:layout_width="146dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="월" />
+
+                <TextView
+                    android:id="@+id/tue"
+                    android:layout_width="146dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="화" />
+
+                <TextView
+                    android:id="@+id/wed"
+                    android:layout_width="146dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="수" />
+
+                <TextView
+                    android:id="@+id/thur"
+                    android:layout_width="146dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="목" />
+
+                <TextView
+                    android:id="@+id/fri"
+                    android:layout_width="146dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="금" />
+
+                <TextView
+                    android:id="@+id/sat"
+                    android:layout_width="146dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="토" />
+
+
+            </LinearLayout>
+
+            <TimePicker
+                android:layout_width="370dp"
+                android:layout_height="140dp"
+                android:id="@+id/timePicker"
+                android:timePickerMode="spinner" />
+
+            <Switch
+                android:id="@+id/wateringSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="알람설정" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:text="적정 온/습도 설정"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="50dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView30"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="최저 온도"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/temperatureTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/temperaturePicker"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="24sp" />
+
+                    <NumberPicker
+                        android:id="@+id/temperaturePicker"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+
+                        android:orientation="vertical"
+                        android:padding="16dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView31"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="최저 습도"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/humidTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/humidPicker"
+                        android:layout_centerHorizontal="true"
+
+                        android:textSize="24sp" />
+
+                    <NumberPicker
+                        android:id="@+id/humidPicker"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:padding="16dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <Switch
+                android:id="@+id/humidSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="알림설정" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
