@@ -10,6 +10,28 @@ create table user (
 ) DEFAULT CHARACTER SET utf8;
 ALTER TABLE user ADD COLUMN imageurl VARCHAR(255) NOT NULL;
 ALTER TABLE user ADD COLUMN introduce VARCHAR(255) NOT NULL;
+edituserinfo.php - 수정 - 추가됨
+<?php
+	header("Content-Type: text/html;charset=UTF-8");
+	//$conn = mysqli_connect("127.0.0.1","데이터베이스 사용자명","데이터베이스 비밀번호","데이터베이스명");
+	$conn = mysqli_connect("127.0.0.1","root","1102","test");
+
+	mysqli_set_charset($conn, "utf8");
+	$uemail = $_POST['uemail'];
+	$uid = $_POST['uid'];
+	$imageurl = $_POST['imageurl'];
+	$introduce = $_POST['introduce'];
+
+	$query = "UPDATE user SET uid='$uid', imageurl='$imageurl', introduce='$introduce' WHERE uemail='$uemail'";
+	$result = mysqli_query($conn, $query);
+
+	if($result)
+		echo "registration successful";
+	else
+		echo "registration failed";
+
+	mysqli_close($conn);
+?>
 login.php - 검색
 <?php
 // MySQL 데이터베이스 연결 정보
@@ -211,6 +233,30 @@ END;
 //
 DELIMITER ;
 
+editdiary.php - 수정 - 추가됨
+<?php
+	header("Content-Type: text/html;charset=UTF-8");
+	//$conn = mysqli_connect("127.0.0.1","데이터베이스 사용자명","데이터베이스 비밀번호","데이터베이스명");
+	$conn = mysqli_connect("127.0.0.1","root","1102","test");
+
+	mysqli_set_charset($conn, "utf8");
+
+	$enrolltime = $_POST['enrolltime']; // 수정할 레코드의 enrolltime
+	$id = $_POST['id']; // 수정할 레코드의 다이어리 아이디
+	$dtitle = $_POST['dtitle']; // 수정할 dtitle
+	$dcontent = $_POST['dcontent']; // 수정할 dcontent
+	$imageurl = $_POST['imageurl']; // 수정할 imageurl
+
+	$query = "UPDATE diary SET dtitle='$dtitle', dcontent='$dcontent', imageurl='$imageurl' WHERE enrolltime='$enrolltime' AND id='$id'";
+	$result = mysqli_query($conn, $query);
+
+	if($result)
+		echo "registration successful";
+	else
+		echo "registration failed";
+
+	mysqli_close($conn);
+?>
 enrolldiary.php - 삽입 - 수정됨
 <?php
 	header("Content-Type: text/html;charset=UTF-8");
@@ -235,7 +281,26 @@ enrolldiary.php - 삽입 - 수정됨
 
 	mysqli_close($conn);
 ?>
+deletediary.php - 삭제 - 추가됨
+<?php
+	header("Content-Type: text/html;charset=UTF-8");
+	//$conn = mysqli_connect("127.0.0.1","데이터베이스 사용자명","데이터베이스 비밀번호","데이터베이스명");
+	$conn = mysqli_connect("127.0.0.1","root","1102","test");
 
+	mysqli_set_charset($conn, "utf8");
+
+	$id = $_POST['id']; // 수정할 레코드의 다이어리 아이디
+
+	$query = "DELETE FROM diary WHERE id='$id'";
+	$result = mysqli_query($conn, $query);
+
+	if($result)
+		echo "delete successful";
+	else
+		echo "delete failed";
+
+	mysqli_close($conn);
+?>
 getdiaries.php - 검색
 <?php
 // MySQL 데이터베이스 연결 정보
