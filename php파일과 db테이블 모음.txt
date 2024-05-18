@@ -337,6 +337,36 @@ if ($result->num_rows > 0) {
 // MySQL 연결 종료
 $conn->close();
 ?>
+image_upload.php - 추가됨
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $uploadDirectory = 'uploads/';
+        
+        if (!file_exists($uploadDirectory)) {
+            mkdir($uploadDirectory, 0777, true);
+        }
+        
+        $filename = uniqid() . '_' . basename($_FILES['image']['name']);
+        
+        $destination = $uploadDirectory . $filename;
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
+            $imageUrl = 'http://' . $_SERVER['HTTP_HOST'] . '/uploads/' . $filename;
+            
+            echo json_encode(array('imageUrl' => $imageUrl));
+        } else {
+            http_response_code(500);
+            echo json_encode(array('error' => 'Failed to move the uploaded file.'));
+        }
+    } else {
+        http_response_code(400);
+        echo json_encode(array('error' => 'File upload failed.'));
+    }
+} else {
+    http_response_code(405);
+    echo json_encode(array('error' => 'Method Not Allowed'));
+}
+?>
 ---------------------------------------------------------------------------------------------------------------------
 ALTER TABLE enrollplant ADD enroll_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 테이블 한글저장안될때 
