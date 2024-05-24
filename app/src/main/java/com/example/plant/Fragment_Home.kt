@@ -1,5 +1,6 @@
 package com.example.plant
 
+import PlantItem
 import RecyclerViewPlantAdapter
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -36,6 +37,7 @@ class Fragment_Home : Fragment() {
     private var userEmail: String? = null
     private var imageUrl: String? = null
     private var pList: ArrayList<PlantListItem> = ArrayList()
+    private lateinit var plantAdapter: RecyclerViewPlantAdapter
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +55,7 @@ class Fragment_Home : Fragment() {
             userEmail?.let { getPlantInfo(it) }
         }
         recyclerView = view.findViewById(R.id.recyclerView)
+
         enrollBtn = view.findViewById(R.id.button)
 
 
@@ -83,10 +86,11 @@ class Fragment_Home : Fragment() {
         }*/
         //recyclerView.adapter = RecyclerViewPlantAdapter(Fragment_Garden.getPlantList())
         //recyclerView.adapter = RecyclerViewPlantAdapter(pList)
-        recyclerView.adapter = RecyclerViewPlantAdapter(pList)
+        plantAdapter = RecyclerViewPlantAdapter(pList)
+        recyclerView.adapter = plantAdapter
         recyclerView.layoutManager =
             LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-        recyclerView.addItemDecoration(RecyclerViewDecoration(20))
+        recyclerView.addItemDecoration(RecyclerViewDecoration(10))
         return view
     }
     private fun getPlantInfo(uemail: String) {
@@ -122,9 +126,7 @@ class Fragment_Home : Fragment() {
     }
     // 데이터 가져오기가 성공한 경우 처리할 로직
     private fun handleSuccess(dataArray: JSONArray) {
-        pList.clear()
-        //recyclerView.adapter?.notifyDataSetChanged()
-        //for (i in 0 until dataArray.length()) {
+        val newPList = ArrayList<PlantListItem>()
         //최근 등록한것순으로 3개만 나타나도록함
         val startIndex = if (dataArray.length() <= 3) 0 else dataArray.length() - 3
         for (i in (startIndex until dataArray.length()).reversed()) {
@@ -147,16 +149,17 @@ class Fragment_Home : Fragment() {
                 setEnrollTime(dataObject.getString("currenttime"))
             }
             //recyclerView.adapter = RecyclerViewPlantAdapter(pList)
-
-
             // 리스트에 추가
-            pList.add(plantItem)
+            newPList.add(plantItem)
+           // pList.add(plantItem)
            // recyclerView.adapter?.notifyDataSetChanged()
 
         }
-        pList.sortByDescending { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(it.getEnrollTime()) }
+        newPList.sortByDescending { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(it.getEnrollTime()) }
+        //pList.sortByDescending { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(it.getEnrollTime()) }
         requireActivity().runOnUiThread {
-            recyclerView.adapter = RecyclerViewPlantAdapter(pList)
+           // recyclerView.adapter = RecyclerViewPlantAdapter(pList)
+            plantAdapter.updateData(newPList)
         }
         Log.d("MyTag", "Data retrieved successfully!")
     }
@@ -166,9 +169,12 @@ class Fragment_Home : Fragment() {
         // 실패한 경우
         pList.clear()
         val defaultItem = PlantListItem()
-        defaultItem.setImageUrl("http://10.0.2.2/uploads/default3.png")
+        defaultItem.setImageUrl("http://10.0.2.2/uploads/default4.png")
         pList.add(defaultItem) // 아무것도 등록 안되어 있을때 표시되는 기본 아이템
-        //recyclerView.adapter?.notifyDataSetChanged()
+        requireActivity().runOnUiThread {
+            plantAdapter.updateData(pList)
+        }
+    //recyclerView.adapter?.notifyDataSetChanged()
         //Toast.makeText(requireContext(), "Failed to retrieve data", Toast.LENGTH_SHORT).show()
     }
 }

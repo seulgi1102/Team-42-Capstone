@@ -23,7 +23,11 @@ class RecyclerViewPlantAdapter(private val mList: ArrayList<PlantListItem>) :
         val view: View = inflater.inflate(R.layout.recyclerview_home_item, parent, false)
         return ViewHolder(view)
     }
-
+    fun updateData(newPlantList: ArrayList<PlantListItem>) {
+        mList.clear()
+        mList.addAll(newPlantList)
+        notifyDataSetChanged()
+    }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item: PlantListItem = mList[position]
        // holder.image.setImageResource(item.getImgSrc())

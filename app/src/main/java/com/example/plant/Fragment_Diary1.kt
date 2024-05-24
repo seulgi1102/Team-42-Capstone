@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -34,7 +35,7 @@ import java.util.Locale
 class Fragment_Diary1 : Fragment() {
     private lateinit var calender: CalendarView
     private lateinit var date: TextView
-    private lateinit var nextBtn: Button
+    private lateinit var nextBtn: FloatingActionButton
     private lateinit var plantNameTextView: TextView
     private lateinit var recyclerView: RecyclerView
     private var choiceDate: String = ""
@@ -43,6 +44,7 @@ class Fragment_Diary1 : Fragment() {
     private var plantId: Int = 0
     private var dDate: String? = null
     private var dList: ArrayList<DiaryListItem> = ArrayList()
+    private lateinit var diaryAdapter: RecyclerViewDiaryAdapter
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -131,7 +133,8 @@ class Fragment_Diary1 : Fragment() {
 
         }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = RecyclerViewDiaryAdapter(dList)
+        diaryAdapter = RecyclerViewDiaryAdapter(dList)
+        recyclerView.adapter = diaryAdapter
 
         val dividerItemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         recyclerView.addItemDecoration(dividerItemDecoration)
@@ -186,7 +189,8 @@ class Fragment_Diary1 : Fragment() {
     }
     // 데이터 가져오기가 성공한 경우 처리할 로직
     private fun handleSuccess(dataArray: JSONArray, plantid: Int, ddate: String) {
-        dList.clear()
+        //dList.clear()
+        val newDList = ArrayList<DiaryListItem>()
         for (i in 0 until dataArray.length()) {
             val dataObject = dataArray.getJSONObject(i)
             val diaryItem = DiaryListItem().apply {
@@ -201,8 +205,8 @@ class Fragment_Diary1 : Fragment() {
                 setEnrollTime(dataObject.getString("enrolltime"))
             }
 
-            //if (diaryItem.getDiaryDate()==ddate) {
-            dList.add(diaryItem)
+            newDList.add(diaryItem)
+                // dList.add(diaryItem)
             //}
             //dList.add(diaryItem)
             // 선택한 날짜와 식물 아이디가 DB에 등록된 날짜와 식물 아이디와 일치하는 경우에만 리스트에 추가
@@ -214,8 +218,8 @@ class Fragment_Diary1 : Fragment() {
         }
 
         requireActivity().runOnUiThread {
-            recyclerView.adapter = RecyclerViewDiaryAdapter(dList)
-            recyclerView.adapter?.notifyDataSetChanged()
+            diaryAdapter.updateData(newDList)
+           // recyclerView.adapter = RecyclerViewDiaryAdapter(dList)
         }
         Log.d("MyTag", "Data retrieved successfully!")
     }
@@ -224,8 +228,10 @@ class Fragment_Diary1 : Fragment() {
     private fun handleFailure() {
         // 실패한 경우
         dList.clear()
+        //dList.add(DiaryListItem())
         requireActivity().runOnUiThread {
-            recyclerView.adapter = RecyclerViewDiaryAdapter(dList)
+            diaryAdapter.updateData(dList)
+            //recyclerView.adapter = RecyclerViewDiaryAdapter(dList)
         }
         //dList.add(DiaryListItem()) // 아무것도 등록 안되어 있을때 표시되는 기본 아이템
         //recyclerView.adapter?.notifyDataSetChanged()

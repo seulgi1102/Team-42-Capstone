@@ -117,13 +117,13 @@ class Fragment_Enroll3 : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         // Check which TextView was clicked
         when (v?.id) {
-            R.id.sun -> handleDayClick(sunday, "Sunday")
-            R.id.mon -> handleDayClick(monday, "Monday")
-            R.id.tue -> handleDayClick(tuesday, "Tuesday")
-            R.id.wed -> handleDayClick(wednesday, "Wednesday")
-            R.id.thur -> handleDayClick(thursday, "Thursday")
-            R.id.fri -> handleDayClick(friday, "Friday")
-            R.id.sat -> handleDayClick(saturday, "Saturday")
+            R.id.sun -> handleDayClick(sunday, "일")
+            R.id.mon -> handleDayClick(monday, "월")
+            R.id.tue -> handleDayClick(tuesday, "화")
+            R.id.wed -> handleDayClick(wednesday, "수")
+            R.id.thur -> handleDayClick(thursday, "목")
+            R.id.fri -> handleDayClick(friday, "금")
+            R.id.sat -> handleDayClick(saturday, "토")
         }
     }
 

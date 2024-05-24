@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import android.content.Context
 import org.json.JSONArray
 import org.json.JSONObject

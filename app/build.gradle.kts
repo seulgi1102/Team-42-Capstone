@@ -56,7 +56,6 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     kapt ("com.github.bumptech.glide:compiler:4.12.0")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation ("org.json:json:20210307")
     implementation ("com.squareup.moshi:moshi-kotlin:1.12.0")
     implementation ("org.simpleframework:simple-xml:2.7.1")
@@ -65,5 +64,6 @@ dependencies {
     implementation("com.google.firebase:firebase-inappmessaging-display-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation ("com.google.firebase:firebase-messaging:23.0.0")
-
+    implementation("com.android.volley:volley:1.2.1")
+    implementation ("com.github.clans:fab:1.6.4")
 }

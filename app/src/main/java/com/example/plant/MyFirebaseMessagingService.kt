@@ -1,5 +1,12 @@
 package com.example.plant
+
+import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.util.Log
+import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -9,14 +16,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 // TODO: Implement this method to send any registration to your app's servers.
 // sendRegistrationToServer(token)
     }
+    @SuppressLint("SuspiciousIndentation")
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "From: ${remoteMessage.from}")
         Log.d(TAG, "Message data payload: ${remoteMessage.data}")
         val msgBody = remoteMessage.notification?.body
-        Log.d(TAG, "Message Notification Body: $msgBody")
+                Log.d(TAG, "Message Notification Body: $msgBody")
     }
     companion object {
         const val TAG = "MyFirebaseMessaging"
     }
-
 }

@@ -28,8 +28,11 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.os.Build
+import android.widget.ImageButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
@@ -47,13 +50,13 @@ import java.text.SimpleDateFormat
 
 const val GALLERY_REQUEST_CODE = 12
 const val REQ_CAMERA = 11
-const val ImageUrl = "http://10.0.2.2/uploads/default3.png"
+const val ImageUrl = "http://10.0.2.2/uploads/default5.png"
 
 class Fragment_Diary2 : Fragment() {
     private lateinit var image: ImageView
     private lateinit var date: TextView
-    private lateinit var beforeBtn: Button
-    private lateinit var saveBtn: Button
+    private lateinit var beforeBtn: ImageButton
+    private lateinit var saveBtn: FloatingActionButton
     private lateinit var gallery: ImageView
     private lateinit var camera: ImageView
     private var userEmail: String = ""
@@ -92,6 +95,7 @@ class Fragment_Diary2 : Fragment() {
             Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
         }
     }
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -102,7 +106,7 @@ class Fragment_Diary2 : Fragment() {
         //val choiceDate = requireActivity().intent.getStringExtra("date")
         image = view.findViewById(R.id.imageView)
         date = view.findViewById(R.id.date2)
-        beforeBtn = view.findViewById(R.id.beforBtn)
+        beforeBtn = view.findViewById(R.id.beforeBtn)
         saveBtn = view.findViewById(R.id.saveBtn)
         diaryTitle = view.findViewById(R.id.enterTitle)
         diaryContent = view.findViewById(R.id.enterContent)

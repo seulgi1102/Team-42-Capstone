@@ -11,43 +11,35 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#66EDAE"
         android:orientation="horizontal"
         android:padding="3dp">
 
-        <android.widget.Button
+        <ImageView
             android:id="@+id/home"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@android:color/transparent"
-            android:text="🏠"
+            android:background="@drawable/home1"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="34sp" />
 
         <TextView
+            style="@style/Widget.AppCompat.TextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:padding="5dp"
-            android:text="With P"
-            android:textSize="20dp" />
+            android:text="플랜텀"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
-        <android.widget.Button
-            android:id="@+id/archiveBtn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="170dp"
-            android:background="@android:color/transparent"
-            android:text="🔔"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="34sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileBtn"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="238dp"
             android:background="@android:color/transparent"
             android:gravity="center"
             android:scaleType="centerCrop"
@@ -61,12 +53,15 @@
         android:layout_width="match_parent"
         android:layout_height="675dp"
         android:layout_weight="1" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
+
         android:layout_marginEnd="0dp"
+        android:background="#8CEEF1"
         app:itemIconSize="29dp"
         app:menu="@menu/menu_bottom" />
 </LinearLayout>

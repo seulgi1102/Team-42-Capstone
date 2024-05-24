@@ -273,7 +273,7 @@ class SignUpActivity : AppCompatActivity() {
             // POST 요청 설정
             connection.requestMethod = "POST"
             connection.doOutput = true
-            val defaultImageUrl ="http://10.0.2.2/uploads/defaultProfile.png"
+            val defaultImageUrl ="http://10.0.2.2/uploads/defaultProfile3.png"
             val defaultIntroduce = ""
             // 데이터 작성
             var postData = URLEncoder.encode("uid", "UTF-8") + "=" + URLEncoder.encode(uid, "UTF-8")

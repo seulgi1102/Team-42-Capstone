@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:orientation="vertical"
-tools:context=".Fragment_Garden">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/album"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Fragment_Garden">
 
 
     <LinearLayout
@@ -18,15 +19,18 @@ tools:context=".Fragment_Garden">
             android:id="@+id/userNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:hint=""
-            android:textSize="30dp" />
+            android:textSize="30dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="의 정원"
-            android:textSize="30dp" />
+            android:textSize="30dp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,8 +41,9 @@ tools:context=".Fragment_Garden">
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/options"
                 android:layout_width="106dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="left"
+                android:background="@drawable/option_border"
                 android:gravity="center"
                 android:text="옵션▼"
                 android:textColor="#505050"
@@ -50,6 +55,7 @@ tools:context=".Fragment_Garden">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#F1F1F1"
         android:orientation="vertical"
         android:padding="5dp">
 
@@ -74,13 +80,28 @@ tools:context=".Fragment_Garden">
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <TextView
-            android:id="@+id/textView25"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:text="내 식물 앨범으로 GO!"
-            android:textSize="20dp" />
+            android:gravity="center|right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="내 식물앨범"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/album" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -88,12 +109,28 @@ tools:context=".Fragment_Garden">
         android:layout_height="252dp"
         android:orientation="vertical"
         android:padding="10dp">
-        <TextView
-            android:id="@+id/textView14"
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="식물 키우기 tip"
-            android:textSize="20dp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="식물 키우기"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/tip" />
+        </LinearLayout>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPagerTip"

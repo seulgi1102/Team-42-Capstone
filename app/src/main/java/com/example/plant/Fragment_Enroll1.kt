@@ -34,7 +34,7 @@ class Fragment_Enroll1 : Fragment() {
     private lateinit var camera: ImageView
     private lateinit var gallery: ImageView
     private var selectedImageUri: Uri? = null
-    //var plantDataListener: DataListener? = null
+
     private lateinit var viewModel: PlantEnrollViewModel
 
 

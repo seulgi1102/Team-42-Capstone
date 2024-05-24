@@ -64,7 +64,11 @@ class RecyclerViewDiaryAdapter(private val mList: ArrayList<DiaryListItem>) :
             transaction.commit()
         }
     }
-
+    fun updateData(newDiaryList: ArrayList<DiaryListItem>) {
+        mList.clear()
+        mList.addAll(newDiaryList)
+        notifyDataSetChanged()
+    }
     override fun getItemCount(): Int {
         return mList.size
     }

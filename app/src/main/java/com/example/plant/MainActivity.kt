@@ -14,6 +14,9 @@ import java.net.URL
 import java.net.URLEncoder
 //로그인
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,6 +25,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
+import com.example.plant.MyFirebaseMessagingService.Companion.TAG
+import com.google.firebase.messaging.FirebaseMessaging
 import org.json.JSONObject
 import java.util.regex.Pattern
 
@@ -41,6 +46,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val token = task.result
+                Log.d(TAG, "Token: $token")
+            } else {
+                Log.e(TAG, "Failed to get token: ${task.exception}")
+            }
+        }
 
         id = findViewById(R.id.id)
         password = findViewById(R.id.password)

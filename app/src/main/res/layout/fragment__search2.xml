@@ -5,13 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="5dp">
-    <androidx.appcompat.widget.AppCompatButton
+    <ImageView
         android:id="@+id/backBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rectangle"
-        android:layout_weight="1"
-        android:text="뒤로가기" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/back" />
 
     <ScrollView
         android:layout_width="match_parent"

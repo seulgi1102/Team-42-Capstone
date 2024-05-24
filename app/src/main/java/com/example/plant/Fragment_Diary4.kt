@@ -20,12 +20,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -49,12 +51,11 @@ import java.text.SimpleDateFormat
 
 class Fragment_Diary4: Fragment() {
     private lateinit var image: ImageView
-    private lateinit var date: TextView
     private lateinit var name: TextView
     private lateinit var content: EditText
     private lateinit var title: EditText
-    private lateinit var cancelBtn: Button
-    private lateinit var confirmBtn: Button
+    private lateinit var cancelBtn: ImageButton
+    private lateinit var confirmBtn: FloatingActionButton
     private lateinit var gallery: ImageView
     private lateinit var camera: ImageView
     private var dDate: String = ""
@@ -65,7 +66,8 @@ class Fragment_Diary4: Fragment() {
     private var enrollTime: String = ""
     private var diaryTitle: String = ""
     private var diaryContent: String = ""
-    private var imageUrl: String = "http://10.0.2.2/uploads/default.png"
+    private var imageUrl: String = ImageUrl
+    //private var imageUrl: String = "http://10.0.2.2/uploads/default5.png"
     private var selectedImageUri: Uri? = null
     private val retrofit = Retrofit.Builder()
         .baseUrl("http://10.0.2.2/")
@@ -111,7 +113,7 @@ class Fragment_Diary4: Fragment() {
             dDate = it.getString("diaryDate").toString()
         }
         image = view.findViewById(R.id.editImageView)
-        date = view.findViewById(R.id.detailDate2)
+
         title =view.findViewById(R.id.editTitle)
         content =view.findViewById(R.id.editContent)
         name = view.findViewById(R.id.detailName2)
@@ -120,7 +122,7 @@ class Fragment_Diary4: Fragment() {
         gallery = view.findViewById(R.id.gallery)
         camera = view.findViewById(R.id.camera)
 
-        date.text = enrollTime
+
         title.setText(diaryTitle)
         content.setText(diaryContent)
         name.text = plantName

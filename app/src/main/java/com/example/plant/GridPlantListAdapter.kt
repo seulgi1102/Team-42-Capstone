@@ -20,7 +20,11 @@ class GridPlantListAdapter(var items: ArrayList<PlantListItem>): BaseAdapter(){
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
-
+    fun updateData(newPlantList: ArrayList<PlantListItem>) {
+        items.clear()
+        items.addAll(newPlantList)
+        notifyDataSetChanged()
+    }
     @SuppressLint("MissingInflatedId")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view =

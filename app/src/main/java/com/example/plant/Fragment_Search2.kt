@@ -1,11 +1,13 @@
 package com.example.plant
 
 import android.annotation.SuppressLint
+import android.media.Image
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ListView
 import android.widget.SearchView
 import android.widget.TextView
@@ -35,7 +37,7 @@ class Fragment_Search2 : Fragment(){
     private lateinit var watercycleSummerCodeNm: TextView
     private lateinit var watercycleAutumnCodeNm: TextView
     private lateinit var watercycleWinterCodeNm: TextView
-    private lateinit var backBtn: Button
+    private lateinit var backBtn: ImageView
     private var plantName: String = ""
     private var plntbneName: String = ""
     private var plntzrName: String = ""

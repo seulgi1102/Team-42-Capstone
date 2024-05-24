@@ -8,11 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -29,9 +31,9 @@ class Fragment_Diary3: Fragment() {
     private lateinit var name: TextView
     private lateinit var content: TextView
     private lateinit var title: TextView
-    private lateinit var beforBtn: Button
-    private lateinit var editBtn: Button
-    private lateinit var deleteBtn: Button
+    private lateinit var beforeBtn: ImageView
+    private lateinit var editBtn: FloatingActionButton
+    private lateinit var deleteBtn:FloatingActionButton
     private var dDate: String = ""
     private var plantId: Int = 0
     private var diaryId: Int = 0
@@ -40,7 +42,8 @@ class Fragment_Diary3: Fragment() {
     private var enrollTime: String = ""
     private var diaryTitle: String = ""
     private var diaryContent: String = ""
-    private var imageUrl: String = "http://10.0.2.2/uploads/default.png"
+    private var imageUrl: String = "http://10.0.2.2/uploads/default5.png"
+    //private var imageUrl: String = "http://10.0.2.2/uploads/default5.png"
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,7 +67,7 @@ class Fragment_Diary3: Fragment() {
         title =view.findViewById(R.id.detailTitle)
         content =view.findViewById(R.id.detailContent)
         name = view.findViewById(R.id.detailName)
-        beforBtn = view.findViewById(R.id.beforBtn2)
+        beforeBtn = view.findViewById(R.id.beforeBtn2)
         editBtn = view.findViewById(R.id.editBtn)
         deleteBtn = view.findViewById(R.id.deleteBtn)
 
@@ -86,7 +89,7 @@ class Fragment_Diary3: Fragment() {
                 }
                 .show()
         }
-        beforBtn.setOnClickListener {
+        beforeBtn.setOnClickListener {
             Log.d("Fragment_Diary3", "Before button clicked: diaryDate=$dDate, plantId=$plantId, userEmail=$userEmail, plantName=$plantName")
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
 

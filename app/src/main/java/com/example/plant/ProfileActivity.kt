@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -29,8 +30,9 @@ class ProfileActivity : AppCompatActivity(){
     private lateinit var profileBirth: TextView
     private lateinit var profileJoinDate: TextView
     private lateinit var profileIntroduce: TextView
-    private lateinit var cancelBtn: Button
-    private lateinit var editBtn: Button
+    private lateinit var logout: TextView
+    private lateinit var cancelBtn: ImageView
+    private lateinit var editBtn: FloatingActionButton
     private var userItem: UserItem = UserItem()
 
     @SuppressLint("MissingInflatedId")
@@ -48,11 +50,14 @@ class ProfileActivity : AppCompatActivity(){
         profileJoinDate = findViewById(R.id.joinDate)
         profileIntroduce = findViewById(R.id.introduce)
         profileImage = findViewById(R.id.profileImage)
-
+        logout = findViewById(R.id.logout)
         GlobalScope.launch(Dispatchers.IO) {
             email?.let { getUserInfo(it) }
         }
-
+        logout.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
         cancelBtn = findViewById(R.id.closeProfilePage)
         cancelBtn.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)

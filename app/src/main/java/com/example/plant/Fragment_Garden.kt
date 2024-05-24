@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.GridView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.PopupMenu
@@ -36,10 +37,12 @@ class Fragment_Garden : Fragment() {
     private lateinit var gridView:GridView
     private lateinit var indicator3: CircleIndicator3
     private lateinit var userNameTextView: TextView
+    private lateinit var album: LinearLayout
     private lateinit var option: Button
     private var userEmail: String? = null
     private var userName: String? = null
     private var pList: ArrayList<PlantListItem> = ArrayList()
+    private lateinit var gardenGridAdapter: GridPlantListAdapter
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +61,9 @@ class Fragment_Garden : Fragment() {
         indicator3 = view.findViewById(R.id.tip_indicator)
         userNameTextView = view.findViewById(R.id.userNameText)
         option = view.findViewById(R.id.options)
-
+        album = view.findViewById(R.id.album)
+        gardenGridAdapter = GridPlantListAdapter(pList)
+        gridView.adapter = gardenGridAdapter
         option.setOnClickListener { view ->
             val popupMenu = PopupMenu(requireContext(), view)
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
@@ -88,6 +93,20 @@ class Fragment_Garden : Fragment() {
                 }
             }
             popupMenu.show()
+        }
+        album.setOnClickListener{
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+
+            val fragment = Fragment_Album()
+            val bundle = Bundle()
+            bundle.putString("userEmail", userEmail)
+            // Fragment에 Bundle을 설정
+            fragment.arguments = bundle
+
+            // FragmentTransaction을 사용하여 PlantEnrollFragment로 전환
+            transaction.replace(R.id.container, fragment)
+            transaction.addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 back stack에 추가
+            transaction.commit() // 변경 사항을 적용
         }
         //다이얼로그
         /*option.setOnClickListener{
@@ -122,24 +141,26 @@ class Fragment_Garden : Fragment() {
         //gridView.adapter = GridPlantListAdapter(pList)
         gridView.setOnItemClickListener { parent, view, position, id ->
             val item: PlantListItem = (parent.adapter as GridPlantListAdapter).getItem(position) as PlantListItem
-            Toast.makeText(requireContext(), "Selected item ID: ${item.getItemId()}", Toast.LENGTH_SHORT).show()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            //Toast.makeText(requireContext(), "Selected item ID: ${item.getItemId()}", Toast.LENGTH_SHORT).show()
+            if(item.getPlantName()!="") {
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
 
-            val fragment = Fragment_Diary1()
-            val bundle = Bundle()
-            var plantName = item.getPlantName()
-            var plantId = item.getItemId()
-            bundle.putString("userEmail", userEmail)
-            bundle.putString("plantName", plantName)
-            bundle.putInt("plantId", plantId)
+                val fragment = Fragment_Diary1()
+                val bundle = Bundle()
+                var plantName = item.getPlantName()
+                var plantId = item.getItemId()
+                bundle.putString("userEmail", userEmail)
+                bundle.putString("plantName", plantName)
+                bundle.putInt("plantId", plantId)
 
-            // Fragment에 Bundle을 설정
-            fragment.arguments = bundle
+                // Fragment에 Bundle을 설정
+                fragment.arguments = bundle
 
-            // FragmentTransaction을 사용하여 PlantEnrollFragment로 전환
-            transaction.replace(R.id.container, fragment)
-            transaction.addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 back stack에 추가
-            transaction.commit() // 변경 사항을 적용
+                // FragmentTransaction을 사용하여 PlantEnrollFragment로 전환
+                transaction.replace(R.id.container, fragment)
+                transaction.addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 back stack에 추가
+                transaction.commit() // 변경 사항을 적용
+            }
             //intent.putExtra("userEmail", userEmail)
             //startActivity(intent)
             // Toast.makeText(context, item.getNum().toString(), Toast.LENGTH_SHORT).show()
@@ -192,7 +213,8 @@ class Fragment_Garden : Fragment() {
     }
     // 데이터 가져오기가 성공한 경우 처리할 로직
     private fun handleSuccess(dataArray: JSONArray) {
-        pList.clear()
+       // pList.clear()
+        val newPList = ArrayList<PlantListItem>()
         for (i in 0 until dataArray.length()) {
             val dataObject = dataArray.getJSONObject(i)
             val plantItem = PlantListItem().apply {
@@ -212,14 +234,17 @@ class Fragment_Garden : Fragment() {
                 setImageUrl(dataObject.getString("imageurl"))
                 setEnrollTime(dataObject.getString("currenttime"))
             }
-            pList.add(plantItem)
+            //pList.add(plantItem)
+            newPList.add(plantItem)
             // 리스트에 추가됨
             //pList.add(0, plantItem)
            // pList = plantList
         }
-        pList.sortByDescending { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(it.getEnrollTime()) }
+        newPList.sortByDescending { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(it.getEnrollTime()) }
+       // pList.sortByDescending { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(it.getEnrollTime()) }
         requireActivity().runOnUiThread {
-            gridView.adapter = GridPlantListAdapter(pList)
+           // gridView.adapter = GridPlantListAdapter(pList)
+            gardenGridAdapter.updateData(newPList)
             // GridView 업데이트 후 추가적인 작업 수행 가능
         }
         Log.d("MyTag", "Data retrieved successfully!")
@@ -229,8 +254,13 @@ class Fragment_Garden : Fragment() {
         // 실패한 경우
         pList.clear()
         val defaultItem = PlantListItem()
-        defaultItem.setImageUrl("http://10.0.2.2/uploads/default3.png")
+        defaultItem.setImageUrl("http://10.0.2.2/uploads/default4.png")
         pList.add(defaultItem)
+        requireActivity().runOnUiThread {
+            // gridView.adapter = GridPlantListAdapter(pList)
+            gardenGridAdapter.updateData(pList)
+            // GridView 업데이트 후 추가적인 작업 수행 가능
+        }
         //Toast.makeText(context, "Failed to retrieve data", Toast.LENGTH_SHORT).show()
     }
 

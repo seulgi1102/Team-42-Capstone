@@ -26,6 +26,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -53,8 +54,8 @@ class EditProfileActivity : AppCompatActivity(){
     private lateinit var profileImage: CircleImageView
     private lateinit var profileUserName: EditText
     private lateinit var profileIntroduce: EditText
-    private lateinit var cancelBtn: Button
-    private lateinit var editBtn: Button
+    private lateinit var cancelBtn: ImageView
+    private lateinit var editBtn: FloatingActionButton
     private lateinit var camera: ImageView
     private lateinit var gallery: ImageView
     private var userImage: String = ""

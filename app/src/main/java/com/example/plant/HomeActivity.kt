@@ -21,7 +21,7 @@ class HomeActivity : AppCompatActivity(){
     private lateinit var Fragment_Garden: Fragment_Garden
     private lateinit var Fragment_Search: Fragment_Search
     private lateinit var bottomNavigationView:BottomNavigationView
-    private lateinit var homeBtn: Button
+    private lateinit var homeBtn: ImageView
     private lateinit var profileBtn: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
 

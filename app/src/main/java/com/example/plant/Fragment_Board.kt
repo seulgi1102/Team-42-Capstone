@@ -5,14 +5,128 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import android.widget.Button
 
 class Fragment_Board : Fragment() {
+    private lateinit var FreeBoardFragment: Fragment_FreeBoard
+    private lateinit var freeboard: Button
+    private lateinit var selfboard: Button
+    private lateinit var giveboard: Button
+    private lateinit var itemboard: Button
+    private lateinit var plantboard: Button
+    private lateinit var qnaboard: Button
+    private var userEmail: String? = null
+    //private var board_type: Int? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__board, container, false)
+        val view = inflater.inflate(R.layout.fragment__board, container, false)
+        arguments?.let {
+            userEmail = it.getString("userEmail")
+            //userPassword = it.getString("userPassword")
+        }
+//        val bundle = Bundle().apply {
+//            putString("userEmail", userEmail)
+//        }
+//        FreeBoardFragment = Fragment_FreeBoard().apply {
+//            arguments = bundle
+//        }
+        freeboard = view.findViewById(R.id.freeboard)
+        selfboard = view.findViewById(R.id.selfboard)
+        giveboard = view.findViewById(R.id.giveboard)
+        itemboard = view.findViewById(R.id.itemboard)
+        plantboard = view.findViewById(R.id.plantboard)
+        qnaboard = view.findViewById(R.id.qnaboard)
+
+        //val intent = Intent(requireContext(), FreeBoard_Fragment::class.java)
+        freeboard.setOnClickListener {
+            // 클릭 이벤트 처리
+            //FreeBoardFragment = FreeBoard_Fragment() // 해당하는 프래그먼트로 변경
+            //유저랑 게시판 번호 넘기기
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putInt("board_type",1)
+            }
+            FreeBoardFragment = Fragment_FreeBoard().apply {
+                arguments = bundle
+            }
+            replaceFragment(FreeBoardFragment)
+        }
+
+        selfboard.setOnClickListener {
+            // 클릭 이벤트 처리
+            //FreeBoardFragment = FreeBoard_Fragment() // 해당하는 프래그먼트로 변경
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putInt("board_type",2)
+            }
+            FreeBoardFragment = Fragment_FreeBoard().apply {
+                arguments = bundle
+            }
+            replaceFragment(FreeBoardFragment)
+        }
+
+        giveboard.setOnClickListener {
+            // 클릭 이벤트 처리
+            //FreeBoardFragment = FreeBoard_Fragment() // 해당하는 프래그먼트로 변경
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putInt("board_type",3)
+            }
+            FreeBoardFragment = Fragment_FreeBoard().apply {
+                arguments = bundle
+            }
+            replaceFragment(FreeBoardFragment)
+        }
+
+        itemboard.setOnClickListener {
+            // 클릭 이벤트 처리
+            //FreeBoardFragment = FreeBoard_Fragment() // 해당하는 프래그먼트로 변경
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putInt("board_type",4)
+            }
+            FreeBoardFragment = Fragment_FreeBoard().apply {
+                arguments = bundle
+            }
+            replaceFragment(FreeBoardFragment)
+        }
+
+        plantboard.setOnClickListener {
+            // 클릭 이벤트 처리
+            //FreeBoardFragment = FreeBoard_Fragment() // 해당하는 프래그먼트로 변경
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putInt("board_type",5)
+            }
+            FreeBoardFragment = Fragment_FreeBoard().apply {
+                arguments = bundle
+            }
+            replaceFragment(FreeBoardFragment)
+        }
+
+        qnaboard.setOnClickListener {
+            // 클릭 이벤트 처리
+            //FreeBoardFragment = FreeBoard_Fragment() // 해당하는 프래그먼트로 변경
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putInt("board_type",6)
+            }
+            FreeBoardFragment = Fragment_FreeBoard().apply {
+                arguments = bundle
+            }
+            replaceFragment(FreeBoardFragment)
+        }
+        return view
     }
+
+    private fun replaceFragment(fragment: Fragment) {
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment) // container는 프래그먼트가 표시될 영역의 ID
+        transaction.addToBackStack(null) // 뒤로 가기 버튼을 눌렀을 때 이전 화면으로 돌아갈 수 있도록 스택에 추가
+        transaction.commit()
+    }
+
+
 }
