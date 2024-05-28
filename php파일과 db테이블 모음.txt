@@ -10,28 +10,6 @@ create table user (
 ) DEFAULT CHARACTER SET utf8;
 ALTER TABLE user ADD COLUMN imageurl VARCHAR(255) NOT NULL;
 ALTER TABLE user ADD COLUMN introduce VARCHAR(255) NOT NULL;
-edituserinfo.php - 수정 - 추가됨
-<?php
-	header("Content-Type: text/html;charset=UTF-8");
-	//$conn = mysqli_connect("127.0.0.1","데이터베이스 사용자명","데이터베이스 비밀번호","데이터베이스명");
-	$conn = mysqli_connect("127.0.0.1","root","1102","test");
-
-	mysqli_set_charset($conn, "utf8");
-	$uemail = $_POST['uemail'];
-	$uid = $_POST['uid'];
-	$imageurl = $_POST['imageurl'];
-	$introduce = $_POST['introduce'];
-
-	$query = "UPDATE user SET uid='$uid', imageurl='$imageurl', introduce='$introduce' WHERE uemail='$uemail'";
-	$result = mysqli_query($conn, $query);
-
-	if($result)
-		echo "registration successful";
-	else
-		echo "registration failed";
-
-	mysqli_close($conn);
-?>
 login.php - 검색
 <?php
 // MySQL 데이터베이스 연결 정보
@@ -119,6 +97,40 @@ if ($result->num_rows > 0) {
 } else {
     echo json_encode(array("status" => "failure", "message" => "No data found"));
 }
+getprofileimage.php
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "1234";
+$dbname = "test";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$uemail = $_POST['uemail'];
+
+$sql = "SELECT imageurl FROM user WHERE uemail = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $uemail);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    echo json_encode(array("imageurl" => $row["imageurl"]));
+} else {
+    echo json_encode(array("error" => "No user found"));
+}
+
+
+$stmt->close();
+$conn->close();
+?>
 ---------------------------------------------------------------------------------------------------------
 enrollplant테이블
 CREATE TABLE IF NOT EXISTS enrollplant (
@@ -137,7 +149,17 @@ CREATE TABLE IF NOT EXISTS enrollplant (
     phumid_alarm BOOLEAN NOT NULL DEFAULT false,
     currenttime TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) DEFAULT CHARACTER SET utf8;
+ALTER TABLE enrollplant ADD COLUMN imageurl VARCHAR(255) NOT NULL;
+DELIMITER //
 
+CREATE TRIGGER update_currenttime
+BEFORE UPDATE ON enrollplant
+FOR EACH ROW
+BEGIN
+    SET NEW.currenttime = CURRENT_TIMESTAMP;
+END;
+//
+DELIMITER ;
 enrollplant.php - 삽입 - 수정됨
 <?php
 	header("Content-Type: text/html;charset=UTF-8");
@@ -204,10 +226,22 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 ---------------------------------------------------------------------------------------------------------------------
+*********채영님은 이부분만 추가해주세요*************
 ALTER TABLE diary
 ADD CONSTRAINT fk_diary_enrollplant FOREIGN KEY (pname)
 REFERENCES enrollplant(pname)
 ON UPDATE CASCADE;
+
+ALTER TABLE diary
+DROP FOREIGN KEY fk_diary_enrollplant;
+ALTER TABLE diary
+ADD CONSTRAINT fk_diary_enrollplant
+FOREIGN KEY (plantid)
+REFERENCES enrollplant(id)
+ON DELETE CASCADE;
+
+ALTER TABLE diary MODIFY dcontent TEXT;
+*******************************************
 diary 테이블
 create table diary (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -233,30 +267,6 @@ END;
 //
 DELIMITER ;
 
-editdiary.php - 수정 - 추가됨
-<?php
-	header("Content-Type: text/html;charset=UTF-8");
-	//$conn = mysqli_connect("127.0.0.1","데이터베이스 사용자명","데이터베이스 비밀번호","데이터베이스명");
-	$conn = mysqli_connect("127.0.0.1","root","1102","test");
-
-	mysqli_set_charset($conn, "utf8");
-
-	$enrolltime = $_POST['enrolltime']; // 수정할 레코드의 enrolltime
-	$id = $_POST['id']; // 수정할 레코드의 다이어리 아이디
-	$dtitle = $_POST['dtitle']; // 수정할 dtitle
-	$dcontent = $_POST['dcontent']; // 수정할 dcontent
-	$imageurl = $_POST['imageurl']; // 수정할 imageurl
-
-	$query = "UPDATE diary SET dtitle='$dtitle', dcontent='$dcontent', imageurl='$imageurl' WHERE enrolltime='$enrolltime' AND id='$id'";
-	$result = mysqli_query($conn, $query);
-
-	if($result)
-		echo "registration successful";
-	else
-		echo "registration failed";
-
-	mysqli_close($conn);
-?>
 enrolldiary.php - 삽입 - 수정됨
 <?php
 	header("Content-Type: text/html;charset=UTF-8");
@@ -281,26 +291,7 @@ enrolldiary.php - 삽입 - 수정됨
 
 	mysqli_close($conn);
 ?>
-deletediary.php - 삭제 - 추가됨
-<?php
-	header("Content-Type: text/html;charset=UTF-8");
-	//$conn = mysqli_connect("127.0.0.1","데이터베이스 사용자명","데이터베이스 비밀번호","데이터베이스명");
-	$conn = mysqli_connect("127.0.0.1","root","1102","test");
 
-	mysqli_set_charset($conn, "utf8");
-
-	$id = $_POST['id']; // 수정할 레코드의 다이어리 아이디
-
-	$query = "DELETE FROM diary WHERE id='$id'";
-	$result = mysqli_query($conn, $query);
-
-	if($result)
-		echo "delete successful";
-	else
-		echo "delete failed";
-
-	mysqli_close($conn);
-?>
 getdiaries.php - 검색
 <?php
 // MySQL 데이터베이스 연결 정보
@@ -336,36 +327,6 @@ if ($result->num_rows > 0) {
 
 // MySQL 연결 종료
 $conn->close();
-?>
-image_upload.php - 추가됨
-<?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $uploadDirectory = 'uploads/';
-        
-        if (!file_exists($uploadDirectory)) {
-            mkdir($uploadDirectory, 0777, true);
-        }
-        
-        $filename = uniqid() . '_' . basename($_FILES['image']['name']);
-        
-        $destination = $uploadDirectory . $filename;
-        if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
-            $imageUrl = 'http://' . $_SERVER['HTTP_HOST'] . '/uploads/' . $filename;
-            
-            echo json_encode(array('imageUrl' => $imageUrl));
-        } else {
-            http_response_code(500);
-            echo json_encode(array('error' => 'Failed to move the uploaded file.'));
-        }
-    } else {
-        http_response_code(400);
-        echo json_encode(array('error' => 'File upload failed.'));
-    }
-} else {
-    http_response_code(405);
-    echo json_encode(array('error' => 'Method Not Allowed'));
-}
 ?>
 ---------------------------------------------------------------------------------------------------------------------
 ALTER TABLE enrollplant ADD enroll_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
