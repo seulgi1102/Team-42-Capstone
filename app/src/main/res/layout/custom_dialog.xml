@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_background">
+
+    <TextView
+        android:id="@+id/dialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Title"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/dialogMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a custom dialog message."
+        android:textSize="16sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:padding="5dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/positiveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#7FFFD4"
+            android:text="OK"
+            android:textColor="#FFFFFF"
+            android:layout_margin="10dp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/negativeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#7FFFD4"
+            android:text="Cancel"
+            android:textColor="#FFFFFF"
+            android:layout_margin="10dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+</LinearLayout>
