@@ -16,10 +16,12 @@ import android.widget.TextView
 import android.widget.Toast
 import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.relex.circleindicator.CircleIndicator3
 import org.json.JSONArray
 import org.json.JSONObject
@@ -53,7 +55,7 @@ class Fragment_Garden : Fragment() {
             userEmail = it.getString("userEmail")
             userName = it.getString("userName")
         }
-        GlobalScope.launch(Dispatchers.IO) {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             userEmail?.let { getPlantinfo(it) }
         }
         viewPagerTip = view.findViewById(R.id.viewPagerTip)
@@ -180,8 +182,8 @@ class Fragment_Garden : Fragment() {
         return view
     }
 
-    private fun getPlantinfo(uemail: String) {
-        val url = URL("http://10.0.2.2/getplantinfo.php")
+    private suspend fun getPlantinfo(uemail: String) {
+        val url = URL("http://192.168.233.22:80/getplantinfo.php")
         val connection = url.openConnection() as HttpURLConnection
         connection.requestMethod = "POST"
         connection.doOutput = true
@@ -212,7 +214,7 @@ class Fragment_Garden : Fragment() {
         }
     }
     // 데이터 가져오기가 성공한 경우 처리할 로직
-    private fun handleSuccess(dataArray: JSONArray) {
+    private suspend fun handleSuccess(dataArray: JSONArray) {
        // pList.clear()
         val newPList = ArrayList<PlantListItem>()
         for (i in 0 until dataArray.length()) {
@@ -242,7 +244,7 @@ class Fragment_Garden : Fragment() {
         }
         newPList.sortByDescending { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(it.getEnrollTime()) }
        // pList.sortByDescending { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(it.getEnrollTime()) }
-        requireActivity().runOnUiThread {
+        withContext(Dispatchers.Main) {
            // gridView.adapter = GridPlantListAdapter(pList)
             gardenGridAdapter.updateData(newPList)
             // GridView 업데이트 후 추가적인 작업 수행 가능
@@ -250,13 +252,14 @@ class Fragment_Garden : Fragment() {
         Log.d("MyTag", "Data retrieved successfully!")
     }
 
-    private fun handleFailure() {
+    private suspend fun handleFailure() {
         // 실패한 경우
-        pList.clear()
-        val defaultItem = PlantListItem()
-        defaultItem.setImageUrl("http://10.0.2.2/uploads/default4.png")
-        pList.add(defaultItem)
-        requireActivity().runOnUiThread {
+        withContext(Dispatchers.Main) {
+            pList.clear()
+            val defaultItem = PlantListItem()
+            defaultItem.setImageUrl("http://192.168.233.22:80/uploads/default4.png")
+            pList.add(defaultItem)
+
             // gridView.adapter = GridPlantListAdapter(pList)
             gardenGridAdapter.updateData(pList)
             // GridView 업데이트 후 추가적인 작업 수행 가능

@@ -110,7 +110,8 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="5dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/content_border"
+                        android:background="@drawable/comment_border"
+                        android:clipToOutline="true"
                         android:scaleType="centerCrop" />
 
                     <ImageButton
@@ -118,7 +119,8 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginTop="10dp"
-                        android:src="@android:drawable/ic_menu_camera" />
+                        android:src="@android:drawable/ic_menu_camera"
+                        android:backgroundTint="#6DF8B7"/>
 
 
                 </LinearLayout>
@@ -155,8 +157,10 @@
                     android:layout_marginTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="작성"
+                    android:backgroundTint="#6DF8B7"
                     android:textAllCaps="false"
-                    android:textSize="20sp" />
+                    android:textStyle="bold"
+                    android:textSize="18sp" />
 
 
             </LinearLayout>

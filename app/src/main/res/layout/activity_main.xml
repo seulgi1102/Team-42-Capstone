@@ -4,48 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_gravity="center"
+    android:background="#F0F3F6"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:background="#6DF8B7"
-        android:text="플랜텀"
-        android:textStyle="bold"
-        android:textSize="20dp" />
+        android:background="#66EDAE"
+        android:orientation="horizontal"
+        android:padding="3dp">
+
+        <ImageView
+            android:id="@+id/home"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/home1"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp" />
+
+        <TextView
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="그린텀"
+            android:textColor="#FFFFFF"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:text="로그인"
         android:textSize="40dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="492dp"
+        android:layout_height="258dp"
         android:layout_margin="10dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView2"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="아이디" />
+            android:background="@drawable/profile_rectangle_white"
+            android:orientation="vertical"
+            android:padding="5dp">
 
-        <EditText
-            android:id="@+id/id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="abc@naver.com"
-            android:inputType="text" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="아이디" />
+
+            <EditText
+                android:id="@+id/id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="abc@naver.com"
+                android:inputType="text" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/alarmId"
@@ -55,20 +87,28 @@
             android:textColor="#A8A8A8"
             android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/textView3"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="비밀번호" />
+            android:layout_marginTop="10dp"
+            android:background="@drawable/profile_rectangle_white"
+            android:orientation="vertical"
+            android:padding="5dp">
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="**********"
-            android:inputType="textPassword" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="비밀번호" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="**********"
+                android:inputType="textPassword" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/alarmPwd"
@@ -87,12 +127,24 @@
 
     </LinearLayout>
 
-    <android.widget.Button
-        android:id="@+id/signInBtn"
-        android:layout_width="158dp"
-        android:layout_height="63dp"
-        android:layout_gravity="center"
-        android:background="@drawable/rectangle"
-        android:text="로그인" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <android.widget.Button
+            android:id="@+id/signInBtn"
+            android:layout_width="160dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@drawable/rectangle"
+            android:text="로그인"
+            android:textColor="#FFFFFF"
+            android:textSize="25dp"
+
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </LinearLayout>

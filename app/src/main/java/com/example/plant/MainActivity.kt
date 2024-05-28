@@ -3,6 +3,7 @@ package com.example.plant
 import android.app.AlertDialog
 import android.util.Log
 import android.widget.Toast
+import androidx.core.view.isVisible
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -18,9 +19,13 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -103,55 +108,58 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, SignUpActivity::class.java)
         val intent2 = Intent(this, HomeActivity::class.java)
 
-            // PHP 스크립트의 URL
-            val url = URL("http://10.0.2.2/login.php")
+        // PHP 스크립트의 URL
+        val url = URL("http://192.168.233.22:80/login.php")
 
-            // HttpURLConnection 열기
-            val connection = url.openConnection() as HttpURLConnection
+        // HttpURLConnection 열기
+        val connection = url.openConnection() as HttpURLConnection
 
-            // POST 요청 설정
-            connection.requestMethod = "POST"
-            connection.doOutput = true
+        // POST 요청 설정
+        connection.requestMethod = "POST"
+        connection.doOutput = true
 
-            var postData = URLEncoder.encode("uemail", "UTF-8") + "=" + URLEncoder.encode(uemail, "UTF-8")
-            postData += "&" + URLEncoder.encode("upw", "UTF-8") + "=" + URLEncoder.encode(upw, "UTF-8")
-            val outputStream = OutputStreamWriter(connection.outputStream)
-            outputStream.write(postData)
-            outputStream.flush()
-            outputStream.close()
+        var postData = URLEncoder.encode("uemail", "UTF-8") + "=" + URLEncoder.encode(uemail, "UTF-8")
+        postData += "&" + URLEncoder.encode("upw", "UTF-8") + "=" + URLEncoder.encode(upw, "UTF-8")
+        val outputStream = OutputStreamWriter(connection.outputStream)
+        outputStream.write(postData)
+        outputStream.flush()
+        outputStream.close()
 
-            val inputStream: BufferedReader
-            if (connection.responseCode == HttpURLConnection.HTTP_OK) {
-                inputStream = BufferedReader(InputStreamReader(connection.inputStream))
-            } else {
-                inputStream = BufferedReader(InputStreamReader(connection.errorStream))
+        val inputStream: BufferedReader
+        if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+            inputStream = BufferedReader(InputStreamReader(connection.inputStream))
+        } else {
+            inputStream = BufferedReader(InputStreamReader(connection.errorStream))
+        }
+
+        val response = StringBuilder()
+        var line: String?
+        while (inputStream.readLine().also { line = it } != null) {
+            response.append(line)
+        }
+        inputStream.close()
+
+        val jsonResponse = JSONObject(response.toString())
+        val status = jsonResponse.getString("status")
+        if (status == "Login successful") {
+            val dataObject = jsonResponse.getJSONObject("data")
+            runOnUiThread {
+                handleSuccess(dataObject) //userName에 db의 uid 가져와서 저장
+                intent2.putExtra("userName", userName)
+                //메인화면으로 넘어감
+                intent2.putExtra("userEmail", userEmail)
+                intent2.putExtra("imageUrl", imageUrl)
+                startActivity(intent2)
             }
+            // 가져온 데이터를 처리
 
-            val response = StringBuilder()
-            var line: String?
-            while (inputStream.readLine().also { line = it } != null) {
-                response.append(line)
-            }
-            inputStream.close()
-
-            val jsonResponse = JSONObject(response.toString())
-            val status = jsonResponse.getString("status")
-            if (status == "Login successful") {
-                val dataObject = jsonResponse.getJSONObject("data")
-                runOnUiThread {
-                    handleSuccess(dataObject) //userName에 db의 uid 가져와서 저장
-                    intent2.putExtra("userName", userName)
-                    //메인화면으로 넘어감
-                    intent2.putExtra("userEmail", userEmail)
-                    intent2.putExtra("imageUrl", imageUrl)
-                    startActivity(intent2)
-                }
-                // 가져온 데이터를 처리
-
-            } else {
-                // 실패 처리
+        } else {
+            // 실패 처리
+            runOnUiThread {
                 handleFailure()
             }
+
+        }
 
     }
     private fun handleSuccess(dataObject: JSONObject) {
@@ -164,8 +172,34 @@ class MainActivity : AppCompatActivity() {
 
     // 데이터 가져오기가 실패한 경우 처리할 로직
     private fun handleFailure() {
-
+        showDialog("로그인 실패", "아이디와 비밀번호를 다시 확인해주세요.", "확인")
     }
+
+    //로그인 실패 다이얼로그
+    private fun showDialog(title: String, message: String, buttonText: String) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog2, null)
+        val dialogBuilder = AlertDialog.Builder(this)
+            .setView(dialogView)
+
+        val dialog = dialogBuilder.create()
+        dialog.show()
+        //레이아웃 배경 투명하게 해줌
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.dialogTitle)
+        val dialogMessage = dialogView.findViewById<TextView>(R.id.dialogMessage)
+        val dialogButton = dialogView.findViewById<Button>(R.id.dialogButton)
+
+        dialogTitle.text = title
+        dialogMessage.text = message
+        dialogButton.text = buttonText
+
+        dialogButton.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
+
     //
     companion object {
         fun checkValidation(password: String, alarmPwd: TextView){

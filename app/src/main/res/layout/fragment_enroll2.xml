@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_enroll_2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_enroll_2"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="702dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="713dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/textView20"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/background_radius_green"
                 android:gravity="center"
+                android:padding="5dp"
                 android:text="식물 분양일"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -31,57 +34,77 @@
             <TextView
                 android:id="@+id/detailDate"
                 android:layout_width="match_parent"
-                android:layout_height="58dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center"
+                android:padding="10dp"
                 android:text="TextView"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
 
             <CalendarView
                 android:id="@+id/calendarView2"
-                android:layout_width="371dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <TextView
-                android:id="@+id/textView22"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-                android:gravity="center"
-                android:text="식물의 특징"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/plantDtl"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:ems="10"
-                android:hint="산세베리아는 고온다습하며 밝은 곳 에서 잘 자라며.."
-                android:inputType="textMultiLine"
-                android:maxLines="3"
-                android:scrollbars="vertical" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/textView17"
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_radius_green"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="식물의 특징"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/plantDtl"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:ellipsize="end"
+                    android:ems="10"
+                    android:hint="산세베리아는 고온다습하며 밝은 곳 에서 잘 자라며.."
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:scrollbars="vertical" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="식물을 키우는 위치"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-            <EditText
-                android:id="@+id/plantLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="방 창가, 아파트 배란다 난간"
-                android:maxLength="30"
-                android:maxLines="1" />
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_radius_green"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="식물을 키우는 위치"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/plantLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="방 창가, 아파트 배란다 난간"
+                    android:maxLength="30"
+                    android:maxLines="1" />
+            </LinearLayout>
 
         </LinearLayout>
 

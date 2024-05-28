@@ -21,6 +21,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +44,6 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
 import ApiService
-
 class Fragment_Viewpost : Fragment() {
     private lateinit var FreeBoardFragment: Fragment_FreeBoard
     private lateinit var listbtn: Button
@@ -196,7 +197,7 @@ class Fragment_Viewpost : Fragment() {
     private fun getProfileImage(postWriter: String) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val url = URL("http://10.0.2.2/getprofileimage.php")
+                val url = URL("http://192.168.233.22:80/getprofileimage.php")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "POST"
                 connection.doOutput = true
@@ -249,7 +250,7 @@ class Fragment_Viewpost : Fragment() {
     private fun addComment(commentContent: String) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val url = URL("http://10.0.2.2/addcomment.php")
+                val url = URL("http://192.168.233.22:80/addcomment.php")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "POST"
                 connection.doOutput = true
@@ -291,7 +292,7 @@ class Fragment_Viewpost : Fragment() {
     private fun getComments(postNum: Int) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val url = URL("http://10.0.2.2/getcomments.php")
+                val url = URL("http://192.168.233.22:80/getcomments.php")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "POST"
                 connection.doOutput = true
@@ -344,7 +345,7 @@ class Fragment_Viewpost : Fragment() {
     private fun showImageById(id: Int) {
         // Retrofit을 사용하여 서버에 요청
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2/") // 서버의 기본 URL
+            .baseUrl("http://192.168.233.22:80/") // 서버의 기본 URL
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -359,8 +360,14 @@ class Fragment_Viewpost : Fragment() {
                     val bitmap = BitmapFactory.decodeStream(inputStream)
                     if (bitmap != null) {
                         // 이미지가 null이 아닌 경우 ImageView에 이미지 설정
+//                        post_image.visibility = View.VISIBLE // ImageView 보이기
+//                        post_image.setImageBitmap(bitmap)
+                        // 이미지가 null이 아닌 경우 Glide를 사용하여 이미지 설정
+                        Glide.with(post_image.context)
+                            .load(bitmap)
+                            .transform(CenterCrop(), RoundedCorners(20)) // 둥근 모서리 설정
+                            .into(post_image)
                         post_image.visibility = View.VISIBLE // ImageView 보이기
-                        post_image.setImageBitmap(bitmap)
                     } else {
                         // 이미지가 null인 경우 ImageView 숨기기
                         post_image.visibility = View.GONE
@@ -417,7 +424,7 @@ class Fragment_Viewpost : Fragment() {
     private fun deletePost(postNum: Int) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val url = URL("http://10.0.2.2/deletepost.php")
+                val url = URL("http://192.168.233.22:80/deletepost.php")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "POST"
                 connection.doOutput = true

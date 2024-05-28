@@ -12,11 +12,13 @@ import android.widget.GridView
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -48,7 +50,7 @@ class Fragment_Album : Fragment() {
         arguments?.let {
             userEmail = it.getString("userEmail")
         }
-        GlobalScope.launch(Dispatchers.IO) {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             userEmail?.let { getPlantinfo(it) }
         }
         gridView.setOnItemClickListener { parent, view, position, id ->
@@ -136,8 +138,8 @@ class Fragment_Album : Fragment() {
         gridView.adapter = albumGridAdapter
         return view
     }
-    private fun getPlantinfo(uemail: String) {
-        val url = URL("http://10.0.2.2/getplantinfo.php")
+    private suspend fun getPlantinfo(uemail: String) {
+        val url = URL("http://192.168.233.22:80/getplantinfo.php")
         val connection = url.openConnection() as HttpURLConnection
         connection.requestMethod = "POST"
         connection.doOutput = true
@@ -168,7 +170,7 @@ class Fragment_Album : Fragment() {
         }
     }
     // 데이터 가져오기가 성공한 경우 처리할 로직
-    private fun handleSuccess(dataArray: JSONArray) {
+    private suspend fun handleSuccess(dataArray: JSONArray) {
         //pList.clear()
         val newPList = ArrayList<PlantListItem>()
         for (i in 0 until dataArray.length()) {
@@ -198,7 +200,7 @@ class Fragment_Album : Fragment() {
         }
         newPList.sortByDescending { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(it.getEnrollTime()) }
         //pList.sortByDescending { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(it.getEnrollTime()) }
-        requireActivity().runOnUiThread {
+        withContext(Dispatchers.Main) {
             //gridView.adapter = GridAlbumListAdapter(pList)
             albumGridAdapter.updateData(newPList)
         // GridView 업데이트 후 추가적인 작업 수행 가능
@@ -206,12 +208,12 @@ class Fragment_Album : Fragment() {
         Log.d("MyTag", "Data retrieved successfully!")
     }
 
-    private fun handleFailure() {
-        // 실패한 경우
-        pList.clear()
-        val defaultItem = PlantListItem()
-        defaultItem.setImageUrl("http://10.0.2.2/uploads/default4.png")
-        requireActivity().runOnUiThread {
+    private suspend fun handleFailure() {
+        withContext(Dispatchers.Main) {
+            // 실패한 경우
+            pList.clear()
+            val defaultItem = PlantListItem()
+            defaultItem.setImageUrl("http://192.168.233.22:80/default4.png")
             //gridView.adapter = GridAlbumListAdapter(pList)
             albumGridAdapter.updateData(pList)
             // GridView 업데이트 후 추가적인 작업 수행 가능

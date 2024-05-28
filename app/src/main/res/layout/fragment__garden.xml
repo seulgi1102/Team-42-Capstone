@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:hint=""
+            android:textColor="#3CADC1"
             android:textSize="30dp"
             android:textStyle="bold" />
 
@@ -55,7 +55,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F1F1F1"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:padding="5dp">
 
@@ -63,22 +63,21 @@
             android:id="@+id/gridView"
             android:layout_width="match_parent"
             android:layout_height="307dp"
+            android:layout_weight="1"
             android:columnWidth="120dp"
             android:gravity="center"
-            android:horizontalSpacing="8dp"
+            android:horizontalSpacing="0dp"
             android:numColumns="3"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="8dp" />
+            android:verticalSpacing="5dp" />
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="84dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:gravity="center|right"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -106,7 +105,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="252dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -135,7 +134,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPagerTip"
             android:layout_width="match_parent"
-            android:layout_height="148dp"
+            android:layout_height="130dp"
             android:layout_marginTop="10dp"
             android:clipChildren="false"
             android:clipToPadding="false"

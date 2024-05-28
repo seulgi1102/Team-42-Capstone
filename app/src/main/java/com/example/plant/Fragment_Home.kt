@@ -2,6 +2,7 @@ package com.example.plant
 
 import PlantItem
 import RecyclerViewPlantAdapter
+import RecyclerViewStepAdapter
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -11,13 +12,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -29,15 +32,26 @@ import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-
 class Fragment_Home : Fragment() {
-    @SuppressLint("MissingInflatedId")
+
+    private lateinit var FragmentRecommendPlant1: Fragment_Recommend_Plant1
+    private lateinit var FragmentRecommendPlant2: Fragment_Recommend_Plant2
+    private lateinit var FragmentRecommendPlant3: Fragment_Recommend_Plant3
+    private lateinit var FragmentRecommendPlant4: Fragment_Recommend_Plant4
+    private lateinit var FragmentRecommendPlant5: Fragment_Recommend_Plant5
+    private lateinit var FragmentRecommendPlant6: Fragment_Recommend_Plant6
+    private lateinit var step1:LinearLayout
+    private lateinit var step2:LinearLayout
+    private lateinit var step3:LinearLayout
+    private lateinit var step4:LinearLayout
+    private lateinit var step5:LinearLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var enrollBtn: Button
     private var userEmail: String? = null
     private var imageUrl: String? = null
     private var pList: ArrayList<PlantListItem> = ArrayList()
     private lateinit var plantAdapter: RecyclerViewPlantAdapter
+
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,85 +63,172 @@ class Fragment_Home : Fragment() {
         arguments?.let {
             userEmail = it.getString("userEmail")
             imageUrl = it.getString("imageUrl")
-            //userPassword = it.getString("userPassword")
         }
-        GlobalScope.launch(Dispatchers.IO) {
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             userEmail?.let { getPlantInfo(it) }
         }
+
         recyclerView = view.findViewById(R.id.recyclerView)
-
         enrollBtn = view.findViewById(R.id.button)
-
-
-       // val userEmail = arguments?.getString("userEmail")
-       // val userPassword = arguments?.getString("userPassword")
-        // + 버튼 누르면 PlantEnrollFragment프레그먼트로 교체
         enrollBtn.setOnClickListener {
-            //intent.putExtra("userEmail", uemail)
-            //startActivity(intent)
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-
-            // PlantEnrollFragment 인스턴스를 생성
             val enrollFragment1 = PlantEnrollFragment()
-            val bundle = Bundle()
-
-            // Bundle에 데이터를 담기
-            bundle.putString("userEmail", userEmail)
-            // Fragment에 Bundle을 설정
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+            }
             enrollFragment1.arguments = bundle
-
             transaction.replace(R.id.container, enrollFragment1)
-            transaction.addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 back stack에 추가합니다.
-            transaction.commit() // 변경 사항을 적용합니다.
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
-        /*
-        userEmail?.let {
-            Toast.makeText(requireContext(), "User Email: $userEmail", Toast.LENGTH_SHORT).show()
-        }*/
-        //recyclerView.adapter = RecyclerViewPlantAdapter(Fragment_Garden.getPlantList())
-        //recyclerView.adapter = RecyclerViewPlantAdapter(pList)
+
         plantAdapter = RecyclerViewPlantAdapter(pList)
         recyclerView.adapter = plantAdapter
-        recyclerView.layoutManager =
-            LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-        recyclerView.addItemDecoration(RecyclerViewDecoration(10))
+        recyclerView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+        recyclerView.addItemDecoration(RecyclerViewDecoration(30))
+
+        //추천 식물1 상세보기
+        val recommendplant1 : LinearLayout = view.findViewById(R.id.recommendedPlant1)
+        recommendplant1.setOnClickListener {
+            //replaceFragment(Fragment_Recommend_Plant1())
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putString("imageUrl",imageUrl)
+            }
+            FragmentRecommendPlant1 = Fragment_Recommend_Plant1().apply {
+                arguments = bundle
+            }
+            replaceFragment(FragmentRecommendPlant1)
+        }
+
+        //추천 식물2 상세보기
+        val recommendplant2 : LinearLayout = view.findViewById(R.id.recommendedPlant2)
+        recommendplant2.setOnClickListener {
+            //replaceFragment(Fragment_Recommend_Plant1())
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putString("imageUrl",imageUrl)
+            }
+            FragmentRecommendPlant2 = Fragment_Recommend_Plant2().apply {
+                arguments = bundle
+            }
+            replaceFragment(FragmentRecommendPlant2)
+        }
+
+        //추천 식물3 상세보기
+        val recommendplant3 : LinearLayout = view.findViewById(R.id.recommendedPlant3)
+        recommendplant3.setOnClickListener {
+            //replaceFragment(Fragment_Recommend_Plant1())
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putString("imageUrl",imageUrl)
+            }
+            FragmentRecommendPlant3 = Fragment_Recommend_Plant3().apply {
+                arguments = bundle
+            }
+            replaceFragment(FragmentRecommendPlant3)
+        }
+
+        //추천 식물4 상세보기
+        val recommendplant4 : LinearLayout = view.findViewById(R.id.recommendedPlant4)
+        recommendplant4.setOnClickListener {
+            //replaceFragment(Fragment_Recommend_Plant1())
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putString("imageUrl",imageUrl)
+            }
+            FragmentRecommendPlant4 = Fragment_Recommend_Plant4().apply {
+                arguments = bundle
+            }
+            replaceFragment(FragmentRecommendPlant4)
+        }
+
+        //추천 식물5 상세보기
+        val recommendplant5 : LinearLayout = view.findViewById(R.id.recommendedPlant5)
+        recommendplant5.setOnClickListener {
+            //replaceFragment(Fragment_Recommend_Plant1())
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putString("imageUrl",imageUrl)
+            }
+            FragmentRecommendPlant5 = Fragment_Recommend_Plant5().apply {
+                arguments = bundle
+            }
+            replaceFragment(FragmentRecommendPlant5)
+        }
+
+        //추천 식물6 상세보기
+        val recommendplant6 : LinearLayout = view.findViewById(R.id.recommendedPlant6)
+        recommendplant6.setOnClickListener {
+            //replaceFragment(Fragment_Recommend_Plant1())
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putString("imageUrl",imageUrl)
+            }
+            FragmentRecommendPlant6 = Fragment_Recommend_Plant6().apply {
+                arguments = bundle
+            }
+            replaceFragment(FragmentRecommendPlant6)
+        }
+
+        step1 = view.findViewById(R.id.step1)
+        step2 = view.findViewById(R.id.step2)
+        step3 = view.findViewById(R.id.step3)
+        step4 = view.findViewById(R.id.step4)
+        step5 = view.findViewById(R.id.step5)
+
+        step1.setOnClickListener{
+            replaceFragment(Fragment_Step1())
+        }
+        step2.setOnClickListener{
+            replaceFragment(Fragment_Step2())
+        }
+        step3.setOnClickListener{
+            replaceFragment(Fragment_Step3())
+        }
+        step4.setOnClickListener{
+            replaceFragment(Fragment_Step4())
+        }
+        step5.setOnClickListener{
+            replaceFragment(Fragment_Step5())
+        }
         return view
     }
-    private fun getPlantInfo(uemail: String) {
-        val url = URL("http://10.0.2.2/getplantinfo.php")
-        val connection = url.openConnection() as HttpURLConnection
-        connection.requestMethod = "POST"
-        connection.doOutput = true
+    private suspend fun getPlantInfo(uemail: String) {
+        withContext(Dispatchers.IO) {
+            val url = URL("http://192.168.233.22:80/getplantinfo.php")
+            val connection = url.openConnection() as HttpURLConnection
+            connection.requestMethod = "POST"
+            connection.doOutput = true
 
-        val postData = URLEncoder.encode("uemail", "UTF-8") + "=" + URLEncoder.encode(uemail, "UTF-8")
-        val outputStream = OutputStreamWriter(connection.outputStream)
-        outputStream.write(postData)
-        outputStream.flush()
-        outputStream.close()
+            val postData = URLEncoder.encode("uemail", "UTF-8") + "=" + URLEncoder.encode(uemail, "UTF-8")
+            OutputStreamWriter(connection.outputStream).use {
+                it.write(postData)
+                it.flush()
+            }
 
-        val inputStream = BufferedReader(InputStreamReader(connection.inputStream))
-        val response = StringBuilder()
-        var line: String?
-        while (inputStream.readLine().also { line = it } != null) {
-            response.append(line)
-        }
-        inputStream.close()
+            val response = StringBuilder()
+            BufferedReader(InputStreamReader(connection.inputStream)).use {
+                var line: String?
+                while (it.readLine().also { line = it } != null) {
+                    response.append(line)
+                }
+            }
 
-        val jsonResponse = JSONObject(response.toString())
-        val status = jsonResponse.getString("status")
-        if (status == "success") {
-            val dataArray = jsonResponse.getJSONArray("data")
-            // 가져온 데이터를 처리
-            handleSuccess(dataArray)
-        } else {
-            // 실패 처리
-            handleFailure()
+            val jsonResponse = JSONObject(response.toString())
+            val status = jsonResponse.getString("status")
+            if (status == "success") {
+                val dataArray = jsonResponse.getJSONArray("data")
+                handleSuccess(dataArray)
+            } else {
+                handleFailure()
+            }
         }
     }
-    // 데이터 가져오기가 성공한 경우 처리할 로직
-    private fun handleSuccess(dataArray: JSONArray) {
+
+    private suspend fun handleSuccess(dataArray: JSONArray) {
         val newPList = ArrayList<PlantListItem>()
-        //최근 등록한것순으로 3개만 나타나도록함
         val startIndex = if (dataArray.length() <= 3) 0 else dataArray.length() - 3
         for (i in (startIndex until dataArray.length()).reversed()) {
             val dataObject = dataArray.getJSONObject(i)
@@ -148,33 +249,33 @@ class Fragment_Home : Fragment() {
                 setImageUrl(dataObject.getString("imageurl"))
                 setEnrollTime(dataObject.getString("currenttime"))
             }
-            //recyclerView.adapter = RecyclerViewPlantAdapter(pList)
-            // 리스트에 추가
             newPList.add(plantItem)
-           // pList.add(plantItem)
-           // recyclerView.adapter?.notifyDataSetChanged()
-
         }
         newPList.sortByDescending { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(it.getEnrollTime()) }
-        //pList.sortByDescending { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(it.getEnrollTime()) }
-        requireActivity().runOnUiThread {
-           // recyclerView.adapter = RecyclerViewPlantAdapter(pList)
+
+        withContext(Dispatchers.Main) {
             plantAdapter.updateData(newPList)
+            Log.d("MyTag", "Data retrieved successfully!")
         }
-        Log.d("MyTag", "Data retrieved successfully!")
     }
 
-    // 데이터 가져오기가 실패한 경우 처리할 로직
-    private fun handleFailure() {
-        // 실패한 경우
-        pList.clear()
-        val defaultItem = PlantListItem()
-        defaultItem.setImageUrl("http://10.0.2.2/uploads/default4.png")
-        pList.add(defaultItem) // 아무것도 등록 안되어 있을때 표시되는 기본 아이템
-        requireActivity().runOnUiThread {
+    private suspend fun handleFailure() {
+        withContext(Dispatchers.Main) {
+            pList.clear()
+            val defaultItem = PlantListItem().apply {
+                setImageUrl("http://192.168.233.22:80/uploads/default4.png")
+                setPlantName("hh")
+            }
+            pList.add(defaultItem)
             plantAdapter.updateData(pList)
+            Log.d("MyTag", "Default item added to the list")
         }
-    //recyclerView.adapter?.notifyDataSetChanged()
-        //Toast.makeText(requireContext(), "Failed to retrieve data", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }

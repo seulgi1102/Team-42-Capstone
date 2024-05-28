@@ -50,7 +50,7 @@ import java.text.SimpleDateFormat
 
 const val GALLERY_REQUEST_CODE = 12
 const val REQ_CAMERA = 11
-const val ImageUrl = "http://10.0.2.2/uploads/default5.png"
+const val ImageUrl = "http://192.168.233.22:80/uploads/default5.png"
 
 class Fragment_Diary2 : Fragment() {
     private lateinit var image: ImageView
@@ -66,11 +66,11 @@ class Fragment_Diary2 : Fragment() {
     private var selectedImageUri: Uri? = null
     private lateinit var diaryTitle: EditText
     private lateinit var diaryContent: EditText
-    //private val ImageUrl = "http://10.0.2.2/uploads/default.png"
+    //private val ImageUrl = "http://192.168.233.22:80/uploads/default5.png"
 
     //retrofit 객체 생성
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://10.0.2.2/")
+        .baseUrl("http://192.168.233.22:80/")
         //.baseUrl("http://localhost:80/")
         .addConverterFactory(GsonConverterFactory.create()) // Gson 변환기 추가
         .addConverterFactory(ScalarsConverterFactory.create())
@@ -244,7 +244,7 @@ class Fragment_Diary2 : Fragment() {
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 // PHP 스크립트의 URL
-                val url = URL("http://10.0.2.2/enrolldiary.php")
+                val url = URL("http://192.168.233.22:80/enrolldiary.php")
 
                 // HttpURLConnection 열기
                 val connection = url.openConnection() as HttpURLConnection

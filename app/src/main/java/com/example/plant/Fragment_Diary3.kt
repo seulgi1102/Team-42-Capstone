@@ -42,7 +42,7 @@ class Fragment_Diary3: Fragment() {
     private var enrollTime: String = ""
     private var diaryTitle: String = ""
     private var diaryContent: String = ""
-    private var imageUrl: String = "http://10.0.2.2/uploads/default5.png"
+    private var imageUrl: String = "http://192.168.233.22:80/uploads/default5.png"
     //private var imageUrl: String = "http://10.0.2.2/uploads/default5.png"
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -141,8 +141,8 @@ class Fragment_Diary3: Fragment() {
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 // PHP 스크립트의 URL
-                val url = URL("http://10.0.2.2/deletediary.php")
-
+                //val url = URL("http://10.0.2.2/deletediary.php")
+                val url = URL("http://192.168.233.22:80/deletediary.php")
                 // HttpURLConnection 열기
                 val connection = url.openConnection() as HttpURLConnection
 

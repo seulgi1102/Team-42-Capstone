@@ -1,48 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_enroll_1"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="702dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/textView17"
             android:layout_width="match_parent"
-            android:layout_height="158dp"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_radius_green"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="식물의 이름과 사진을 등록해주세요!"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:gravity="center"
-                android:text="식물의 이름과 사진을 등록해주세요!"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
+    </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="306dp"
-            android:orientation="vertical"
-            android:padding="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="314dp"
-                android:layout_weight="1"
-                android:src="@drawable/img_9" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_radius"
+            android:scaleType="fitCenter"
+            android:src="@drawable/camera2" />
+    </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,16 +67,33 @@
                 android:src="@drawable/gallery"
                 android:text="갤러리" />
         </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
         <EditText
             android:id="@+id/plantName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/background_radius"
             android:ems="10"
             android:gravity="center"
             android:hint="산세베리아"
-            android:inputType="text" />
+            android:inputType="text"
+            android:padding="10dp"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
 
 </LinearLayout>

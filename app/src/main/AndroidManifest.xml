@@ -35,6 +35,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Fragment_Enroll1"
+            android:windowSoftInputMode="adjustUnspecified|adjustPan" />
         <activity android:name=".SignUpActivity"
             android:exported="true"
             android:label="회원가입"

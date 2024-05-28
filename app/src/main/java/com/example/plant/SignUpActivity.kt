@@ -17,8 +17,11 @@ import java.io.OutputStreamWriter
 //로그인
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -80,59 +83,64 @@ class SignUpActivity : AppCompatActivity() {
             val joindate = formattedDate
             val ubirth = birth.text.toString()
             if(uemail.isNotEmpty()&&uid.isNotEmpty()&&upw.isNotEmpty()&&confrimPwd.isNotEmpty()&&ubirth.isNotEmpty()){
-            if(pattern.matcher(uemail).matches()){
-                if(isValidPassword(upw)){
-                    if(confrimPwd == upw){
-                    if(isValidBirthDate(ubirth)){
-                    //중복이메일 체크
-                    GlobalScope.launch(Dispatchers.IO) {
-                        checkExistingId(uid, upw, uemail, joindate, ubirth)
-                    }
-                    }else{
-                        AlertDialog.Builder(this)
-                            .setTitle("With P")
-                            .setMessage("생년월일을 형식(yyyyMMdd)에 맞게 입력해주세요")
-                            .setPositiveButton("확인") { dialog, _ ->
-                                dialog.dismiss() // 다이얼로그 닫기
+                if(pattern.matcher(uemail).matches()){
+                    if(isValidPassword(upw)){
+                        if(confrimPwd == upw){
+                            if(isValidBirthDate(ubirth)){
+                                //중복이메일 체크
+                                GlobalScope.launch(Dispatchers.IO) {
+                                    checkExistingId(uid, upw, uemail, joindate, ubirth)
+                                }
+                            }else{
+//                        AlertDialog.Builder(this)
+//                            .setTitle("With P")
+//                            .setMessage("생년월일을 형식(yyyyMMdd)에 맞게 입력해주세요")
+//                            .setPositiveButton("확인") { dialog, _ ->
+//                                dialog.dismiss() // 다이얼로그 닫기
+//                            }
+//                            .show()
+                                showDialog("회원가입 실패", "생년월일을 형식(yyyyMMdd)에 맞게 입력해주세요.", "확인")
                             }
-                            .show()
-                    }
+                        }else{
+//                        AlertDialog.Builder(this)
+//                            .setTitle("With P")
+//                            .setMessage("비밀번호가 불일치합니다.")
+//                            .setPositiveButton("확인") { dialog, _ ->
+//                                dialog.dismiss() // 다이얼로그 닫기
+//                            }
+//                            .show
+                            showDialog("회원가입 실패", "비밀번호가 불일치합니다.", "확인")
+                        }
                     }else{
-                        AlertDialog.Builder(this)
-                            .setTitle("With P")
-                            .setMessage("비밀번호가 불일치합니다.")
-                            .setPositiveButton("확인") { dialog, _ ->
-                                dialog.dismiss() // 다이얼로그 닫기
-                            }
-                            .show()
+//                    AlertDialog.Builder(this)
+//                        .setTitle("With P")
+//                        .setMessage("영문, 숫자, 특수문자 조합으로 10자리 이상 입력해주세요. ")
+//                        .setPositiveButton("확인") { dialog, _ ->
+//                            dialog.dismiss() // 다이얼로그 닫기
+//                        }
+//                        .show()
+                        showDialog("회원가입 실패", "비밀번호를 영문, 숫자, 특수문자 조합으로 10자리 이상 입력해주세요.", "확인")
                     }
                 }else{
-                    AlertDialog.Builder(this)
-                        .setTitle("With P")
-                        .setMessage("영문, 숫자, 특수문자 조합으로 10자리 이상 입력해주세요. ")
-                        .setPositiveButton("확인") { dialog, _ ->
-                            dialog.dismiss() // 다이얼로그 닫기
-                        }
-                        .show()
+//                AlertDialog.Builder(this)
+//                    .setTitle("With P")
+//                    .setMessage("이메일 형식이 올바르지 않습니다.")
+//                    .setPositiveButton("확인") { dialog, _ ->
+//                        dialog.dismiss() // 다이얼로그 닫기
+//                    }
+//                    .show()
+                    showDialog("회원가입 실패", "이메일 형식이 올바르지 않습니다.", "확인")
                 }
             }else{
-                AlertDialog.Builder(this)
-                    .setTitle("With P")
-                    .setMessage("이메일 형식이 올바르지 않습니다.")
-                    .setPositiveButton("확인") { dialog, _ ->
-                        dialog.dismiss() // 다이얼로그 닫기
-                    }
-                    .show()
+//                AlertDialog.Builder(this)
+//                    .setTitle("With P")
+//                    .setMessage("빈칸없이 입력해주세요.")
+//                    .setPositiveButton("확인") { dialog, _ ->
+//                        dialog.dismiss() // 다이얼로그 닫기
+//                    }
+//                    .show()
+                showDialog("회원가입 실패", "빈칸없이 입력해주세요.", "확인")
             }
-            }else{
-                AlertDialog.Builder(this)
-                    .setTitle("With P")
-                    .setMessage("빈칸없이 입력해주세요.")
-                    .setPositiveButton("확인") { dialog, _ ->
-                        dialog.dismiss() // 다이얼로그 닫기
-                    }
-                    .show()
-                }
         }
         password.addTextChangedListener {
 
@@ -198,15 +206,38 @@ class SignUpActivity : AppCompatActivity() {
                 }
             }else{
                 alarmBirth.visibility = View.GONE
-                }
             }
         }
+    }
+
+    private fun showDialog(title: String, message: String, buttonText: String) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog2, null)
+        val dialogBuilder = AlertDialog.Builder(this)
+            .setView(dialogView)
+
+        val dialog = dialogBuilder.create()
+        dialog.show()
+        //레이아웃 배경 투명하게 해줌
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.dialogTitle)
+        val dialogMessage = dialogView.findViewById<TextView>(R.id.dialogMessage)
+        val dialogButton = dialogView.findViewById<Button>(R.id.dialogButton)
+
+        dialogTitle.text = title
+        dialogMessage.text = message
+        dialogButton.text = buttonText
+
+        dialogButton.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
 
     //중복이메일 체크 기능
     private fun checkExistingId(uid:String, upw:String, uemail:String, joindate: String, ubirth: String) {
         try {
             // PHP 스크립트의 URL
-            val url = URL("http://10.0.2.2/checkid.php")
+            val url = URL("http://192.168.233.22:80/checkid.php")
 
             // HttpURLConnection 열기
             val connection = url.openConnection() as HttpURLConnection
@@ -232,13 +263,14 @@ class SignUpActivity : AppCompatActivity() {
                 // 이미 존재하는 이메일인지 확인
                 if (response == "Already Exist") {
                     runOnUiThread {
-                        AlertDialog.Builder(this)
-                            .setTitle("With P")
-                            .setMessage("이미 존재하는 이메일입니다.")
-                            .setPositiveButton("확인"
-                            ) { dialog, which -> Log.d("MyTag", "positive") }
-                            .create()
-                            .show()
+//                        AlertDialog.Builder(this)
+//                            .setTitle("With P")
+//                            .setMessage("이미 존재하는 이메일입니다.")
+//                            .setPositiveButton("확인"
+//                            ) { dialog, which -> Log.d("MyTag", "positive") }
+//                            .create()
+//                            .show()
+                        showDialog("회원가입 실패", "이미 존재하는 이메일입니다.", "확인")
                     }
                 } else {
                     // 회원가입 처리를 진행
@@ -265,7 +297,7 @@ class SignUpActivity : AppCompatActivity() {
     //회원가입 기능
     private fun signup(uid:String, upw:String, uemail:String, joindate:String, ubirth:String) {
         try {
-            val url = URL("http://10.0.2.2/signup.php")
+            val url = URL("http://192.168.233.22:80/signup.php")
 
             // HttpURLConnection 열기
             val connection = url.openConnection() as HttpURLConnection
@@ -273,7 +305,7 @@ class SignUpActivity : AppCompatActivity() {
             // POST 요청 설정
             connection.requestMethod = "POST"
             connection.doOutput = true
-            val defaultImageUrl ="http://10.0.2.2/uploads/defaultProfile3.png"
+            val defaultImageUrl ="http://192.168.233.22:80/uploads/defaultProfile3.png"
             val defaultIntroduce = ""
             // 데이터 작성
             var postData = URLEncoder.encode("uid", "UTF-8") + "=" + URLEncoder.encode(uid, "UTF-8")
@@ -293,24 +325,26 @@ class SignUpActivity : AppCompatActivity() {
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 // 성공적으로 요청이 처리됨
                 runOnUiThread {
-                    AlertDialog.Builder(this)
-                        .setTitle("With P")
-                        .setMessage("회원가입 되었습니다.")
-                        .setPositiveButton("확인"
-                        ) { dialog, which -> startActivity(intent) }
-                        .create()
-                        .show()
+//                    AlertDialog.Builder(this)
+//                        .setTitle("With P")
+//                        .setMessage("회원가입 되었습니다.")
+//                        .setPositiveButton("확인"
+//                        ) { dialog, which -> startActivity(intent) }
+//                        .create()
+//                        .show()
+                    showDialog("", "회원가입 되었습니다.", "확인")
                 }
             } else {
                 // 요청이 실패한 경우
                 runOnUiThread {
-                    AlertDialog.Builder(this)
-                        .setTitle("With P")
-                        .setMessage("회원가입 실패했습니다.")
-                        .setPositiveButton("확인"
-                        ) { dialog, which -> Log.d("MyTag", "positive") }
-                        .create()
-                        .show()
+//                    AlertDialog.Builder(this)
+//                        .setTitle("With P")
+//                        .setMessage("회원가입 실패했습니다.")
+//                        .setPositiveButton("확인"
+//                        ) { dialog, which -> Log.d("MyTag", "positive") }
+//                        .create()
+//                        .show()
+                    showDialog("오류", "회원가입 실패했습니다.", "확인")
                 }
             }
 
@@ -320,13 +354,14 @@ class SignUpActivity : AppCompatActivity() {
             // 예외 처리
             e.printStackTrace()
             runOnUiThread {
-                AlertDialog.Builder(this)
-                    .setTitle("With P")
-                    .setMessage("회원가입 실패했습니다.")
-                    .setPositiveButton("확인"
-                    ) { dialog, which -> Log.d("MyTag", "positive") }
-                    .create()
-                    .show()
+//                AlertDialog.Builder(this)
+//                    .setTitle("With P")
+//                    .setMessage("회원가입 실패했습니다.")
+//                    .setPositiveButton("확인"
+//                    ) { dialog, which -> Log.d("MyTag", "positive") }
+//                    .create()
+//                    .show()
+                showDialog("오류", "회원가입 실패했습니다.", "확인")
             }
         }
     }

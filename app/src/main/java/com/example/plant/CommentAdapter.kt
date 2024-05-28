@@ -96,6 +96,7 @@ class CommentAdapter(private val context: Context, private val commentList: Muta
             }
 
         }
+
         fun updateData(comment: ArrayList<Comment>) {
             commentList.clear()
             commentList.addAll(comment)
@@ -105,7 +106,7 @@ class CommentAdapter(private val context: Context, private val commentList: Muta
         private fun loadImage(uemail: String, imageView: CircleImageView) {
             GlobalScope.launch(Dispatchers.IO) {
                 try {
-                    val url = URL("http://10.0.2.2/getprofileimage.php")
+                    val url = URL("http://192.168.233.22:80/getprofileimage.php")
                     val connection = url.openConnection() as HttpURLConnection
                     connection.requestMethod = "POST"
                     connection.doOutput = true
@@ -177,7 +178,7 @@ class CommentAdapter(private val context: Context, private val commentList: Muta
     private fun editComment(comment: Comment, newContent: String) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val url = URL("http://10.0.2.2/editcomment.php")
+                val url = URL("http://192.168.233.22:80/editcomment.php")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "POST"
                 connection.doOutput = true
@@ -219,7 +220,7 @@ class CommentAdapter(private val context: Context, private val commentList: Muta
         // 서버로 댓글 번호를 전송하여 삭제
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val url = URL("http://10.0.2.2/deletecomment.php")
+                val url = URL("http://192.168.233.22:80/deletecomment.php")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "POST"
                 connection.doOutput = true

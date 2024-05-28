@@ -78,6 +78,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/list_icon"
                     android:textSize="24sp"
+                    android:backgroundTint="#6DF8B7"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -117,9 +118,8 @@
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/content_border"
-                    android:scaleType="centerCrop"
                     android:clipToOutline="true"
+                    android:scaleType="fitCenter"
                     android:visibility="visible" />
 
             </LinearLayout>
@@ -151,7 +151,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="210dp"
                     android:text="수정"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:backgroundTint="#6DF8B7"
                     android:visibility="visible" />
 
                 <Button
@@ -160,6 +162,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text="삭제"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:backgroundTint="#6DF8B7"
                     android:visibility="visible" />
 
                 <!-- 초기에는 보이지 않도록 설정 -->
@@ -198,7 +203,8 @@
             android:layout_marginLeft="2dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/comment_border"
-            android:hint=" 댓글을 입력하세요..."
+            android:backgroundTint="#6DF8B7"
+            android:hint="  댓글을 입력하세요..."
             android:inputType="textMultiLine" />
 
         <android.widget.Button
@@ -207,6 +213,7 @@
             android:layout_height="35dp"
             android:layout_marginLeft="5dp"
             android:background="@drawable/baseline_send_24"
+            android:backgroundTint="#6DF8B7"
             android:rotation="320"/>
     </LinearLayout>
 

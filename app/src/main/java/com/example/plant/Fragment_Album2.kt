@@ -174,7 +174,7 @@ class Fragment_Album2 : Fragment() {
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 // PHP 스크립트의 URL
-                val url = URL("http://10.0.2.2/deleteplant.php")
+                val url = URL("http://192.168.233.22:80/deleteplant.php")
 
                 // HttpURLConnection 열기
                 val connection = url.openConnection() as HttpURLConnection

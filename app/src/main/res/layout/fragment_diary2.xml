@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/note4"
+    android:scaleType="centerCrop"
     android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +18,8 @@
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
-            android:background="@drawable/back" />
+            android:background="@drawable/back"
+            android:backgroundTint="#6DF8B7"/>
     </LinearLayout>
 
     <TextView
@@ -25,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
+        android:padding="10dp"
         android:gravity="center"
         android:text="TextView"
         android:textSize="20sp" />
@@ -39,39 +42,40 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="250dp"
+            android:background="@drawable/background_radius2"
             android:layout_height="match_parent"
-            android:src="@drawable/img_9" />
+            android:src="@drawable/camera2" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
+        <ImageView
+            android:id="@+id/camera"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/camera"
+            android:text="카메라" />
+
+        <ImageView
+            android:id="@+id/gallery"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/gallery"
+            android:text="갤러리" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="391dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="10dp">
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:padding="5dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/camera"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/camera"
-                android:text="카메라" />
-
-            <ImageView
-                android:id="@+id/gallery"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/gallery"
-                android:text="갤러리" />
-        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -85,10 +89,14 @@
                 android:id="@+id/enterTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
                 android:hint="Title"
                 android:inputType="text"
+                android:background="@drawable/background_radius3"
                 android:maxLength="70"
                 android:maxLines="1"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -98,8 +106,10 @@
                 android:id="@+id/enterContent"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@drawable/content_border"
+                android:layout_marginTop="10dp"
                 android:ellipsize="end"
+                android:padding="5dp"
+                android:background="@drawable/background_radius3"
                 android:ems="10"
                 android:hint="Content"
                 android:inputType="textMultiLine"

@@ -10,19 +10,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="818dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
-
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/boardname"
@@ -57,7 +57,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="550dp"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -65,10 +65,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="5dp"
                     android:scrollbarSize="5dp"
                     android:scrollbarThumbVertical="@null"
                     android:scrollbarTrackVertical="@null"
-                    android:scrollbars="vertical" />
+                    android:scrollbars="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <!--
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -94,14 +102,14 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
                     android:layout_margin="10dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="44dp"
+                    android:layout_marginBottom="24dp"
                     app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:menu_fab_label=""
                     app:menu_colorNormal="#7FFFD4"
                     app:menu_colorPressed="#7FFFD4"
                     app:menu_colorRipple="#7FFFD4"
+                    app:menu_fab_label=""
                     app:menu_openDirection="up"
                     app:menu_showShadow="true">
 

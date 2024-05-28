@@ -1,6 +1,6 @@
 package com.example.plant
 
-import ApiService
+//import ApiService
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +11,9 @@ import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,7 +21,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Locale
-
+import ApiService
 data class Post(
     val post_num: Int,
     val board_type: Int,
@@ -102,7 +105,7 @@ class PostAdapter(private val postList: List<Post>, private val onItemClick: (Po
         private fun showImageById(id: Int) {
             // Retrofit을 사용하여 서버에 요청
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://10.0.2.2/") // 서버의 기본 URL
+                .baseUrl("http://192.168.233.22:80/") // 서버의 기본 URL
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
@@ -115,7 +118,11 @@ class PostAdapter(private val postList: List<Post>, private val onItemClick: (Po
                         // 서버로부터 이미지 데이터를 받아와서 이미지뷰에 표시
                         val inputStream = response.body()?.byteStream()
                         val bitmap = BitmapFactory.decodeStream(inputStream)
-                        coverimageView.setImageBitmap(bitmap)
+                        //coverimageView.setImageBitmap(bitmap)
+                        Glide.with(coverimageView.context)
+                            .load(bitmap)
+                            .transform(CenterCrop(), RoundedCorners(20)) // 둥근 모서리 설정
+                            .into(coverimageView)
                     } else {
                         // 오류 처리
                         Log.e("ImageLoad", "Failed to load image")

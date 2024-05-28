@@ -78,7 +78,7 @@ class ProfileActivity : AppCompatActivity(){
     }
 
     private fun getUserInfo(userEmail: String) {
-        val url = URL("http://10.0.2.2/getuserinfo.php")
+        val url = URL("http://192.168.233.22:80/getuserinfo.php")
         val connection = url.openConnection() as HttpURLConnection
         connection.requestMethod = "POST"
         connection.doOutput = true

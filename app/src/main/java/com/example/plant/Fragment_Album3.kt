@@ -102,7 +102,7 @@ class Fragment_Album3 : Fragment(), View.OnClickListener{
     //private var imageUrl: String = "http://10.0.2.2/uploads/default5.png"
     private var selectedImageUri: Uri? = null
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://10.0.2.2/")
+        .baseUrl("http://192.168.233.22:80/")
         .addConverterFactory(GsonConverterFactory.create()) // Gson 변환기 추가
         .addConverterFactory(ScalarsConverterFactory.create())
         .build()
@@ -445,7 +445,7 @@ class Fragment_Album3 : Fragment(), View.OnClickListener{
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 // PHP 스크립트의 URL
-                val url = URL("http://10.0.2.2/editplant.php")
+                val url = URL("http://192.168.233.22:80/editplant.php")
 
                 // HttpURLConnection 열기
                 val connection = url.openConnection() as HttpURLConnection

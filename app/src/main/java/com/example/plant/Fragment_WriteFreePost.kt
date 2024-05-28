@@ -33,7 +33,11 @@ import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.ImageButton
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -88,10 +92,16 @@ class Fragment_WriteFreePost : Fragment() {
         if (result.resultCode == AppCompatActivity.RESULT_OK) {
             val data: Intent? = result.data
             val imageBitmap = data?.extras?.get("data") as? Bitmap
-            imageView.setImageBitmap(imageBitmap)
+            //imageView.setImageBitmap(imageBitmap)
 //            imageBitmap?.let {
 //                imageView.setImageBitmap(it)
 //            }
+
+            // 이미지가 null이 아닌 경우 Glide를 사용하여 이미지 설정
+            Glide.with(imageView.context)
+                .load(imageBitmap)
+                .transform(CenterCrop(), RoundedCorners(20)) // 둥근 모서리 설정
+                .into(imageView)
 
         }
     }
@@ -101,7 +111,13 @@ class Fragment_WriteFreePost : Fragment() {
         if (result.resultCode == AppCompatActivity.RESULT_OK) {
             val data: Intent? = result.data
             val selectedImageUri = data?.data
-            imageView.setImageURI(selectedImageUri)
+            //imageView.setImageURI(selectedImageUri)
+
+            // 이미지가 null이 아닌 경우 Glide를 사용하여 이미지 설정
+            Glide.with(imageView.context)
+                .load(selectedImageUri)
+                .transform(CenterCrop(), RoundedCorners(20)) // 둥근 모서리 설정
+                .into(imageView)
         }
     }
 
@@ -255,6 +271,8 @@ class Fragment_WriteFreePost : Fragment() {
                     val imageBitmap = imageDrawable?.bitmap
                     if (imageBitmap != null) {
                         editPost(imageBitmap, writer, title, content)
+                    } else {
+                        editPost2(writer, title, content)
                     }
                     // 데이터베이스에 데이터 삽입
                     //editPost(writer, title, content, postDate)
@@ -284,7 +302,7 @@ class Fragment_WriteFreePost : Fragment() {
         GlobalScope.launch(Dispatchers.IO) {
             val gson = GsonBuilder().setLenient().create()
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://10.0.2.2/") // 서버의 기본 URL
+                .baseUrl("http://192.168.233.22:80/") // 서버의 기본 URL
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
@@ -337,7 +355,7 @@ class Fragment_WriteFreePost : Fragment() {
     private fun insertPost2(writer: String, title: String, content: String) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val url = URL("http://10.0.2.2/insertpost2.php")
+                val url = URL("http://192.168.233.22:80/insertpost2.php")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "POST"
                 connection.doOutput = true
@@ -375,7 +393,7 @@ class Fragment_WriteFreePost : Fragment() {
         GlobalScope.launch(Dispatchers.IO) {
             val gson = GsonBuilder().setLenient().create()
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://10.0.2.2/") // 서버의 기본 URL
+                .baseUrl("http://192.168.233.22:80/") // 서버의 기본 URL
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
@@ -408,7 +426,10 @@ class Fragment_WriteFreePost : Fragment() {
                 if (response.isSuccessful) {
                     Log.d("Edit", "post edit successfully")
                     // 업로드 성공 시 처리
-                    requireActivity().runOnUiThread {
+//                    requireActivity().runOnUiThread {
+//                        replaceFragment(Fragment_FreeBoard())
+//                    }
+                    withContext(Dispatchers.Main) {
                         replaceFragment(Fragment_FreeBoard())
                     }
                 } else {
@@ -422,11 +443,50 @@ class Fragment_WriteFreePost : Fragment() {
         }
     }
 
+    //이미지 없는 게시물 -> 이미지 없는 게시물로 수정하기
+    private fun editPost2(writer: String, title: String, content: String) {
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                val url = URL("http://192.168.233.22:80/editpost2.php")
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "POST"
+                connection.doOutput = true
+
+                val postData = URLEncoder.encode("post_num", "UTF-8") + "=" + URLEncoder.encode(post_num.toString(), "UTF-8") +
+                        "&" + URLEncoder.encode("post_title", "UTF-8") + "=" + URLEncoder.encode(title, "UTF-8") +
+                        "&" + URLEncoder.encode("post_content", "UTF-8") + "=" + URLEncoder.encode(content, "UTF-8") +
+                        "&" + URLEncoder.encode("post_writer", "UTF-8") + "=" + URLEncoder.encode(writer, "UTF-8")
+
+                val outputStream = OutputStreamWriter(connection.outputStream)
+                outputStream.write(postData)
+                outputStream.flush()
+                outputStream.close()
+
+                val responseCode = connection.responseCode
+                withContext(Dispatchers.Main) {
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        // 데이터 수정 성공
+                        replaceFragment(Fragment_FreeBoard())
+                    } else {
+                        // 데이터 수정 실패
+                        Toast.makeText(requireContext(), "Edit post failed with response code: $responseCode", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+
     //이미지 불러오기
     private fun showImageById(id: Int) {
         // Retrofit을 사용하여 서버에 요청
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2/") // 서버의 기본 URL
+            .baseUrl("http://192.168.233.22:80/") // 서버의 기본 URL
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -443,7 +503,14 @@ class Fragment_WriteFreePost : Fragment() {
 
                     if (bitmap != null) {
                         // 이미지가 null이 아닌 경우 ImageView에 이미지 설정
-                        imageView.setImageBitmap(bitmap)
+                        //imageView.setImageBitmap(bitmap)
+
+                        // 이미지가 null이 아닌 경우 Glide를 사용하여 이미지 설정
+                        Glide.with(imageView.context)
+                            .load(bitmap)
+                            .transform(CenterCrop(), RoundedCorners(20)) // 둥근 모서리 설정
+                            .into(imageView)
+                        //imageView.visibility = View.VISIBLE // ImageView 보이기
                     }
 
 //                    requireActivity().runOnUiThread {
@@ -463,76 +530,6 @@ class Fragment_WriteFreePost : Fragment() {
     }
 
 
-//    private fun insertPost(writer: String, title: String, content: String, date: String) {
-//        GlobalScope.launch(Dispatchers.IO) {
-//            try {
-//                val url = URL("http://10.0.2.2/insertpost.php")
-//                val connection = url.openConnection() as HttpURLConnection
-//                connection.requestMethod = "POST"
-//                connection.doOutput = true
-//
-//                val postData = URLEncoder.encode("board_type", "UTF-8") + "=" + URLEncoder.encode(board_type.toString(), "UTF-8") +
-//                        "&" + URLEncoder.encode("post_title", "UTF-8") + "=" + URLEncoder.encode(title, "UTF-8") +
-//                        "&" + URLEncoder.encode("post_content", "UTF-8") + "=" + URLEncoder.encode(content, "UTF-8") +
-//                        "&" + URLEncoder.encode("post_writer", "UTF-8") + "=" + URLEncoder.encode(writer, "UTF-8") +
-//                        "&" + URLEncoder.encode("post_date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8")
-//
-//                val outputStream = OutputStreamWriter(connection.outputStream)
-//                outputStream.write(postData)
-//                outputStream.flush()
-//                outputStream.close()
-//
-//                val responseCode = connection.responseCode
-//                if (responseCode == HttpURLConnection.HTTP_OK) {
-//                    // 데이터 삽입 성공
-//                    replaceFragment(Fragment_FreeBoard())
-//
-//                } else {
-//                    // 데이터 삽입 실패
-//                    Toast.makeText(requireContext(), "insert post failed", Toast.LENGTH_SHORT).show()
-//                }
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
-//        }
-//    }
-
-//    private fun editPost(writer: String, title: String, content: String, date: String) {
-//        GlobalScope.launch(Dispatchers.IO) {
-//            try {
-//                val url = URL("http://10.0.2.2/editpost.php")
-//                val connection = url.openConnection() as HttpURLConnection
-//                connection.requestMethod = "POST"
-//                connection.doOutput = true
-//
-//                val postData = URLEncoder.encode("board_type", "UTF-8") + "=" + URLEncoder.encode(board_type.toString(), "UTF-8") +
-//                        "&" + URLEncoder.encode("post_title", "UTF-8") + "=" + URLEncoder.encode(title, "UTF-8") +
-//                        "&" + URLEncoder.encode("post_content", "UTF-8") + "=" + URLEncoder.encode(content, "UTF-8") +
-//                        "&" + URLEncoder.encode("post_writer", "UTF-8") + "=" + URLEncoder.encode(writer, "UTF-8") +
-//                        "&" + URLEncoder.encode("post_date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") +
-//                        "&" + URLEncoder.encode("post_num", "UTF-8") + "=" + URLEncoder.encode(post_num.toString(), "UTF-8")
-//
-//                val outputStream = OutputStreamWriter(connection.outputStream)
-//                outputStream.write(postData)
-//                outputStream.flush()
-//                outputStream.close()
-//
-//                val responseCode = connection.responseCode
-//                if (responseCode == HttpURLConnection.HTTP_OK) {
-//                    // 데이터 수정 성공
-//                    replaceFragment(Fragment_FreeBoard())
-//
-//                } else {
-//                    // 데이터 수정 실패
-//                    Toast.makeText(requireContext(), "edit post failed", Toast.LENGTH_SHORT).show()
-//                }
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
-//        }
-//    }
-
-
     private fun replaceFragment(fragment: Fragment) {
         val bundle = Bundle().apply {
             putString("userEmail", userEmail)
@@ -544,6 +541,5 @@ class Fragment_WriteFreePost : Fragment() {
         transaction.addToBackStack(null) // 뒤로 가기 버튼을 눌렀을 때 이전 화면으로 돌아갈 수 있도록 스택에 추가
         transaction.commit()
     }
-
 
 }
