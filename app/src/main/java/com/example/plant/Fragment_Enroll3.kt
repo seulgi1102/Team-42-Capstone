@@ -110,7 +110,6 @@ class Fragment_Enroll3 : Fragment(), View.OnClickListener {
             selectedHour = hourOfDay
             selectedMinute = minute
         }
-
         return view
     }
 

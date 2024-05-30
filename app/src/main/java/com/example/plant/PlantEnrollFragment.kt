@@ -32,7 +32,7 @@ class PlantEnrollFragment : Fragment() {
 
         val intent = Intent(requireContext(), HomeActivity::class.java)
 
-        Toast.makeText(requireContext(), "Email: $email", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(requireContext(), "Email: $email", Toast.LENGTH_SHORT).show()
         val bundle = Bundle().apply {
             putString("userEmail", email)
         }

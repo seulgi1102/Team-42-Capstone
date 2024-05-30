@@ -12,6 +12,7 @@ import android.widget.ListView
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import org.w3c.dom.Text
 
 class Fragment_Search2 : Fragment(){
@@ -155,7 +156,7 @@ class Fragment_Search2 : Fragment(){
         return view
     }
     private fun replaceFragment(fragment: Fragment){
-        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        /*val transaction = requireActivity().supportFragmentManager.beginTransaction()
 
         val fragment = fragment
         val bundle = Bundle()
@@ -170,7 +171,23 @@ class Fragment_Search2 : Fragment(){
         // FragmentTransaction을 사용하여 PlantEnrollFragment로 전환
         transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 back stack에 추가
-        transaction.commit() // 변경 사항을 적용
+        transaction.commit() // 변경 사항을 적용*/
+        val fragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.popBackStack(
+            fragmentManager.getBackStackEntryAt(0).id,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
+
+        val bundle = Bundle()
+        bundle.putString("userEmail", userEmail)
+        bundle.putString("imageUrl", imageUrl)
+        bundle.putString("userName", userName)
+        fragment.arguments = bundle
+
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        //transaction.addToBackStack(null)
+        transaction.commit()
     }
 
 }

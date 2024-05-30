@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.FragmentManager
 
 class Fragment_Board : Fragment() {
     private lateinit var FreeBoardFragment: Fragment_FreeBoard
@@ -122,11 +123,17 @@ class Fragment_Board : Fragment() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, fragment) // container는 프래그먼트가 표시될 영역의 ID
-        transaction.addToBackStack(null) // 뒤로 가기 버튼을 눌렀을 때 이전 화면으로 돌아갈 수 있도록 스택에 추가
-        transaction.commit()
+        val fragmentManager = requireActivity().supportFragmentManager
+        // Remove any existing instances of the same fragment
+        fragmentManager.fragments.forEach {
+            if (it::class == fragment::class) {
+                fragmentManager.beginTransaction().remove(it).commitNow()
+            }
+        }
+        // Replace the fragment
+        fragmentManager.beginTransaction()
+            .replace(R.id.container, fragment)
+            .commitNow()
     }
-
 
 }

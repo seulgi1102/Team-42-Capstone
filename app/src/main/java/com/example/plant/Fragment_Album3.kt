@@ -13,6 +13,7 @@ import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -31,6 +32,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
@@ -237,7 +239,7 @@ class Fragment_Album3 : Fragment(), View.OnClickListener{
                     // 온도를 선택한 후 실행할 코드를 작성
                     temperature = temperaturePicker.value.toString() + "°C" + " ~ " + (temperaturePicker.value +15).toString() + "°C"
                     ptemp.text = temperature
-                // 선택된 온도에 대한 작업 수행
+                    // 선택된 온도에 대한 작업 수행
                 }
                 .setNegativeButton("Cancel", null)
                 .create()
@@ -299,40 +301,41 @@ class Fragment_Album3 : Fragment(), View.OnClickListener{
             plantPlace = place
             val selectedStringDays = selectedDays.joinToString(", ")
             wateringCycle = selectedStringDays
-                if(pname.isNotEmpty()){
-                    //선택된 이미지가 있으면
-                    if (selectedImageUri != null) {
-                        val file = File(absolutelyPath(selectedImageUri, requireContext())) // Assuming selectedImageUri is a file URI
-                        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
-                        val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
-                        Log.d("test", file.name) // 파일이름 출력
-                        uploadImageAndGetUrl(body) { imageUrl ->
-                            if (imageUrl != null) {
-                                ImageUrl = imageUrl
-                                GlobalScope.launch(Dispatchers.IO) {
-                                    editPlant(plantId, enrollTime, pname, plantDate, point, place, selectedStringDays,
-                                        plantHour, plantMinute, temperature, humid, wateringAlarm, tempHumidAlarm, imageUrl)
-                                }
-                            } else {
-                                // 이미지 업로드 실패 처리
-                                Toast.makeText(requireContext(), "이미지 uri가있으나 서버로부터 url을 받지못함", Toast.LENGTH_SHORT).show()
+            if(pname.isNotEmpty()){
+                //선택된 이미지가 있으면
+                if (selectedImageUri != null) {
+                    val file = File(absolutelyPath(selectedImageUri, requireContext())) // Assuming selectedImageUri is a file URI
+                    val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+                    val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
+                    Log.d("test", file.name) // 파일이름 출력
+                    uploadImageAndGetUrl(body) { imageUrl ->
+                        if (imageUrl != null) {
+                            ImageUrl = imageUrl
+                            GlobalScope.launch(Dispatchers.IO) {
+                                editPlant(plantId, enrollTime, pname, plantDate, point, place, selectedStringDays,
+                                    plantHour, plantMinute, temperature, humid, wateringAlarm, tempHumidAlarm, imageUrl)
                             }
-                        }
-                    } else {
-                        // No image selected, proceed without uploading image
-                        GlobalScope.launch(Dispatchers.IO) {
-                            editPlant(plantId, enrollTime, pname, plantDate, plantPoint, plantPlace, selectedStringDays,
-                                plantHour, plantMinute, temperature, humid, wateringAlarm, tempHumidAlarm, ImageUrl)
+                        } else {
+                            // 이미지 업로드 실패 처리
+                            Toast.makeText(requireContext(), "이미지 uri가있으나 서버로부터 url을 받지못함", Toast.LENGTH_SHORT).show()
                         }
                     }
+                } else {
+                    // No image selected, proceed without uploading image
+                    GlobalScope.launch(Dispatchers.IO) {
+                        editPlant(plantId, enrollTime, pname, plantDate, plantPoint, plantPlace, selectedStringDays,
+                            plantHour, plantMinute, temperature, humid, wateringAlarm, tempHumidAlarm, ImageUrl)
+                    }
+                }
             }else{
-                AlertDialog.Builder(requireContext())
-                    .setTitle("With P")
-                    .setMessage("식물의 이름을 입력해주세요.")
-                    .setPositiveButton("확인") { dialog, _ ->
-                        dialog.dismiss() // 다이얼로그 닫기
-                    }
-                    .show()
+//                AlertDialog.Builder(requireContext())
+//                    .setTitle("With P")
+//                    .setMessage("식물의 이름을 입력해주세요.")
+//                    .setPositiveButton("확인") { dialog, _ ->
+//                        dialog.dismiss() // 다이얼로그 닫기
+//                    }
+//                    .show()
+                showdialog("수정 실패","식물의 이름을 입력해주세요.","확인")
             }
         }
         Glide.with(requireContext())
@@ -349,6 +352,31 @@ class Fragment_Album3 : Fragment(), View.OnClickListener{
         ptemp.text = temperature
         return view
     }
+
+    private fun showdialog(title: String, message: String, buttonText: String) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.custom_dialog2, null)
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+
+        val dialog = dialogBuilder.create()
+
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.dialogTitle)
+        val dialogMessage = dialogView.findViewById<TextView>(R.id.dialogMessage)
+        val positiveButton = dialogView.findViewById<Button>(R.id.dialogButton)
+
+        dialogTitle.text = title
+        dialogMessage.text = message
+        positiveButton.text = buttonText
+
+        positiveButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+
     fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -441,7 +469,7 @@ class Fragment_Album3 : Fragment(), View.OnClickListener{
         })
     }
     private fun editPlant( plantid: Int, enrolltime: String, pname: String, pdate: String, ppoint: String, plocation: String, pcycle: String, phour: Int, pminute: Int, ptemp: String, phumid: String, ptemp_alarm: Int, phumid_alarm: Int,
-                                  imageurl: String) {
+                           imageurl: String) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 // PHP 스크립트의 URL
@@ -500,12 +528,13 @@ class Fragment_Album3 : Fragment(), View.OnClickListener{
                     }
                 } else {
                     launch(Dispatchers.Main) {
-                        AlertDialog.Builder(requireContext())
-                            .setTitle("With P")
-                            .setMessage("등록 실패")
-                            .setPositiveButton("확인") { dialog, which -> Log.d("MyTag", "positive") }
-                            .create()
-                            .show()
+//                        AlertDialog.Builder(requireContext())
+//                            .setTitle("With P")
+//                            .setMessage("등록 실패")
+//                            .setPositiveButton("확인") { dialog, which -> Log.d("MyTag", "positive") }
+//                            .create()
+//                            .show()
+                        showdialog("","식물 수정에 실패했습니다.","확인")
                     }
                 }
 
@@ -548,6 +577,7 @@ class Fragment_Album3 : Fragment(), View.OnClickListener{
         }
     }
     private fun replaceFragment(fragment: Fragment){
+        /*
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
 
         val fragment = fragment
@@ -573,7 +603,35 @@ class Fragment_Album3 : Fragment(), View.OnClickListener{
 
         // FragmentTransaction을 사용하여 PlantEnrollFragment로 전환
         transaction.replace(R.id.container, fragment)
-        transaction.addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 back stack에 추가
-        transaction.commit() // 변경 사항을 적용
+        //transaction.addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 back stack에 추가
+        transaction.commit() // 변경 사항을 적용*/
+        val fragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.popBackStack(
+            fragmentManager.getBackStackEntryAt(1).id,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
+
+        val bundle = Bundle()
+        bundle.putString("userEmail", userEmail)
+        bundle.putString("plantName", plantName)
+        bundle.putInt("plantId", plantId)
+        bundle.putString("plantDate", plantDate)
+        bundle.putString("plantPoint", plantPoint)
+        bundle.putInt("plantHour", plantHour)
+        bundle.putInt("plantMinute", plantMinute)
+        bundle.putString("plantPlace", plantPlace)
+        bundle.putString("wateringCycle", wateringCycle)
+        bundle.putString("imageUrl", ImageUrl)
+        bundle.putInt("wateringAlarm", wateringAlarm)
+        bundle.putInt("tempHumidAlarm", tempHumidAlarm)
+        bundle.putString("temperature", temperature)
+        bundle.putString("humid", humid)
+        bundle.putString("enrollTime", enrollTime)
+        fragment.arguments = bundle
+
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }

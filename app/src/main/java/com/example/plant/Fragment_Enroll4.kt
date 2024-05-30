@@ -7,6 +7,8 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -19,6 +21,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
@@ -85,54 +88,71 @@ class Fragment_Enroll4 : Fragment() {
             //val currentTimeMillis = System.currentTimeMillis()
 
             if (pnameText.isNotBlank()) {
-                if (selectedImageUri != null) {
-                    val file = File(absolutelyPath(selectedImageUri, requireContext()))
-                    val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
-                    val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
+                if (ptemp_alarm == 1) {
+                    if (pcycleText.isNotBlank() && phourValue != 0 && pminuteValue != 0) {
+                        if (selectedImageUri != null) {
+                            val file = File(absolutelyPath(selectedImageUri, requireContext()))
+                            val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+                            val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
-                    // 이미지 업로드 후 콜백에서 식물 등록 요청
-                    uploadImageAndGetUrl(body) { imageUrl ->
-                        if (imageUrl != null) {
-                            if (ptemp_alarm == 1) {
-                                if (pcycleText.isNotBlank() && phourValue != 0 && pminuteValue != 0) {
+                            // 이미지 업로드 후 콜백에서 식물 등록 요청
+                            uploadImageAndGetUrl(body) { imageUrl ->
+                                if (imageUrl != null) {
+                                    Toast.makeText(requireContext(), "알람과 함께 등록", Toast.LENGTH_SHORT).show()
                                     GlobalScope.launch(Dispatchers.IO) {
-                                        enroll(uemail, pnameText, pdateText, ppointText, plocationText, pcycleText,
-                                            phourValue, pminuteValue, ptempText, phumidText, ptemp_alarm, phumid_alarm, imageUrl)
+                                        enroll(
+                                            uemail, pnameText, pdateText, ppointText, plocationText, pcycleText,
+                                            phourValue, pminuteValue, ptempText, phumidText, ptemp_alarm, phumid_alarm, imageUrl
+                                        )
                                     }
                                 } else {
-                                    AlertDialog.Builder(requireContext())
-                                        .setTitle("With P")
-                                        .setMessage("알람을 받기 위한 시간과 주기를 설정하세요.")
-                                        .setPositiveButton("확인") { dialog, _ ->
-                                            dialog.dismiss()
-                                        }
-                                        .show()
-                                }
-                            } else {
-                                GlobalScope.launch(Dispatchers.IO) {
-                                    enroll(uemail, pnameText, pdateText, ppointText, plocationText, pcycleText,
-                                        phourValue, pminuteValue, ptempText, phumidText, ptemp_alarm, phumid_alarm, imageUrl)
+                                    Toast.makeText(requireContext(), "이미지 업로드 실패", Toast.LENGTH_SHORT).show()
                                 }
                             }
                         } else {
-                            // 이미지 업로드 실패 처리
-                            Toast.makeText(requireContext(), "이미지 uri가있으나 서버로부터 url을 받지못함", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "이미지 없이 등록", Toast.LENGTH_SHORT).show()
+                            GlobalScope.launch(Dispatchers.IO) {
+                                enroll(
+                                    uemail, pnameText, pdateText, ppointText, plocationText, pcycleText,
+                                    phourValue, pminuteValue, ptempText, phumidText, ptemp_alarm, phumid_alarm, ImageUrl
+                                )
+                            }
                         }
+                    } else {
+                        showdialog("식물 등록 실패", "시간과 주기를 설정하세요.", "확인")
                     }
                 } else {
-                    GlobalScope.launch(Dispatchers.IO) {
-                        enroll(uemail, pnameText, pdateText, ppointText, plocationText, pcycleText,
-                            phourValue, pminuteValue, ptempText, phumidText, ptemp_alarm, phumid_alarm, ImageUrl)
+                    if (selectedImageUri != null) {
+                        val file = File(absolutelyPath(selectedImageUri, requireContext()))
+                        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+                        val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
+
+                        // 이미지 업로드 후 콜백에서 식물 등록 요청
+                        uploadImageAndGetUrl(body) { imageUrl ->
+                            if (imageUrl != null) {
+                                Toast.makeText(requireContext(), "알람 없이 등록", Toast.LENGTH_SHORT).show()
+                                GlobalScope.launch(Dispatchers.IO) {
+                                    enroll(
+                                        uemail, pnameText, pdateText, ppointText, plocationText, pcycleText,
+                                        phourValue, pminuteValue, ptempText, phumidText, ptemp_alarm, phumid_alarm, imageUrl
+                                    )
+                                }
+                            } else {
+                                Toast.makeText(requireContext(), "이미지 업로드 실패", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), "이미지 없이 등록", Toast.LENGTH_SHORT).show()
+                        GlobalScope.launch(Dispatchers.IO) {
+                            enroll(
+                                uemail, pnameText, pdateText, ppointText, plocationText, pcycleText,
+                                phourValue, pminuteValue, ptempText, phumidText, ptemp_alarm, phumid_alarm, ImageUrl
+                            )
+                        }
                     }
                 }
             } else {
-                AlertDialog.Builder(requireContext())
-                    .setTitle("With P")
-                    .setMessage("식물의 이름을 입력해주세요.")
-                    .setPositiveButton("확인") { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .show()
+                showdialog("식물 등록 실패", "식물의 이름을 입력해주세요.", "확인")
             }
         }
         return view
@@ -232,35 +252,28 @@ class Fragment_Enroll4 : Fragment() {
                 // 서버로부터의 응답에 따라 처리
                 if (result == "registration successful") {
                     launch(Dispatchers.Main) {
-                        //메인화면으로 넘어감
-                        //val intent2 = Intent(requireContext(), HomeActivity::class.java)
-                        //intent2.putExtra("userEmail", uemail)
-                        //startActivity(intent2)
-                        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-
-                        // PlantEnrollFragment 인스턴스를 생성합니다.
+                        val fragmentManager = requireActivity().supportFragmentManager
+                        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                        val bundle = Bundle().apply {
+                            putString("userEmail", userEmail)
+                        }
                         val fragment = Fragment_Home()
-                        val bundle = Bundle()
-
-                        // Bundle에 데이터를 담습니다.
-                        bundle.putString("userEmail", userEmail)
-
-                        // Fragment에 Bundle을 설정합니다.
                         fragment.arguments = bundle
 
-                        // FragmentTransaction을 사용하여 PlantEnrollFragment로 전환합니다.
+                        // 프래그먼트 교체
+                        val transaction = fragmentManager.beginTransaction()
                         transaction.replace(R.id.container, fragment)
-                        transaction.addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 back stack에 추가합니다.
-                        transaction.commit() // 변경 사항을 적용합니다.
+                        transaction.commit()
                     }
                 } else {
                     launch(Dispatchers.Main) {
-                        AlertDialog.Builder(requireContext())
-                            .setTitle("With P")
-                            .setMessage("등록 실패")
-                            .setPositiveButton("확인") { dialog, which -> Log.d("MyTag", "positive") }
-                            .create()
-                            .show()
+//                        AlertDialog.Builder(requireContext())
+//                            .setTitle("With P")
+//                            .setMessage("등록 실패")
+//                            .setPositiveButton("확인") { dialog, which -> Log.d("MyTag", "positive") }
+//                            .create()
+//                            .show()
+                        showdialog("", "식물 등록에 실패하였습니다.", "확인")
                     }
                 }
 
@@ -272,6 +285,30 @@ class Fragment_Enroll4 : Fragment() {
             }
         }
     }
+
+    private fun showdialog(title: String, message: String, buttonText: String) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.custom_dialog2, null)
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+
+        val dialog = dialogBuilder.create()
+
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.dialogTitle)
+        val dialogMessage = dialogView.findViewById<TextView>(R.id.dialogMessage)
+        val positiveButton = dialogView.findViewById<Button>(R.id.dialogButton)
+
+        dialogTitle.text = title
+        dialogMessage.text = message
+        positiveButton.text = buttonText
+
+        positiveButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
     //uri로 이미지의 절대경로 얻어오기
     private fun absolutelyPath(path: Uri?, context: Context): String{
         var proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)

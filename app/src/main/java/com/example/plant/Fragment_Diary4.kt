@@ -10,6 +10,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -26,6 +28,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
@@ -66,8 +69,8 @@ class Fragment_Diary4: Fragment() {
     private var enrollTime: String = ""
     private var diaryTitle: String = ""
     private var diaryContent: String = ""
-    private var imageUrl: String = "http://192.168.233.22:80/uploads/default5.png"
-    //private var imageUrl: String = "http://10.0.2.2/uploads/default5.png"
+    private var imageUrl: String = ImageUrl
+    //private var imageUrl: String = "http://192.168.233.22:80/uploads/default5.png"
     private var selectedImageUri: Uri? = null
     private val retrofit = Retrofit.Builder()
         .baseUrl("http://192.168.233.22:80/")
@@ -168,55 +171,105 @@ class Fragment_Diary4: Fragment() {
                         }
                     }
                 }else{
-                    AlertDialog.Builder(requireContext())
-                        .setTitle("With P")
-                        .setMessage("내용을 입력해주세요.")
-                        .setPositiveButton("확인") { dialog, _ ->
-                            dialog.dismiss() // 다이얼로그 닫기
-                        }
-                        .show()
+//                    AlertDialog.Builder(requireContext())
+//                        .setTitle("With P")
+//                        .setMessage("내용을 입력해주세요.")
+//                        .setPositiveButton("확인") { dialog, _ ->
+//                            dialog.dismiss() // 다이얼로그 닫기
+//                        }
+//                        .show()
+                    showdialog("다이어리 수정 실패", "내용을 입력해주세요.", "확인")
                 }
             }else{
-                AlertDialog.Builder(requireContext())
-                    .setTitle("With P")
-                    .setMessage("제목을 입력해주세요.")
-                    .setPositiveButton("확인") { dialog, _ ->
-                        dialog.dismiss() // 다이얼로그 닫기
-                    }
-                    .show()
+//                AlertDialog.Builder(requireContext())
+//                    .setTitle("With P")
+//                    .setMessage("제목을 입력해주세요.")
+//                    .setPositiveButton("확인") { dialog, _ ->
+//                        dialog.dismiss() // 다이얼로그 닫기
+//                    }
+//                    .show()
+                showdialog("다이어리 수정 실패", "제목을 입력해주세요.", "확인")
             }
             //replaceFragment(Fragment_Diary3())
         }
         cancelBtn.setOnClickListener {
-            Log.d("Fragment_Diary3", "Before button clicked: diaryDate=$dDate, plantId=$plantId, userEmail=$userEmail, plantName=$plantName")
             replaceFragment(Fragment_Diary3())
+           /* Log.d("Fragment_Diary3", "Before button clicked: diaryDate=$dDate, plantId=$plantId, userEmail=$userEmail, plantName=$plantName")
+            //replaceFragment(Fragment_Diary3())
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+
+            val fragment = Fragment_Diary3()
+            val bundle = Bundle()
+
+            bundle.putInt("itemId", diaryId)
+            bundle.putInt("plantId", plantId)
+            bundle.putString("plantName", plantName)
+            bundle.putString("userEmail", userEmail)
+            bundle.putString("diaryTitle", diaryTitle)
+            bundle.putString("diaryContent", diaryContent)
+            bundle.putString("imageUrl", imageUrl)
+            bundle.putString("diaryDate", dDate)
+            bundle.putString("enrollTime", enrollTime)
+
+            // Fragment에 Bundle을 설정
+            fragment.arguments = bundle
+
+            // FragmentTransaction을 사용하여 PlantEnrollFragment로 전환
+            transaction.replace(R.id.container, fragment)
+            transaction.addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 back stack에 추가
+            transaction.commit() // 변경 사항을 적용*/
         }
 
         return view
     }
-    private fun replaceFragment(fragment: Fragment){
-        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+    private fun replaceFragment(fragment: Fragment){/*
+        val fragmentManager = requireActivity().supportFragmentManager
 
-        val fragment = fragment
-        val bundle = Bundle()
+        // 백 스택 비우기
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 
-        bundle.putInt("itemId", diaryId)
-        bundle.putInt("plantId", plantId)
-        bundle.putString("plantName", plantName)
-        bundle.putString("userEmail", userEmail)
-        bundle.putString("diaryTitle", diaryTitle)
-        bundle.putString("diaryContent", diaryContent)
-        bundle.putString("imageUrl", imageUrl)
-        bundle.putString("diaryDate", dDate)
-        bundle.putString("enrollTime", enrollTime)
+        val bundle = Bundle().apply {
+            putInt("itemId", diaryId)
+            putInt("plantId", plantId)
+            putString("plantName", plantName)
+            putString("userEmail", userEmail)
+            putString("diaryTitle", diaryTitle)
+            putString("diaryContent", diaryContent)
+            putString("imageUrl", imageUrl)
+            putString("diaryDate", dDate)
+            putString("enrollTime", enrollTime)
+        }
 
-        // Fragment에 Bundle을 설정
         fragment.arguments = bundle
 
-        // FragmentTransaction을 사용하여 PlantEnrollFragment로 전환
+        // 프래그먼트 교체
+        val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.container, fragment)
-        transaction.addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 back stack에 추가
-        transaction.commit() // 변경 사항을 적용
+        transaction.commit()*/
+        val fragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.popBackStack(
+            fragmentManager.getBackStackEntryAt(0).id,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
+
+
+        val bundle = Bundle().apply {
+            putInt("itemId", diaryId)
+            putInt("plantId", plantId)
+            putString("plantName", plantName)
+            putString("userEmail", userEmail)
+            putString("diaryTitle", diaryTitle)
+            putString("diaryContent", diaryContent)
+            putString("imageUrl", imageUrl)
+            putString("diaryDate", dDate)
+            putString("enrollTime", enrollTime)
+        }
+        fragment.arguments = bundle
+
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK)
@@ -319,12 +372,13 @@ class Fragment_Diary4: Fragment() {
                     }
                 } else {
                     launch(Dispatchers.Main) {
-                        AlertDialog.Builder(requireContext())
-                            .setTitle("With P")
-                            .setMessage("등록 실패")
-                            .setPositiveButton("확인") { dialog, which -> Log.d("MyTag", "positive") }
-                            .create()
-                            .show()
+//                        AlertDialog.Builder(requireContext())
+//                            .setTitle("With P")
+//                            .setMessage("등록 실패")
+//                            .setPositiveButton("확인") { dialog, which -> Log.d("MyTag", "positive") }
+//                            .create()
+//                            .show()
+                        showdialog("", "다이어리 수정에 실패하였습니다.", "확인")
                     }
                 }
 
@@ -336,6 +390,31 @@ class Fragment_Diary4: Fragment() {
             }
         }
     }
+
+    private fun showdialog(title: String, message: String, buttonText: String) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.custom_dialog2, null)
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+
+        val dialog = dialogBuilder.create()
+
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.dialogTitle)
+        val dialogMessage = dialogView.findViewById<TextView>(R.id.dialogMessage)
+        val positiveButton = dialogView.findViewById<Button>(R.id.dialogButton)
+
+        dialogTitle.text = title
+        dialogMessage.text = message
+        positiveButton.text = buttonText
+
+        positiveButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+
     private fun absolutelyPath(path: Uri?, context: Context): String{
         var proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
         var c: Cursor? = context.contentResolver.query(path!!, proj, null, null, null)

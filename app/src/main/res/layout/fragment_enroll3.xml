@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="630dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -17,13 +17,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:gravity="center"
             android:padding="10dp">
 
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="물주기 주기 설정"
                 android:textSize="24sp"

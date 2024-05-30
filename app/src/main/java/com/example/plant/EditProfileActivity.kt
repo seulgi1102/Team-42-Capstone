@@ -10,12 +10,15 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.media.Image
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -111,9 +114,11 @@ class EditProfileActivity : AppCompatActivity(){
         profileIntroduce.setText(userIntroduce)
         cancelBtn.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             intent.putExtra("userEmail", userEmail)
             intent.putExtra("userName", userName)
             startActivity(intent)
+            finish()
         }
         editBtn.setOnClickListener {
             val userName = profileUserName.text.toString()
@@ -143,22 +148,24 @@ class EditProfileActivity : AppCompatActivity(){
                         }
                     }
                 }else{
-                    AlertDialog.Builder(this)
-                        .setTitle("With P")
-                        .setMessage("내용을 입력해주세요.")
-                        .setPositiveButton("확인") { dialog, _ ->
-                            dialog.dismiss() // 다이얼로그 닫기
-                        }
-                        .show()
+//                    AlertDialog.Builder(this)
+//                        .setTitle("With P")
+//                        .setMessage("내용을 입력해주세요.")
+//                        .setPositiveButton("확인") { dialog, _ ->
+//                            dialog.dismiss() // 다이얼로그 닫기
+//                        }
+//                        .show()
+                    showDialog("프로필 수정 실패", "자기소개를 입력해주세요.", "확인")
                 }
             }else{
-                AlertDialog.Builder(this)
-                    .setTitle("With P")
-                    .setMessage("제목을 입력해주세요.")
-                    .setPositiveButton("확인") { dialog, _ ->
-                        dialog.dismiss() // 다이얼로그 닫기
-                    }
-                    .show()
+//                AlertDialog.Builder(this)
+//                    .setTitle("With P")
+//                    .setMessage("제목을 입력해주세요.")
+//                    .setPositiveButton("확인") { dialog, _ ->
+//                        dialog.dismiss() // 다이얼로그 닫기
+//                    }
+//                    .show()
+                showDialog("프로필 수정 실패", "닉네임을 입력해주세요.", "확인")
             }
         }
         gallery.setOnClickListener {
@@ -172,6 +179,31 @@ class EditProfileActivity : AppCompatActivity(){
             requestPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
     }
+
+    private fun showDialog(title: String, message: String, buttonText: String) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog2, null)
+        val dialogBuilder = AlertDialog.Builder(this)
+            .setView(dialogView)
+
+        val dialog = dialogBuilder.create()
+        dialog.show()
+        //레이아웃 배경 투명하게 해줌
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.dialogTitle)
+        val dialogMessage = dialogView.findViewById<TextView>(R.id.dialogMessage)
+        val dialogButton = dialogView.findViewById<Button>(R.id.dialogButton)
+
+        dialogTitle.text = title
+        dialogMessage.text = message
+        dialogButton.text = buttonText
+
+        dialogButton.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
+
     private fun uploadImageAndGetUrl(body: MultipartBody.Part, callback: (String?) -> Unit) {
         apiService.sendImage(body).enqueue(object : Callback<ImageUploadResponse> {
             override fun onResponse(call: Call<ImageUploadResponse>, response: Response<ImageUploadResponse>) {
@@ -300,18 +332,21 @@ class EditProfileActivity : AppCompatActivity(){
                     launch(Dispatchers.Main) {
                         //Fragment_Diary1 으로 넘어감
                         val intent = Intent(this@EditProfileActivity, ProfileActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         intent.putExtra("userEmail", userEmail)
                         intent.putExtra("userName", userName)
                         startActivity(intent)
+                        finish()
                     }
                 } else {
                     launch(Dispatchers.Main) {
-                        AlertDialog.Builder(this@EditProfileActivity)
-                            .setTitle("With P")
-                            .setMessage("등록 실패")
-                            .setPositiveButton("확인") { dialog, which -> Log.d("MyTag", "positive") }
-                            .create()
-                            .show()
+//                        AlertDialog.Builder(this@EditProfileActivity)
+//                            .setTitle("With P")
+//                            .setMessage("등록 실패")
+//                            .setPositiveButton("확인") { dialog, which -> Log.d("MyTag", "positive") }
+//                            .create()
+//                            .show()
+                        showDialog("", "프로필 수정에 실패하였습니다.", "확인")
                     }
                 }
 
@@ -341,6 +376,15 @@ class EditProfileActivity : AppCompatActivity(){
 
             }
         }
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // Create an intent to navigate to the home screen activity
+        val intent = Intent(this@EditProfileActivity, ProfileActivity::class.java)
+        // Optional: Add flags to clear the activity stack if necessary
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
     //uri로 이미지의 절대경로 얻어오기
     private fun absolutelyPath(path: Uri?, context: Context): String{

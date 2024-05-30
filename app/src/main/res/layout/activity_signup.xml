@@ -31,7 +31,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:padding="5dp"
-            android:text="그린텀"
+            android:text="GreenThumb"
             android:textColor="#FFFFFF"
             android:textSize="25dp"
             android:textStyle="bold" />

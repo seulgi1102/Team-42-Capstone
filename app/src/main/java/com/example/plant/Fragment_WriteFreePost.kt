@@ -50,6 +50,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.ByteArrayOutputStream
 import ApiService
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import androidx.fragment.app.FragmentManager
+
 class Fragment_WriteFreePost : Fragment() {
     //private lateinit var FreeBoardFragment: Fragment_FreeBoard
     private lateinit var titleText: EditText
@@ -57,6 +61,8 @@ class Fragment_WriteFreePost : Fragment() {
     private lateinit var imageView: ImageView
     private lateinit var camera: ImageButton
     private lateinit var contentText: EditText
+    private lateinit var backbtn: Button
+    private var post_date: String? = null
     private lateinit var postbtn: Button
     private var userEmail: String? = null
     private var board_type: Int? = null
@@ -133,6 +139,7 @@ class Fragment_WriteFreePost : Fragment() {
             post_title = it.getString("post_title")
             post_content = it.getString("post_content")
             post_num = it.getInt("post_num")
+            post_date = it.getString("post_date")
             task = it.getString("task")
         }
         writerText = view.findViewById(R.id.writerText)
@@ -146,9 +153,14 @@ class Fragment_WriteFreePost : Fragment() {
             contentText = view.findViewById(R.id.contentText)
             imageView = view.findViewById(R.id.imageView)
             camera = view.findViewById(R.id.camera)
+            backbtn = view.findViewById(R.id.backbtn)
+            backbtn.setOnClickListener {
+                replaceFragment(Fragment_FreeBoard())
+            }
 
             //게시물 작성 시 사진 등록 기능
             camera.setOnClickListener {
+                /*
                 // 다이얼로그 생성
                 val options = arrayOf("카메라 촬영", "갤러리에서 가져오기")
                 val builder = AlertDialog.Builder(requireContext())
@@ -176,8 +188,12 @@ class Fragment_WriteFreePost : Fragment() {
                     }
                 }
                 // 다이얼로그 표시
-                builder.show()
-            }
+                builder.show()*/
+                imagedialog("", "사진 불러오기", "카메라 촬영", "갤러리에서\n가져오기")
+
+
+        }
+
 
             //작성 버튼 누르면 데이터 저장
             postbtn = view.findViewById(R.id.postbtn)
@@ -186,7 +202,7 @@ class Fragment_WriteFreePost : Fragment() {
                 val title = titleText.text.toString()
                 val content = contentText.text.toString()
 
-                if (title.isNotEmpty() || content.isNotEmpty()) {
+                if (title.isNotEmpty() && content.isNotEmpty()) {
 //                    val currentDate = Calendar.getInstance().time
 //                    val dateFormat = SimpleDateFormat("yyyy / MM / dd", Locale.getDefault())
 //                    val formattedDate = dateFormat.format(currentDate)
@@ -204,6 +220,13 @@ class Fragment_WriteFreePost : Fragment() {
                     }
                     // 데이터베이스에 데이터 삽입
                     //insertPost(writer, title, content, postDate)
+                } else {
+                    if(title.isEmpty()) {
+                        showdialog("게시물 저장 실패", "제목을 입력해주세요.", "확인")
+                    }
+                    if(content.isEmpty()) {
+                        showdialog("게시물 저장 실패", "내용을 입력해주세요.", "확인")
+                    }
                 }
 
             }
@@ -217,7 +240,32 @@ class Fragment_WriteFreePost : Fragment() {
             contentText.setText(post_content)
             postbtn = view.findViewById(R.id.postbtn)
             postbtn.text = "수정"
-
+            backbtn = view.findViewById(R.id.backbtn)
+            backbtn.setOnClickListener {
+                //수정됨
+                val fragmentManager = requireActivity().supportFragmentManager
+                fragmentManager.popBackStack(
+                    fragmentManager.getBackStackEntryAt(0).id,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE
+                )
+                val fragment = Fragment_Viewpost().apply {
+                    arguments = Bundle().apply {
+                        putString("post_num", post_num.toString())
+                        putString("board_type", board_type.toString())
+                        putString("post_title", post_title)
+                        putString("post_content", post_content)
+                        putString("post_writer", userEmail)
+                        putString("post_date", post_date)
+                        //현재 로그인된 사용자
+                        putString("userEmail", userEmail)
+                        putBoolean("is_equal", true) // 수정 가능 여부를 전달
+                    }
+                }
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.container, fragment) // container는 프래그먼트가 표시될 영역의 ID
+                transaction.addToBackStack(null) // 뒤로 가기 버튼을 눌렀을 때 이전 화면으로 돌아갈 수 있도록 스택에 추가
+                transaction.commit()
+            }
             camera = view.findViewById(R.id.camera)
 
             //이미지 불러오기
@@ -227,32 +275,33 @@ class Fragment_WriteFreePost : Fragment() {
             //사진 수정할 수 있도록 하기
             camera.setOnClickListener {
                 // 다이얼로그 생성
-                val options = arrayOf("카메라 촬영", "갤러리에서 가져오기")
-                val builder = AlertDialog.Builder(requireContext())
-                builder.setTitle("사진 불러오기")
-                builder.setItems(options) { dialog, which ->
-                    when (which) {
-                        0 -> {
-                            // 카메라 촬영 기능 실행
-                            cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
-//                            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//                            cameraLauncher.launch(cameraIntent)
-                        }
-                        1 -> {
-                            // 갤러리에서 이미지 가져오기 기능 실행
-                            //이미지 권한확인, sdk 33이상이면 READ_MEDIA_IMAGES, 이하면 READ_EXTERNAL_STORAGE
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-                                galleryPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
-                            else
-                                galleryPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-//                            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//                            galleryLauncher.launch(galleryIntent)
-                        }
-                    }
-                }
-                // 다이얼로그 표시
-                builder.show()
-            }
+//                val options = arrayOf("카메라 촬영", "갤러리에서 가져오기")
+//                val builder = AlertDialog.Builder(requireContext())
+//                builder.setTitle("사진 불러오기")
+//                builder.setItems(options) { dialog, which ->
+//                    when (which) {
+//                        0 -> {
+//                            // 카메라 촬영 기능 실행
+//                            cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+////                            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+////                            cameraLauncher.launch(cameraIntent)
+//                        }
+//                        1 -> {
+//                            // 갤러리에서 이미지 가져오기 기능 실행
+//                            //이미지 권한확인, sdk 33이상이면 READ_MEDIA_IMAGES, 이하면 READ_EXTERNAL_STORAGE
+//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+//                                galleryPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
+//                            else
+//                                galleryPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+////                            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+////                            galleryLauncher.launch(galleryIntent)
+//                        }
+//                    }
+//                }
+//                // 다이얼로그 표시
+//                builder.show()
+                imagedialog("", "사진 불러오기", "카메라 촬영", "갤러리에서\n가져오기")
+         }
 
             //수정 버튼 누르면 데이터 수정
             postbtn.setOnClickListener {
@@ -260,7 +309,7 @@ class Fragment_WriteFreePost : Fragment() {
                 val title = titleText.text.toString()
                 val content = contentText.text.toString()
 
-                if (title.isNotEmpty() || content.isNotEmpty()) {
+                if (title.isNotEmpty() && content.isNotEmpty()) {
 //                    val currentDate = Calendar.getInstance().time
 //                    val dateFormat = SimpleDateFormat("yyyy / MM / dd", Locale.getDefault())
 //                    val formattedDate = dateFormat.format(currentDate)
@@ -276,6 +325,13 @@ class Fragment_WriteFreePost : Fragment() {
                     }
                     // 데이터베이스에 데이터 삽입
                     //editPost(writer, title, content, postDate)
+                } else {
+                    if(title.isEmpty()) {
+                        showdialog("게시물 수정 실패", "제목을 입력해주세요.", "확인")
+                    }
+                    if(content.isEmpty()) {
+                        showdialog("게시물 수정 실패", "내용을 입력해주세요.", "확인")
+                    }
                 }
             }
         }
@@ -528,9 +584,69 @@ class Fragment_WriteFreePost : Fragment() {
             }
         })
     }
+    private fun showdialog(title: String, message: String, buttonText: String) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.custom_dialog2, null)
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
 
+        val dialog = dialogBuilder.create()
+
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.dialogTitle)
+        val dialogMessage = dialogView.findViewById<TextView>(R.id.dialogMessage)
+        val positiveButton = dialogView.findViewById<Button>(R.id.dialogButton)
+
+        dialogTitle.text = title
+        dialogMessage.text = message
+        positiveButton.text = buttonText
+
+        positiveButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    private fun imagedialog(title: String, message: String, buttonText1: String, buttonText2: String) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.custom_dialog, null)
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+
+        val dialog = dialogBuilder.create()
+
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.dialogTitle)
+        val dialogMessage = dialogView.findViewById<TextView>(R.id.dialogMessage)
+        val positiveButton = dialogView.findViewById<Button>(R.id.positiveButton)
+        val negativeButton = dialogView.findViewById<Button>(R.id.negativeButton)
+
+        dialogTitle.text = title
+        dialogMessage.text = message
+        positiveButton.text = buttonText1
+        negativeButton.text = buttonText2
+
+        positiveButton.setOnClickListener {
+            cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+            dialog.dismiss()
+        }
+
+        negativeButton.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                galleryPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
+            else
+                galleryPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
 
     private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.popBackStack(
+            fragmentManager.getBackStackEntryAt(0).id,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
         val bundle = Bundle().apply {
             putString("userEmail", userEmail)
             board_type?.let { putInt("board_type", it) }

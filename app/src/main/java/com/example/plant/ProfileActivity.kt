@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import de.hdodenhof.circleimageview.CircleImageView
@@ -61,10 +63,13 @@ class ProfileActivity : AppCompatActivity(){
         cancelBtn = findViewById(R.id.closeProfilePage)
         cancelBtn.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             intent.putExtra("userEmail", userItem.getUemail())
             intent.putExtra("userName", userItem.getUid())
             intent.putExtra("imageUrl", userItem.getUimageurl())
             startActivity(intent)
+            //replaceFragment(Fragment_Home())
+
         }
         editBtn = findViewById(R.id.editProfilePage)
         editBtn.setOnClickListener {
@@ -76,7 +81,15 @@ class ProfileActivity : AppCompatActivity(){
             startActivity(intent)
         }
     }
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // Create an intent to navigate to the home screen activity
+        val intent = Intent(this@ProfileActivity, HomeActivity::class.java)
+        // Optional: Add flags to clear the activity stack if necessary
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
     private fun getUserInfo(userEmail: String) {
         val url = URL("http://192.168.233.22:80/getuserinfo.php")
         val connection = url.openConnection() as HttpURLConnection
@@ -140,5 +153,40 @@ class ProfileActivity : AppCompatActivity(){
     private fun handleFailure() {
 
     }
+    private fun replaceFragment(fragment: Fragment) {
+        /*
+        val fragmentManager = this.supportFragmentManager
+        if (fragmentManager.backStackEntryCount > 0) {
+            // 현재 프래그먼트와 이동할 프래그먼트 사이에 등록된 스택들만 제거
+            fragmentManager.popBackStack(
+                fragmentManager.getBackStackEntryAt(0).id,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )
+        }
 
+        val bundle = Bundle().apply {
+            putString("userEmail", userItem.getUemail())
+            putString("imageUrl", userItem.getUimageurl())
+            putString("userName", userItem.getUid())
+        }
+        fragment.arguments = bundle
+
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.commit()
+        */
+        val fragmentManager = this.supportFragmentManager
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        val bundle = Bundle().apply {
+            putString("userEmail", userItem.getUemail())
+            putString("imageUrl", userItem.getUimageurl())
+            putString("userName", userItem.getUid())
+        }
+        fragment.arguments = bundle
+
+        // 프래그먼트 교체
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.commit()
+    }
 }

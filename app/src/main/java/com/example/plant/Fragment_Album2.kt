@@ -3,6 +3,7 @@ package com.example.plant
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,9 +14,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.github.clans.fab.FloatingActionMenu
+import com.github.clans.fab.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -54,7 +57,8 @@ class Fragment_Album2 : Fragment() {
     private lateinit var ptempHumidAlarm:TextView
     private lateinit var point: TextView
     private lateinit var beforeBtn: ImageView
-    private lateinit var editBtn:FloatingActionButton
+    private lateinit var floatingActionMenu: FloatingActionMenu
+    private lateinit var editBtn: FloatingActionButton
     private lateinit var deleteBtn: FloatingActionButton
 
     @SuppressLint("MissingInflatedId")
@@ -95,6 +99,7 @@ class Fragment_Album2 : Fragment() {
         image = view.findViewById(R.id.detailImageView)
         ptempHumidAlarm =view.findViewById(R.id.tempHumidAlarm)
         beforeBtn = view.findViewById(R.id.beforeBtn)
+        floatingActionMenu = view.findViewById(R.id.floatingActionMenu)
         editBtn = view.findViewById(R.id.editBtn)
         deleteBtn = view.findViewById(R.id.deleteBtn)
 
@@ -129,14 +134,16 @@ class Fragment_Album2 : Fragment() {
             replaceFragment(Fragment_Album())
         }
         deleteBtn.setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setTitle("플랜텀")
-                .setMessage("정말 삭제하시겠습니까?")
-                .setPositiveButton("삭제") { dialog, _ ->
-                    deletePlant(plantId)
-                    dialog.dismiss() // 다이얼로그 닫기
-                }
-                .show()
+//            AlertDialog.Builder(requireContext())
+//                .setTitle("플랜텀")
+//                .setMessage("정말 삭제하시겠습니까?")
+//                .setPositiveButton("삭제") { dialog, _ ->
+//                    deletePlant(plantId)
+//                    floatingActionMenu.close(true)
+//                    dialog.dismiss() // 다이얼로그 닫기
+//                }
+//                .show()
+            deleteDialog(plantId)
         }
         editBtn.setOnClickListener {
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -170,6 +177,39 @@ class Fragment_Album2 : Fragment() {
         }
         return view
     }
+
+    private fun deleteDialog(plantid: Int) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.custom_dialog, null)
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+
+        val dialog = dialogBuilder.create()
+
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.dialogTitle)
+        val dialogMessage = dialogView.findViewById<TextView>(R.id.dialogMessage)
+        val positiveButton = dialogView.findViewById<Button>(R.id.positiveButton)
+        val negativeButton = dialogView.findViewById<Button>(R.id.negativeButton)
+
+        dialogTitle.text = "앨범 삭제"
+        dialogMessage.text = "정말로 이 앨범을 삭제하시겠습니까?"
+        positiveButton.text = "삭제"
+        negativeButton.text = "취소"
+
+        positiveButton.setOnClickListener {
+            deletePlant(plantid)
+            dialog.dismiss()
+            floatingActionMenu.close(true)
+        }
+
+        negativeButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+
     private fun deletePlant(plantid: Int) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
@@ -215,12 +255,13 @@ class Fragment_Album2 : Fragment() {
                     }
                 } else {
                     launch(Dispatchers.Main) {
-                        AlertDialog.Builder(requireContext())
-                            .setTitle("플랜텀")
-                            .setMessage("삭제 실패")
-                            .setPositiveButton("확인") { dialog, which -> Log.d("MyTag", "positive") }
-                            .create()
-                            .show()
+//                        AlertDialog.Builder(requireContext())
+//                            .setTitle("플랜텀")
+//                            .setMessage("삭제 실패")
+//                            .setPositiveButton("확인") { dialog, which -> Log.d("MyTag", "positive") }
+//                            .create()
+//                            .show()
+                        showdialog()
                     }
                 }
             } catch (e: Exception) {
@@ -231,7 +272,33 @@ class Fragment_Album2 : Fragment() {
             }
         }
     }
+
+
+    private fun showdialog() {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.custom_dialog2, null)
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+
+        val dialog = dialogBuilder.create()
+
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.dialogTitle)
+        val dialogMessage = dialogView.findViewById<TextView>(R.id.dialogMessage)
+        val positiveButton = dialogView.findViewById<Button>(R.id.dialogButton)
+
+        dialogTitle.text = "앨범 삭제"
+        dialogMessage.text = "앨범 삭제에 실패했습니다."
+        positiveButton.text = "확인"
+
+        positiveButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
     private fun replaceFragment(fragment: Fragment){
+        /*
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
 
         val fragment = fragment
@@ -246,6 +313,21 @@ class Fragment_Album2 : Fragment() {
         // FragmentTransaction을 사용하여 PlantEnrollFragment로 전환
         transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 back stack에 추가
-        transaction.commit() // 변경 사항을 적용
+        transaction.commit() // 변경 사항을 적용*/
+        val fragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.popBackStack(
+            fragmentManager.getBackStackEntryAt(1).id,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
+
+        val bundle = Bundle()
+
+        bundle.putString("userEmail", userEmail)
+        fragment.arguments = bundle
+
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }

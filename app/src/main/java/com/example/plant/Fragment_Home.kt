@@ -40,11 +40,11 @@ class Fragment_Home : Fragment() {
     private lateinit var FragmentRecommendPlant4: Fragment_Recommend_Plant4
     private lateinit var FragmentRecommendPlant5: Fragment_Recommend_Plant5
     private lateinit var FragmentRecommendPlant6: Fragment_Recommend_Plant6
-    private lateinit var step1:LinearLayout
-    private lateinit var step2:LinearLayout
-    private lateinit var step3:LinearLayout
-    private lateinit var step4:LinearLayout
-    private lateinit var step5:LinearLayout
+    private lateinit var step1:Fragment_Step1
+    private lateinit var step2:Fragment_Step2
+    private lateinit var step3:Fragment_Step3
+    private lateinit var step4:Fragment_Step4
+    private lateinit var step5:Fragment_Step5
     private lateinit var recyclerView: RecyclerView
     private lateinit var enrollBtn: Button
     private var userEmail: String? = null
@@ -85,6 +85,7 @@ class Fragment_Home : Fragment() {
 
         plantAdapter = RecyclerViewPlantAdapter(pList)
         recyclerView.adapter = plantAdapter
+       // plantAdapter.updateData(pList)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
         recyclerView.addItemDecoration(RecyclerViewDecoration(30))
 
@@ -172,26 +173,61 @@ class Fragment_Home : Fragment() {
             replaceFragment(FragmentRecommendPlant6)
         }
 
-        step1 = view.findViewById(R.id.step1)
-        step2 = view.findViewById(R.id.step2)
-        step3 = view.findViewById(R.id.step3)
-        step4 = view.findViewById(R.id.step4)
-        step5 = view.findViewById(R.id.step5)
+        val step1btn : LinearLayout = view.findViewById(R.id.step1)
+        val step2btn : LinearLayout = view.findViewById(R.id.step2)
+        val step3btn : LinearLayout = view.findViewById(R.id.step3)
+        val step4btn : LinearLayout = view.findViewById(R.id.step4)
+        val step5btn : LinearLayout = view.findViewById(R.id.step5)
 
-        step1.setOnClickListener{
-            replaceFragment(Fragment_Step1())
+        step1btn.setOnClickListener{
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putString("imageUrl",imageUrl)
+            }
+            step1 = Fragment_Step1().apply {
+                arguments = bundle
+            }
+            replaceFragment(step1)
         }
-        step2.setOnClickListener{
-            replaceFragment(Fragment_Step2())
+        step2btn.setOnClickListener{
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putString("imageUrl",imageUrl)
+            }
+            step2 = Fragment_Step2().apply {
+                arguments = bundle
+            }
+            replaceFragment(step2)
         }
-        step3.setOnClickListener{
-            replaceFragment(Fragment_Step3())
+        step3btn.setOnClickListener{
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putString("imageUrl",imageUrl)
+            }
+            step3 = Fragment_Step3().apply {
+                arguments = bundle
+            }
+            replaceFragment(step3)
         }
-        step4.setOnClickListener{
-            replaceFragment(Fragment_Step4())
+        step4btn.setOnClickListener{
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putString("imageUrl",imageUrl)
+            }
+            step4 = Fragment_Step4().apply {
+                arguments = bundle
+            }
+            replaceFragment(step4)
         }
-        step5.setOnClickListener{
-            replaceFragment(Fragment_Step5())
+        step5btn.setOnClickListener{
+            val bundle = Bundle().apply {
+                putString("userEmail", userEmail)
+                putString("imageUrl",imageUrl)
+            }
+            step5 = Fragment_Step5().apply {
+                arguments = bundle
+            }
+            replaceFragment(step5)
         }
         return view
     }
@@ -258,7 +294,6 @@ class Fragment_Home : Fragment() {
             Log.d("MyTag", "Data retrieved successfully!")
         }
     }
-
     private suspend fun handleFailure() {
         withContext(Dispatchers.Main) {
             pList.clear()
@@ -273,9 +308,10 @@ class Fragment_Home : Fragment() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
+
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)
-            .addToBackStack(null)
+            //.addToBackStack(null)
             .commit()
     }
 }

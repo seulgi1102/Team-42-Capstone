@@ -282,6 +282,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -303,6 +304,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -311,6 +313,7 @@
                                 android:layout_weight="3"
                                 android:text="행운목"
                                 android:textSize="10sp"
+
                                 android:textStyle="bold" />
 
                             <TextView
@@ -363,7 +366,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
 
                     android:orientation="vertical"
@@ -424,19 +427,21 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:text="천남성과의 열대식물로 습도가 충분하고 따뜻한 반양지 환경에서 잘 자라는 관엽식물."
                             android:textSize="10sp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
-                            android:text="스파티필룸"
+                            android:text="스파티필름"
                             android:textSize="10sp"
                             android:textStyle="bold" />
 
@@ -444,13 +449,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:text="가습효과가 뛰어나고 그늘진 곳에서도 잘자라는 관엽식물."
                             android:textSize="10sp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
+                        android:layout_marginTop="3dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -465,6 +471,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:text="잎사귀가 아름답고 여름을 대표하는 천남성과의 여러해살이 관엽식물"
                             android:textSize="10sp" />
                     </LinearLayout>
                     </LinearLayout>
@@ -557,6 +564,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+
                             android:orientation="horizontal">
 
                             <TextView
@@ -578,6 +586,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -599,6 +608,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -729,6 +739,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -999,12 +1010,22 @@
                         android:orientation="vertical"
                         android:padding="5dp">
 
+                        <ImageView
+                            android:id="@+id/imageView7"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:background="@drawable/radius_clear"
+                            android:clipToOutline="true"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/greenhouse4" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/background_radius"
                             android:padding="3dp"
-                            android:text="원예센터 및 식물원"
+                            android:layout_marginTop="5dp"
+                            android:text="• 원예센터 및 식물원"
                             android:textStyle="bold" />
 
                         <TextView
@@ -1013,7 +1034,7 @@
                             android:layout_marginTop="5dp"
                             android:background="@drawable/background_radius"
                             android:padding="3dp"
-                            android:text="다양한 종류의 식물을 볼 수 있으며, 직접 확인하고 구매할 수 있음."
+                            android:text="• 다양한 종류의 식물을 볼 수 있으며, 직접 확인하고 구매할 수 있음."
                             android:textSize="10sp" />
                     </LinearLayout>
 
@@ -1025,12 +1046,22 @@
                         android:orientation="vertical"
                         android:padding="5dp">
 
+                        <ImageView
+                            android:id="@+id/imageView8"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:background="@drawable/radius_clear"
+                            android:clipToOutline="true"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/onlineshop" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/background_radius"
                             android:padding="3dp"
-                            android:text="온라인 쇼핑몰"
+                            android:layout_marginTop="5dp"
+                            android:text="• 온라인 쇼핑몰"
                             android:textStyle="bold" />
 
                         <TextView
@@ -1039,7 +1070,7 @@
                             android:layout_marginTop="5dp"
                             android:background="@drawable/background_radius"
                             android:padding="3dp"
-                            android:text="편리하게 다양한 식물을 비교하고 구매할 수 있음. 다만, 배송 중 식물의 상태가 악화될 수 있으므로 신뢰할 수 있는 판매처를 선택하는 것이 중요함."
+                            android:text="• 편리하게 다양한 식물을 비교하고 구매할 수 있음. 다만, 배송 중 식물의 상태가 악화될 수 있으므로 신뢰할 수 있는 판매처를 선택하는 것이 중요함."
                             android:textSize="10sp" />
                     </LinearLayout>
 
@@ -1051,12 +1082,22 @@
                         android:orientation="vertical"
                         android:padding="5dp">
 
+                        <ImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:background="@drawable/radius_clear"
+                            android:clipToOutline="true"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/greenhouse3" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/background_radius"
                             android:padding="3dp"
-                            android:text="농장 직판장"
+                            android:layout_marginTop="5dp"
+                            android:text="• 농장 직판장"
                             android:textStyle="bold" />
 
                         <TextView
@@ -1077,12 +1118,22 @@
                         android:orientation="vertical"
                         android:padding="5dp">
 
+                        <ImageView
+                            android:id="@+id/imageView9"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:background="@drawable/radius_clear"
+                            android:clipToOutline="true"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/flowerhouse" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/background_radius"
                             android:padding="3dp"
-                            android:text="플랜트 마켓"
+                            android:layout_marginTop="5dp"
+                            android:text="• 플랜트 마켓"
                             android:textStyle="bold" />
 
                         <TextView
@@ -1112,7 +1163,7 @@
                     android:gravity="center"
                     android:maxLines="1"
                     android:padding="5dp"
-                    android:text="네번째"
+                    android:text="마지막"
                     android:textColor="#3ABCDC"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -1143,7 +1194,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="고려해보기."
+                        android:text="고려해보기 . "
                         android:textSize="20sp" />
 
                 </LinearLayout>
@@ -1157,9 +1208,134 @@
                     android:ems="5"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:text="기타 고려 사항들"
+                    android:text="최종 고려 사항들"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius"
+                            android:padding="3dp"
+                            android:gravity="center"
+                            android:text="1. 빛의 조건"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/background_radius2"
+                            android:padding="3dp"
+                            android:gravity="center"
+                            android:text="식물이 자라기 위해 필요한 빛의 양을 고려해야 한다. 햇빛이 잘 드는 창가가 있는지, 간접 빛이 많은지에 따라 식물을 선택하기."
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius"
+                            android:padding="3dp"
+                            android:gravity="center"
+                            android:text="2. 물 주기"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/background_radius2"
+                            android:padding="3dp"
+                            android:gravity="center"
+                            android:text="물을 얼마나 자주 줘야 하는지에 대한 정보를 숙지하고, 식물의 요구에 맞는 물 주기 패턴을 유지하기."
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius"
+                            android:padding="3dp"
+                            android:gravity="center"
+                            android:text="3. 공간 크기"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_radius2"
+                            android:padding="3dp"
+                            android:gravity="center"
+                            android:text="식물이 자랄 공간의 크기를 고려하여 식물의 크기와 성장 속도를 감안한 식물을 선택하기."
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginBottom="100dp"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius"
+                            android:padding="3dp"
+                            android:gravity="center"
+                            android:text="4.온•습도"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/background_radius2"
+                            android:padding="3dp"
+                            android:gravity="center"
+                            android:text="실내 온도와 습도가 높으면 좋지 않은 식물과 높은 습도가 필요한 식물의 특성을 고려하여 선택하기."
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

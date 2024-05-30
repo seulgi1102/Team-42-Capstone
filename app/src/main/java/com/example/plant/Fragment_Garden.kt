@@ -15,9 +15,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.PopupMenu
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -51,6 +53,8 @@ class Fragment_Garden : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment__garden, container, false)
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.visibility = View.VISIBLE
         arguments?.let {
             userEmail = it.getString("userEmail")
             userName = it.getString("userName")
@@ -269,10 +273,17 @@ class Fragment_Garden : Fragment() {
 
     private fun getTipList(): ArrayList<String> {
         val fullTipList = arrayListOf(
-            "채광이 잘드는 장소를 찾은 다음에 무엇을 키울지 결정하는 것이 좋습니다.",
-            "지나치게 물을 많이 주지 말고 흙이 건조할 때 물을 주는 것이 좋습니다.",
-            "너무 강한 직사광선은 식물에게 해롭습니다.",
-            "식물의 잘 자라는 온도는 18~23도로 사람과 같습니다. 열대식물과 같이 습한 환경에서 잘 자라는 식물은 분무기로 2~3일에 한 번씩 물을 뿌려줍시다."
+            "채광이 잘드는 장소를 찾은 다음에 무엇을 키울지 결정하는 것이 좋다.",
+            "지나치게 물을 많이 주지 말고 흙이 건조할 때 물을 주는 것이 좋다.",
+            "너무 강한 직사광선은 식물에게 해롭다.",
+            "식물의 잘 자라는 온도는 18~23도로 사람과 같다. 열대식물과 같이 습한 환경에서 잘 자라는 식물은 분무기로 2~3일에 한 번씩 물을 뿌려준다.",
+            "공간이 좁아서 뿌리가 화분 속에 빽뺵히 자리 잡으면 식물을 결국 죽을 수밖에 없기 때문에 식물이 자랄 수 있는 여유공간이 중요하다. ",
+            "1년에 한 번 정도 확인한 후 분갈이를 해주는 것이 좋다.",
+            "실내용이라면 보통 반그늘에서 가장 잘 자라기에 너무 햇빛이 강한 곳에 키우지 않는 것이 좋다. ",
+            "매주 실외 식물을 최소한 이틀에 한 번 잘 자라고 있는 지 확인한다. 실내용이라고 하더라도 식물을 살펴보는 것으로 하루를 시작하는 습관을 들이는 것도 좋다.",
+            "인체에 해가 되지 않는 살충제나 달갈 껍질 등을 활용해서 해충들이 식물에 접근하지 못하게 신경 써야 한다.",
+            "물을 많이 줘야하는 종류도 있지만 대개 흙이 살짝 말랐을 때 물을 주면 되고 화분의 배수구로 빠질 정도로 넉넉하게 물을 줘야한다.",
+            "특히 초보들이 하는 실수중 하나인 물을 너무 자주 주는 것은 식물에게 독이 될 수 있다. "
         )
         val selectedTips = arrayListOf<String>()
         while (selectedTips.size < 3) {

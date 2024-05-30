@@ -30,8 +30,11 @@ import okhttp3.RequestBody
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentValues
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.widget.ImageButton
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -66,7 +69,7 @@ class Fragment_Diary2 : Fragment() {
     private var selectedImageUri: Uri? = null
     private lateinit var diaryTitle: EditText
     private lateinit var diaryContent: EditText
-    //private val ImageUrl = "http://192.168.233.22:80/uploads/default5.png"
+    //private val ImageUrl = "http://10.0.2.2/uploads/default.png"
 
     //retrofit 객체 생성
     private val retrofit = Retrofit.Builder()
@@ -151,22 +154,24 @@ class Fragment_Diary2 : Fragment() {
                         diaryEnroll(plantId, plantName, userEmail, dDate, title, content, ImageUrl)
                     }
                 }else{
-                    AlertDialog.Builder(requireContext())
-                        .setTitle("With P")
-                        .setMessage("내용을 입력해주세요.")
-                        .setPositiveButton("확인") { dialog, _ ->
-                            dialog.dismiss() // 다이얼로그 닫기
-                        }
-                        .show()
+//                    AlertDialog.Builder(requireContext())
+//                        .setTitle("With P")
+//                        .setMessage("내용을 입력해주세요.")
+//                        .setPositiveButton("확인") { dialog, _ ->
+//                            dialog.dismiss() // 다이얼로그 닫기
+//                        }
+//                        .show()
+                    showdialog("다이어리 작성 실패", "다이어리 내용을 입력해주세요.", "확인")
                 }
             }else{
-                AlertDialog.Builder(requireContext())
-                    .setTitle("With P")
-                    .setMessage("제목을 입력해주세요.")
-                    .setPositiveButton("확인") { dialog, _ ->
-                        dialog.dismiss() // 다이얼로그 닫기
-                    }
-                    .show()
+//                AlertDialog.Builder(requireContext())
+//                    .setTitle("With P")
+//                    .setMessage("제목을 입력해주세요.")
+//                    .setPositiveButton("확인") { dialog, _ ->
+//                        dialog.dismiss() // 다이얼로그 닫기
+//                    }
+//                    .show()
+                showdialog("다이어리 작성 실패", "다이어리 제목을 입력해주세요.", "확인")
             }
         }
 
@@ -288,16 +293,18 @@ class Fragment_Diary2 : Fragment() {
                 if (result == "registration successful") {
                     launch(Dispatchers.Main) {
                         //Fragment_Diary1 으로 넘어감
-                        replaceFragment(Fragment_Diary1())
+                       replaceFragment(Fragment_Diary1())
+
                     }
                 } else {
                     launch(Dispatchers.Main) {
-                        AlertDialog.Builder(requireContext())
-                            .setTitle("With P")
-                            .setMessage("등록 실패")
-                            .setPositiveButton("확인") { dialog, which -> Log.d("MyTag", "positive") }
-                            .create()
-                            .show()
+//                        AlertDialog.Builder(requireContext())
+//                            .setTitle("With P")
+//                            .setMessage("등록 실패")
+//                            .setPositiveButton("확인") { dialog, which -> Log.d("MyTag", "positive") }
+//                            .create()
+//                            .show()
+                        showdialog("", "다이어리 작성에 실패하였습니다.", "확인")
                     }
                 }
 
@@ -309,7 +316,32 @@ class Fragment_Diary2 : Fragment() {
             }
         }
     }
-    private fun replaceFragment(fragment: Fragment){
+
+
+    private fun showdialog(title: String, message: String, buttonText: String) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.custom_dialog2, null)
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+
+        val dialog = dialogBuilder.create()
+
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.dialogTitle)
+        val dialogMessage = dialogView.findViewById<TextView>(R.id.dialogMessage)
+        val positiveButton = dialogView.findViewById<Button>(R.id.dialogButton)
+
+        dialogTitle.text = title
+        dialogMessage.text = message
+        positiveButton.text = buttonText
+
+        positiveButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    private fun replaceFragment(fragment: Fragment){/*
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
 
         val fragment = fragment
@@ -326,25 +358,44 @@ class Fragment_Diary2 : Fragment() {
         // FragmentTransaction을 사용하여 PlantEnrollFragment로 전환
         transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null) // 이전 Fragment로 돌아갈 수 있도록 back stack에 추가
-        transaction.commit() // 변경 사항을 적용
+        transaction.commit() // 변경 사항을 적용*/
+        val fragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.popBackStack(
+            fragmentManager.getBackStackEntryAt(0).id,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
+
+
+        val bundle = Bundle().apply {
+            putString("userEmail", userEmail)
+            putString("plantName", plantName)
+            putInt("plantId", plantId)
+            putString("diaryDate", dDate)
+        }
+        fragment.arguments = bundle
+
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
     // onActivityResult 메서드를 오버라이드하여 갤러리로부터 선택된 이미지를 처리
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK){
-        if (requestCode == GALLERY_REQUEST_CODE) {
-            // 갤러리에서 선택한 이미지의 URI 가져오기
-            selectedImageUri = data?.data
+            if (requestCode == GALLERY_REQUEST_CODE) {
+                // 갤러리에서 선택한 이미지의 URI 가져오기
+                selectedImageUri = data?.data
 
-            // 선택한 이미지를 ImageView에 표시
-            selectedImageUri?.let { uri ->
-                image.setImageURI(uri)
-            }
-        }else if(requestCode == REQ_CAMERA){
-           // val imageBitmap = data?.extras?.get("data") as Bitmap?
-            selectedImageUri?.let { uri ->
-                image.setImageURI(uri)
-            }
+                // 선택한 이미지를 ImageView에 표시
+                selectedImageUri?.let { uri ->
+                    image.setImageURI(uri)
+                }
+            }else if(requestCode == REQ_CAMERA){
+                // val imageBitmap = data?.extras?.get("data") as Bitmap?
+                selectedImageUri?.let { uri ->
+                    image.setImageURI(uri)
+                }
 
             }
         }

@@ -1,10 +1,14 @@
 package com.example.plant
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -76,7 +80,7 @@ class CommentAdapter(private val context: Context, private val commentList: Muta
             editTextView.setOnClickListener {
                 // 댓글 수정 기능 호출
                 //editComment(comment.comment_num)
-                showEditDialog(comment)
+                editDialog(comment)
             }
 
             // 삭제 버튼 클릭 리스너 설정
@@ -84,15 +88,16 @@ class CommentAdapter(private val context: Context, private val commentList: Muta
                 // 댓글 삭제 기능 호출
                 //deleteComment(comment)
                 //댓글 삭제 기능 호출 전에 확인 다이얼로그 표시
-                AlertDialog.Builder(context)
-                    .setTitle("댓글 삭제")
-                    .setMessage("정말로 이 댓글을 삭제하시겠습니까?")
-                    .setPositiveButton("삭제") { dialog, which ->
-                        // 사용자가 확인을 클릭하면 삭제 함수 호출
-                        deleteComment(comment)
-                    }
-                    .setNegativeButton("취소", null)
-                    .show()
+//                AlertDialog.Builder(context)
+//                    .setTitle("댓글 삭제")
+//                    .setMessage("정말로 이 댓글을 삭제하시겠습니까?")
+//                    .setPositiveButton("삭제") { dialog, which ->
+//                        // 사용자가 확인을 클릭하면 삭제 함수 호출
+//                        deleteComment(comment)
+//                    }
+//                    .setNegativeButton("취소", null)
+//                    .show()
+                deleteDialog(comment)
             }
 
         }
@@ -155,24 +160,100 @@ class CommentAdapter(private val context: Context, private val commentList: Muta
 
     }
 
-    //수정 다이얼로그
-    private fun showEditDialog(comment: Comment) {
-        val editView = LayoutInflater.from(context).inflate(R.layout.edit_comment_dialog, null)
-        val editText = editView.findViewById<EditText>(R.id.edit_comment_content)
-        editText.setText(comment.comment_content)
 
-        AlertDialog.Builder(context)
-            .setTitle("댓글 수정")
-            .setView(editView)
-            .setPositiveButton("수정") { _, _ ->
-                val newContent = editText.text.toString()
-                if (newContent.isNotBlank()) {
-                    editComment(comment, newContent)
-                }
-            }
-            .setNegativeButton("취소", null)
-            .show()
+    private fun deleteDialog(comment: Comment) {
+        // 다이얼로그 레이아웃을 인플레이트
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.custom_dialog, null)
+        // 다이얼로그 빌더 생성
+        val dialogBuilder = AlertDialog.Builder(context)
+            .setView(dialogView)
+        // 다이얼로그 생성
+        val dialog = dialogBuilder.create()
+        // 레이아웃 내부의 뷰들을 참조
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.dialogTitle)
+        val dialogMessage = dialogView.findViewById<TextView>(R.id.dialogMessage)
+        val positiveButton = dialogView.findViewById<Button>(R.id.positiveButton)
+        val negativeButton = dialogView.findViewById<Button>(R.id.negativeButton)
+        // 다이얼로그 메시지 설정
+        dialogTitle.text = "댓글 삭제"
+        dialogMessage.text = "정말로 이 댓글을 삭제하시겠습니까?"
+        positiveButton.text = "삭제"
+        negativeButton.text = "취소"
+        // OK 버튼 클릭 리스너 설정
+        positiveButton.setOnClickListener {
+            // 사용자가 확인을 클릭하면 삭제 함수 호출
+            deleteComment(comment)
+            dialog.dismiss()
+        }
+        // Cancel 버튼 클릭 리스너 설정
+        negativeButton.setOnClickListener {
+            // 다이얼로그 닫기
+            dialog.dismiss()
+        }
+        // 다이얼로그 표시
+        dialog.show()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
+
+
+
+    @SuppressLint("MissingInflatedId")
+    private fun editDialog(comment: Comment) {
+        // 다이얼로그 레이아웃을 인플레이트
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.edit_comment_dialog, null)
+        // 다이얼로그 빌더 생성
+        val dialogBuilder = AlertDialog.Builder(context)
+            .setView(dialogView)
+        // 다이얼로그 생성
+        val dialog = dialogBuilder.create()
+        // 레이아웃 내부의 뷰들을 참조
+        val errorMessage = dialogView.findViewById<TextView>(R.id.editerrorMessage)
+        val editCommentEditText = dialogView.findViewById<EditText>(R.id.edit_comment_content)
+        val positiveButton = dialogView.findViewById<Button>(R.id.positiveButton)
+        val negativeButton = dialogView.findViewById<Button>(R.id.negativeButton)
+        // 이전에 작성한 댓글 내용을 EditText에 설정
+        editCommentEditText.setText(comment.comment_content)
+        // OK 버튼 클릭 리스너 설정
+        positiveButton.setOnClickListener {
+            // 수정된 댓글 내용 가져오기
+            val newContent = editCommentEditText.text.toString()
+            // 댓글 수정 함수 호출
+            if (newContent.isNotBlank()) {
+                editComment(comment, newContent)
+                dialog.dismiss()
+            } else {
+                errorMessage.visibility = View.VISIBLE
+            }
+        }
+        // Cancel 버튼 클릭 리스너 설정
+        negativeButton.setOnClickListener {
+            // 다이얼로그 닫기
+            dialog.dismiss()
+        }
+        // 다이얼로그 표시
+        dialog.show()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+
+    //수정 다이얼로그
+//    private fun showEditDialog(comment: Comment) {
+//        val editView = LayoutInflater.from(context).inflate(R.layout.edit_comment_dialog, null)
+//        val editText = editView.findViewById<EditText>(R.id.edit_comment_content)
+//        editText.setText(comment.comment_content)
+//
+//        AlertDialog.Builder(context)
+//            .setTitle("댓글 수정")
+//            .setView(editView)
+//            .setPositiveButton("수정") { _, _ ->
+//                val newContent = editText.text.toString()
+//                if (newContent.isNotBlank()) {
+//                    editComment(comment, newContent)
+//                }
+//            }
+//            .setNegativeButton("취소", null)
+//            .show()
+//    }
 
     //댓글 수정 기능
     private fun editComment(comment: Comment, newContent: String) {
@@ -255,8 +336,5 @@ class CommentAdapter(private val context: Context, private val commentList: Muta
             }
         }
     }
-
-
-
 
 }

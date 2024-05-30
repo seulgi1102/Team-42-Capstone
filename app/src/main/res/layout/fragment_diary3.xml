@@ -151,37 +151,46 @@
                     android:textSize="20sp" />
             </ScrollView>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/deleteBtn"
+            <com.github.clans.fab.FloatingActionMenu
+                android:id="@+id/floatingActionMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:backgroundTint="#EF5757"
-                android:clickable="true"
-                android:contentDescription=" "
-                android:src="@drawable/trash"
-                app:fabSize="normal"
-                app:layout_constraintBottom_toTopOf="@+id/editBtn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:maxImageSize="30dp"
-                app:tint="@null" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/editBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:backgroundTint="#4DCDED"
-                android:clickable="true"
-                android:contentDescription=" "
-                android:src="@drawable/edit"
-                app:fabSize="normal"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="10dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:maxImageSize="30dp"
-                app:tint="@null" />
+                app:menu_fab_label=""
+                app:menu_colorNormal="#7FFFD4"
+                app:menu_colorPressed="#7FFFD4"
+                app:menu_colorRipple="#7FFFD4"
+                app:menu_openDirection="up"
+                app:menu_showShadow="true">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/deleteBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_delete_24"
+                    app:fab_colorNormal="#7FFFD4"
+                    app:fab_colorPressed="#7FFFD4"
+                    app:fab_label="다이어리 삭제하기"
+                    app:fab_size="normal" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/editBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_draw_24"
+                    app:fab_colorNormal="#7FFFD4"
+                    app:fab_colorPressed="#7FFFD4"
+                    app:fab_label="다이어리 수정하기"
+                    app:fab_size="normal" />
+
+            </com.github.clans.fab.FloatingActionMenu>
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

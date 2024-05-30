@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:padding="5dp">
 
             <ImageView
@@ -27,13 +26,13 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/back"
-                android:backgroundTint="#6DF8B7"/>
+                android:backgroundTint="#6DF8B7" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_radius_green"
                 android:layout_marginLeft="10dp"
+                android:background="@drawable/background_radius_green"
                 android:padding="5dp"
                 android:text="Step 2. "
                 android:textSize="25dp"
@@ -42,7 +41,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:padding="5dp"
                 android:text="&quot;식물의 집 마련하기&quot;"
                 android:textSize="25dp"
@@ -50,12 +48,1020 @@
         </LinearLayout>
 
     </LinearLayout>
-
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:layout_height="wrap_content">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fadingEdgeLength="100dp">
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/stepTitle6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:ems="5"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="5dp"
+                    android:text="첫번째"
+                    android:textColor="#3ABCDC"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="식물에게 알맞은 "
+                            android:textSize="20sp" />
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="화분"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView34"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="을 선택하기 . "
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="3dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding = "5dp"
+                                android:background="@drawable/background_radius4"
+                                android:text="1. 초기크기 "
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="12dp"
+                                android:padding="5dp"
+                                android:background="@drawable/background_radius5"
+                                android:text="식물의 뿌리가 자랄 수 있는 충분한 공간을 제공하는 크기의 화분을 선택하기. 보통 식물의 뿌리가 화분의 1/3 이상을 차지하지 않도록 하는 것이 좋음." />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="vertical"
+                            android:padding="3dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/background_radius4"
+                                android:padding = "5dp"
+                                android:text="2. 성장여유 "
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_radius5"
+                                android:padding="5dp"
+                                android:textSize="12dp"
+                                android:text="식물이 자랄 여유를 주기 위해 현재 뿌리 크기보다 약 2-3cm 더 큰 화분을 선택하기." />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:ems="5"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="화분의 재질"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center|top"
+                        android:padding="3dp">
+
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="120dp"
+                            android:background="@drawable/radius_clear"
+                            android:clipToOutline="true"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/teracota5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/background_radius4"
+                            android:padding="5dp"
+                            android:text="테라코타 화분 "
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius"
+                            android:padding="5dp"
+                            android:text="통기성이 좋아 뿌리 부패를 방지하는데 유리함. 다육식물과 선인장에 적합함."
+                            android:textSize="12dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center|top"
+                        android:orientation="vertical"
+                        android:padding="3dp">
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="120dp"
+                            android:background="@drawable/radius_clear"
+                            android:clipToOutline="true"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/plastic" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius4"
+                            android:padding="5dp"
+                            android:layout_marginTop="5dp"
+                            android:text="플라스틱 화분 "
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius"
+                            android:padding="5dp"
+                            android:text="가볍고 다양한 디자인이 있지만, 통기성이 떨어지므로 배수에 신경 써야함."
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:padding="3dp">
+
+                        <ImageView
+                            android:id="@+id/imageView10"
+                            android:layout_width="160dp"
+                            android:layout_height="120dp"
+                            android:background="@drawable/radius_clear"
+                            android:clipToOutline="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/seramic2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius4"
+                            android:padding="5dp"
+                            android:layout_marginTop="5dp"
+                            android:text="세라믹 화분 "
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius"
+                            android:padding="5dp"
+                            android:text="아름답지만 무겁고 배수에 유의해야함."
+                            android:textSize="12dp" />
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="3dp">
+
+                        <ImageView
+                            android:id="@+id/imageView11"
+                            android:layout_width="160dp"
+                            android:layout_height="120dp"
+                            android:background="@drawable/radius_clear"
+                            android:clipToOutline="true"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/wood" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius4"
+                            android:padding="5dp"
+                            android:layout_marginTop="5dp"
+                            android:text="목재 화분 "
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius"
+                            android:padding="5dp"
+                            android:text="자연스럽고 통기성이 좋지만, 습기에 약할 수 있음."
+                            android:textSize="12dp" />
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/stepTitle7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:ems="5"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="5dp"
+                    android:text="두번째"
+                    android:textColor="#3ABCDC"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="식물에게 적합한 "
+                        android:textSize="20sp" />
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="흙"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="을 준비하기 ."
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView47"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:ellipsize="end"
+                    android:ems="5"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="4가지 고려사항"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius"
+                            android:padding="5dp"
+                            android:text="일반적인 실내식물"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/background_radius"
+                            android:padding="3dp"
+                            android:text="일반적인 실내 식물에는 화초용 흙을 사용하기. 이 흙은 보통 배수가 잘 되고 영양분이 적절히 포함되어 있음."
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius"
+                            android:padding="5dp"
+                            android:text="다육식물과 선인장"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/background_radius"
+                            android:padding="3dp"
+                            android:text="물빠짐이 좋은 배합이 필요함. 일반 화초용 흙에 모래나 펄라이트를 1:1 비율로 섞어 배수성을 높이기."
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius"
+                            android:padding="5dp"
+                            android:text="난식물"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_radius"
+                            android:padding="3dp"
+                            android:text="수분 유지와 통기성이 중요한 난식물의 경우, 난 전용 배합토를 사용하거나 수태를 섞어줌."
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius"
+                            android:padding="5dp"
+                            android:text="허브"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/background_radius"
+                            android:padding="3dp"
+                            android:text="배수가 좋은 흙에 퇴비나 유기질 비료를 적절히 섞어줌."
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center|top"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_radius"
+                            android:padding="5dp"
+                            android:layout_weight="3"
+                            android:textSize="10sp"
+                            android:text="추천재료" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text="① 피트모스: 보습력이 뛰어나고 통기성을 향상시킴."
+                            android:textSize="9sp" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="3dp"
+                                android:text="② 펄라이트: 배수를 돕고 흙의 통기성을 높여줌."
+                                android:textSize="9sp" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="3dp"
+                                android:text="③ 버미큘라이트: 보습력과 배수성을 동시에 제공하여 흙의 구조를 개선함."
+                                android:textSize="9sp" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="3dp"
+                                android:text="④ 코코피트: 코코넛 섬유로 만든 보습력이 좋은 소재임."
+                                android:textSize="9sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/stepTitle9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:ems="5"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="세번째"
+                        android:textColor="#3ABCDC"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="화분"
+                            android:textSize="20sp" />
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text=" 세팅하기"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView48"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:ellipsize="end"
+                        android:ems="5"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:maxLines="1"
+                        android:text="1단계 | 배수층 만들기"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:id="@+id/imageView7"
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:background="@drawable/radius_clear"
+                                android:clipToOutline="true"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/setting1" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/background_radius"
+                                android:padding="5dp"
+                                android:text="먼저 화분 바닥에 깔망을 깔고, 화분의 바닥에 마사토나 작은 자갈, 깨진 도자기 조각을 깔아 배수층을 만들어준다. 배수를 원활히 하기 위해 세척 마사토를 화분 깊이의 1/5 정도 넣는데 이때 배수층은 화분의 깊이에 따라 달라지며 깊은 화분일수록 배수층을 높여주어야 한다. 이러한 과정은 물빠짐을 돕고 뿌리 부패를 방지해준다. "
+                                android:textSize="13dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:ellipsize="end"
+                            android:ems="5"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="2단계 | 흙 채우기"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:id="@+id/imageView8"
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:background="@drawable/radius_clear"
+                                android:clipToOutline="true"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/setting2" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/background_radius"
+                                android:padding="5dp"
+                                android:text="배수층 위에 식물의 습성에 맞게 적절히 섞은 배합토를 식물 뿌리가 충분히 자랄 수 있도록 세척 마사토 위에 2/5 정도 채워 넣는다."
+                                android:textSize="13dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:ellipsize="end"
+                            android:ems="5"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="3단계 | 식물심기"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:background="@drawable/radius_clear"
+                                android:clipToOutline="true"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/setting3" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/background_radius"
+                                android:padding="5dp"
+                                android:text="식물을 화분 중앙에 두고 뿌리를 흙으로 덮고 뿌리가 잘 퍼지도록 부드럽게 눌러준다. 만약 식물의 뿌리가 단단하게 휘감겨 있다면 화분에 제대로 활착하지 못할 수 있기에 뿌리를 정리해주어야한다."
+
+                                android:textSize="13dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:ellipsize="end"
+                            android:ems="5"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="4단계 | 물 주기"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:background="@drawable/radius_clear"
+                                android:clipToOutline="true"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/setting4" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/background_radius"
+                                android:padding="5dp"
+                                android:text="심은 직후 충분히 물을 주어 흙이 식물 뿌리 주변에 잘 밀착되도록 한다. 과도한 물은 피하고, 배수가 잘 되는지 확인해준다."
+                                android:textSize="13dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:ellipsize="end"
+                            android:ems="5"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:maxLines="1"
+                            android:text="4단계 | 그늘로 옮기기"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:background="@drawable/radius_clear"
+                                android:clipToOutline="true"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/setting5" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/background_radius"
+                                android:padding="5dp"
+                                android:text="뿌리가 안정을 취하고 잘 활착할 수 있도록 하루 정도는 반음지에서 쉬게 해준다."
+                                android:textSize="13dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/stepTitle10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:ems="5"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="마지막"
+                        android:textColor="#3ABCDC"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text=" 식물을"
+                            android:textSize="20sp" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text=" 심기 전"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text=" 고려해볼것 . "
+                            android:textSize="20sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView49"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:ellipsize="end"
+                        android:ems="5"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="기타 고려 사항들"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_radius"
+                                android:padding="3dp"
+                                android:gravity="center"
+                                android:text="1. 배수 구멍"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/background_radius2"
+                                android:padding="3dp"
+                                android:gravity="center"
+                                android:text="화분에 배수 구멍이 있는지 확인하기. 배수 구멍이 없는 화분을 사용할 경우, 속 화분을 두어 배수 문제를 해결할 수 있음."
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_radius"
+                                android:padding="3dp"
+                                android:gravity="center"
+                                android:text="2. 받침대"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/background_radius2"
+                                android:padding="3dp"
+                                android:gravity="center"
+                                android:text="물이 흘러나오지 않도록 받침대를 사용하기. 이는 실내 청결을 유지하는 데 도움이 됨."
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_radius"
+                                android:padding="3dp"
+                                android:gravity="center"
+                                android:text="3. 위치 선정"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/background_radius2"
+                                android:padding="3dp"
+                                android:gravity="center"
+                                android:text="식물이 필요한 빛의 양에 따라 적절한 위치에 화분을 배치함. 햇빛이 많이 필요한 식물은 창가 근처에, 간접 빛이 필요한 식물은 약간 떨어진 곳에 놓기."
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_radius"
+                                android:padding="3dp"
+                                android:gravity="center"
+                                android:text="4. 환기"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/background_radius2"
+                                android:padding="3dp"
+                                android:gravity="center"
+                                android:text="실내 공기의 흐름이 원활한 곳에 배치하여 식물이 건강하게 자랄 수 있도록 하기."
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="100dp"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_radius"
+                                android:padding="3dp"
+                                android:gravity="center"
+                                android:text="5. 장식 요소"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/background_radius2"
+                                android:padding="3dp"
+                                android:gravity="center"
+                                android:text="화분 주위에 작은 돌이나 장식물을 추가하여 미관을 향상시킬 수 있음."
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="bottom"
+            android:background="@drawable/fade_out"/>
+    </FrameLayout>
 
 </LinearLayout>

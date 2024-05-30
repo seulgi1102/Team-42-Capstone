@@ -11,6 +11,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -23,6 +25,7 @@ class HomeActivity : AppCompatActivity(){
     private lateinit var bottomNavigationView:BottomNavigationView
     private lateinit var homeBtn: ImageView
     private lateinit var profileBtn: ImageView
+    private lateinit var currentFragment: Fragment
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -50,19 +53,17 @@ class HomeActivity : AppCompatActivity(){
         Fragment_Garden.arguments = bundle
         Fragment_Search = Fragment_Search()
         Fragment_Search.arguments = bundle
-        supportFragmentManager.beginTransaction().replace(R.id.container, Fragment_Home).commit();
+
+        //currentFragment = Fragment_Home()
+        supportFragmentManager.beginTransaction().replace(R.id.container, Fragment_Home).commit()
 
         homeBtn = findViewById(R.id.home)
         val intent = Intent(this, HomeActivity::class.java)
-        homeBtn.setOnClickListener {
-            intent.putExtra("userEmail", email)
-            intent.putExtra("imageUrl", imageUrl)
-            intent.putExtra("userName", userName)
-            startActivity(intent)
-        }
+
         val intent2 = Intent(this, ProfileActivity::class.java)
         profileBtn = findViewById(R.id.profileBtn)
         profileBtn.setOnClickListener {
+            intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             intent2.putExtra("userEmail", email)
             intent.putExtra("imageUrl", imageUrl)
             intent2.putExtra("userName", userName)
@@ -73,23 +74,55 @@ class HomeActivity : AppCompatActivity(){
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.tab1 -> {
+                    clearBackStack()
+                    //currentFragment = Fragment_Home()
                     supportFragmentManager.beginTransaction().replace(R.id.container, Fragment_Home).commit()
                     true
                 }
                 R.id.tab2 -> {
+                    clearBackStack()
+                    //currentFragment = Fragment_Board()
                     supportFragmentManager.beginTransaction().replace(R.id.container, Fragment_Board).commit()
                     true
                 }
                 R.id.tab3 -> {
+                    clearBackStack()
+                    //currentFragment = Fragment_Garden()
                     supportFragmentManager.beginTransaction().replace(R.id.container, Fragment_Garden).commit()
                     true
                 }
                 R.id.tab4 -> {
+                    clearBackStack()
+                    //currentFragment = Fragment_Search()
                     supportFragmentManager.beginTransaction().replace(R.id.container, Fragment_Search).commit()
                     true
                 }
                 else -> false
             }
         }
+
+        homeBtn.setOnClickListener {
+            val fragmentManager = this.supportFragmentManager
+            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            /*intent.putExtra("userEmail", email)
+            intent.putExtra("imageUrl", imageUrl)
+            intent.putExtra("userName", userName)
+            startActivity(intent)*/
+            val bundle = Bundle().apply {
+                putString("userEmail", email)
+                putString("imageUrl",imageUrl)
+            }
+            val fragment = Fragment_Home
+            fragment.arguments = bundle
+
+            // 프래그먼트 교체
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.container, fragment)
+            transaction.commit()
+        }
+    }
+    private fun clearBackStack() {
+        val fragmentManager = supportFragmentManager
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 }

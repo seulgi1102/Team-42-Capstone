@@ -3,6 +3,8 @@ package com.example.plant
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -44,11 +46,13 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
 import ApiService
+import androidx.fragment.app.FragmentManager
+
 class Fragment_Viewpost : Fragment() {
     private lateinit var FreeBoardFragment: Fragment_FreeBoard
     private lateinit var listbtn: Button
-    private lateinit var editbtn: Button
-    private lateinit var deletebtn: Button
+    private lateinit var editbtn: TextView
+    private lateinit var deletebtn: TextView
     private lateinit var comment_btn: Button
     private lateinit var comment_text: EditText
     private lateinit var post_image: ImageView
@@ -105,12 +109,12 @@ class Fragment_Viewpost : Fragment() {
         // 수정 가능 여부에 따라 버튼 보이기/숨기기 처리
         if (is_equal == true) {
             // 수정 가능한 경우 버튼 보이기
-            view.findViewById<Button>(R.id.editButton).visibility = View.VISIBLE
-            view.findViewById<Button>(R.id.deleteButton).visibility = View.VISIBLE
+            view.findViewById<TextView>(R.id.editButton).visibility = View.VISIBLE
+            view.findViewById<TextView>(R.id.deleteButton).visibility = View.VISIBLE
         } else {
             // 수정 불가능한 경우 버튼 숨기기
-            view.findViewById<Button>(R.id.editButton).visibility = View.GONE
-            view.findViewById<Button>(R.id.deleteButton).visibility = View.GONE
+            view.findViewById<TextView>(R.id.editButton).visibility = View.GONE
+            view.findViewById<TextView>(R.id.deleteButton).visibility = View.GONE
         }
 
         //리싸이클러뷰
@@ -130,14 +134,14 @@ class Fragment_Viewpost : Fragment() {
         listbtn = view.findViewById(R.id.listbtn)
         listbtn.setOnClickListener {
             // 클릭 이벤트 처리, 해당하는 프래그먼트로 변경
-            val fragment = Fragment_FreeBoard().apply {
-                arguments = Bundle().apply {
-                    //putString("board_type", board_type) // board_type 데이터 전달
-                    putString("userEmail", post_writer) // writer 데이터 전달
-                    board_type?.let { it1 -> putInt("board_type", it1.toInt()) } //board_type 데이터 전달
-                }
-            }
-            replaceFragment(fragment)
+//            val fragment = Fragment_FreeBoard().apply {
+//                arguments = Bundle().apply {
+//                    //putString("board_type", board_type) // board_type 데이터 전달
+//                    putString("userEmail", post_writer) // writer 데이터 전달
+//                    board_type?.let { it1 -> putInt("board_type", it1.toInt()) } //board_type 데이터 전달
+//                }
+//            }
+            replaceFragment(Fragment_FreeBoard())
         }
 
         editbtn = view.findViewById(R.id.editButton)
@@ -160,15 +164,16 @@ class Fragment_Viewpost : Fragment() {
         deletebtn.setOnClickListener {
             //post_num?.let { it1 -> deletePost(it1.toInt()) }
             // AlertDialog를 생성하여 사용자에게 삭제 여부를 확인
-            AlertDialog.Builder(requireContext())
-                .setTitle("With P")
-                .setMessage("정말로 이 게시물을 삭제하시겠습니까?")
-                .setPositiveButton("삭제") { _, _ ->
-                    // 사용자가 확인을 클릭하면 삭제 함수 호출
-                    post_num?.let { it1 -> deletePost(it1.toInt()) }
-                }
-                .setNegativeButton("취소", null)
-                .show()
+//            AlertDialog.Builder(requireContext())
+//                .setTitle("With P")
+//                .setMessage("정말로 이 게시물을 삭제하시겠습니까?")
+//                .setPositiveButton("삭제") { _, _ ->
+//                    // 사용자가 확인을 클릭하면 삭제 함수 호출
+//                    post_num?.let { it1 -> deletePost(it1.toInt()) }
+//                }
+//                .setNegativeButton("취소", null)
+//                .show()
+            post_num?.let { it1 -> showdialog(it1.toInt(), "게시물 삭제", "정말 이 게시물을 삭제하시겠습니까?", "삭제", "취소") }
 
         }
 
@@ -419,6 +424,36 @@ class Fragment_Viewpost : Fragment() {
 //        })
 //    }
 
+    private fun showdialog(post_num: Int, title: String, message: String, buttonText1: String, buttonText2: String) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.custom_dialog, null)
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+
+        val dialog = dialogBuilder.create()
+
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.dialogTitle)
+        val dialogMessage = dialogView.findViewById<TextView>(R.id.dialogMessage)
+        val positiveButton = dialogView.findViewById<Button>(R.id.positiveButton)
+        val negativeButton = dialogView.findViewById<Button>(R.id.negativeButton)
+
+        dialogTitle.text = title
+        dialogMessage.text = message
+        positiveButton.text = buttonText1
+        negativeButton.text = buttonText2
+
+        positiveButton.setOnClickListener {
+            deletePost(post_num)
+            dialog.dismiss()
+        }
+
+        negativeButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
 
 
     private fun deletePost(postNum: Int) {
@@ -452,6 +487,7 @@ class Fragment_Viewpost : Fragment() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
+        /*
         val bundle = Bundle().apply {
             putString("userEmail", post_writer)
             board_type?.let { putInt("board_type", it.toInt()) }
@@ -460,6 +496,23 @@ class Fragment_Viewpost : Fragment() {
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, fragment) // container는 프래그먼트가 표시될 영역의 ID
         transaction.addToBackStack(null) // 뒤로 가기 버튼을 눌렀을 때 이전 화면으로 돌아갈 수 있도록 스택에 추가
+        transaction.commit()*/
+        val fragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.popBackStack(
+            fragmentManager.getBackStackEntryAt(0).id,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
+
+
+        val bundle = Bundle().apply {
+            putString("userEmail", userEmail)
+            board_type?.let { putInt("board_type", it.toInt()) }
+        }
+        fragment.arguments = bundle
+
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.addToBackStack(null)
         transaction.commit()
     }
 
@@ -470,6 +523,7 @@ class Fragment_Viewpost : Fragment() {
             post_num?.let { it1 -> putInt("post_num", it1.toInt()) }
             putString("post_title", post_title)
             putString("post_content", post_content)
+            putString("post_date", post_date)
             putString("task","edit")
         }
         fragment.arguments = bundle
